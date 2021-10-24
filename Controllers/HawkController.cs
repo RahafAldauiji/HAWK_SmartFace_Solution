@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 using SmartfaceSolution.Classes;
 using SmartfaceSolution.SubClasses;
 
@@ -18,27 +19,18 @@ namespace SmartfaceSolution.Controllers
         [Route("Camera/Match")]
         public IActionResult getMatch()
         {
-            Task<List<MatchResult>> matchs = new SubMatchFaces().matchFaces();
-            return null;
+            List<MatchResult> matchs = new SubMatchFaces().matchFaces();
+            return Json(matchs);
          }
-        [HttpPost]
-        [Route("WatchlistMember/create")]
-        public IActionResult createWatchlistMember(string displayName, string fullName, string note)
-        {
-            WatchlistMember watchlistMember =
-                new SubWatchlistMember().createWatchListMember(displayName,
-                    fullName, note);
-            return Json(watchlistMember);
-        }
         
         [HttpPut]
         [Route("WatchlistMember/update")]
         public IActionResult updateWatchlistMember(string id, string displayName, string fullName, string note)
         {
-            id = "916255be-0ca7-43e9-ab7e-727c665bbd7a";
-            displayName = "t";
-            fullName = "e";
-            note = "dfd";
+            // id = "916255be-0ca7-43e9-ab7e-727c665bbd7a";
+            // displayName = "t";
+            // fullName = "e";
+            // note = "dfd";
             WatchlistMember updatedwatchlistMember = new SubWatchlistMember().updateWatchListMember(id,
                 displayName, fullName, note);
             return Json(updatedwatchlistMember);
@@ -71,16 +63,27 @@ namespace SmartfaceSolution.Controllers
             return Json(deletedwatchlistMember);
         }
         
+        // [HttpPost]
+        // [Route("WatchlistMember/register")]
+        // public IActionResult registerWatchlistMember(string imgUrl, string id,
+        //     string watchlistId)
+        // {
+        //     string registeredWatchlistMember =
+        //         new SubWatchlistMember().register(id, watchlistId, imgUrl);
+        //     return Json(registeredWatchlistMember);
+        // }
         [HttpPost]
-        [Route("WatchlistMember/register")]
-        public IActionResult registerWatchlistMember(string imgUrl, string id,
-            string watchlistId)
+        [Route("WatchlistMember/CreateAndResgister")]
+        public IActionResult createWatchlistMember(string displayName, string fullName, string note,string watchlistId,string imgUrl)
         {
+            WatchlistMember watchlistMember =
+                new SubWatchlistMember().createWatchListMember(displayName,
+                    fullName, note);
             string registeredWatchlistMember =
-                new SubWatchlistMember().register(id, watchlistId, imgUrl);
+                new SubWatchlistMember().register(watchlistMember.Id, watchlistId, imgUrl);
             return Json(registeredWatchlistMember);
         }
-        
+
         [HttpPost]
         [Route("WatchlistMember/addFace")]
         public IActionResult addFace(string watchlistMemberId, string imgUrl)

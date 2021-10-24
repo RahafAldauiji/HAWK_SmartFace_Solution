@@ -330,5 +330,37 @@ namespace SmartfaceSolution.SubClasses
 
             return image;
         }
+
+        public byte[] CropImageFile(string imgId)
+        {
+            //string imgId = "bb820d72-a6d8-4900-9952-fc74c0256d72";
+            using (WebClient webClient = new WebClient())
+            {
+                byte[] data = webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
+
+                MemoryStream imgMemoryStream = new MemoryStream();
+                System.Drawing.Image imgPhoto = System.Drawing.Image.FromStream(new MemoryStream(data));
+
+                Bitmap bmPhoto = new Bitmap(200, 200, PixelFormat.Format24bppRgb);
+                bmPhoto.SetResolution(72, 72);
+
+                Graphics grPhoto = Graphics.FromImage(bmPhoto);
+                grPhoto.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                grPhoto.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                grPhoto.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                try
+                {
+                    grPhoto.DrawImage(imgPhoto, new Rectangle(0, 0, 200, 200),
+                        0, 0, imgPhoto.Width, imgPhoto.Height, GraphicsUnit.Pixel);
+                    bmPhoto.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+                }
+                catch (Exception ex)
+                {
+                }
+
+                return imgMemoryStream.GetBuffer();
+            }
+        }
     }
 }

@@ -87,12 +87,12 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
-        public async Task<List<MatchResult>> matchFaces()
+        public List<MatchResult> matchFaces()
         {
             List<MatchResult> match = null;
             //string reqUrl, string methodType, string json
-            await Task.Run(() =>
-                {
+            // await Task.Run(() =>
+            //     {
                     
                         string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
                         //string dayTime = DateTime.Now.ToString("yyyy-M-ddThh:mm:ss.ffZ");
@@ -138,9 +138,9 @@ namespace SmartfaceSolution.SubClasses
                     
 
                     return match;
-                }
-            );
-            return match;
+            //     }
+            // );
+            //return match;
         }
 
         public string convertImageToString(string url)

@@ -12,4 +12,9 @@
       <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="Front\.vscode\settings.json" />
+      <Content Include="Front\.vscode\tasks.json" />
+    </ItemGroup>
+
 </Project>

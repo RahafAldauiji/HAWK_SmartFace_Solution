@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "jquery-ui-datepicker/",
+			"problemMatcher": [],
+			"label": "npm: install - jquery-ui-datepicker",
+			"detail": "install dependencies from package"
+		}
+	]
+}

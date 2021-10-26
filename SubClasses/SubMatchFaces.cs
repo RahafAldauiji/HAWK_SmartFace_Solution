@@ -95,8 +95,8 @@ namespace SmartfaceSolution.SubClasses
             //     {
                     
                         string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
-                        //string dayTime = DateTime.Now.ToString("yyyy-M-ddThh:mm:ss.ffZ");
-                        string dayTime = "2021-10-17T22:19:25.437Z";
+                        string dayTime = DateTime.Now.ToString("yyyy-M-ddThh:mm:ss.ffZ");
+                        //string dayTime = "2021-10-17T22:19:25.437Z";
                         string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
                         string[] frameSplit1 = resp.Split('[', ']');
                         string[] frameSplit2 = frameSplit1[1].Split("},");

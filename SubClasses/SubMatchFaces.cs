@@ -89,56 +89,81 @@ namespace SmartfaceSolution.SubClasses
 
         public List<MatchResult> matchFaces()
         {
-            List<MatchResult> match = null;
+            List<MatchResult> match = new List<MatchResult>();
+            MatchResult m;
             //string reqUrl, string methodType, string json
             // await Task.Run(() =>
             //     {
-                    
-                        string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
-                        string dayTime = DateTime.Now.ToString("yyyy-M-ddThh:mm:ss.ffZ");
-                        //string dayTime = "2021-10-17T22:19:25.437Z";
-                        string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
-                        string[] frameSplit1 = resp.Split('[', ']');
-                        string[] frameSplit2 = frameSplit1[1].Split("},");
-                        Frame[] frame = new Frame[frameSplit2.Length];
-                        string[] dayTimeFrame = null;
-                        string[] split1;
-                        string[] split2;
-                        frameSplit2[frameSplit2.Length - 1] =
-                            frameSplit2[frameSplit2.Length - 1].Remove(frameSplit2.Length - 1);
-                        for (int i = 0; i < frameSplit2.Length; i++)
-                        {
-                            frameSplit2[i] += "}";
-                            frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
-                            dayTimeFrame = frame[i].CreatedAt.Replace("Z", "").Split('T');
-                            if (dayTimeNow[0].Equals(dayTimeFrame[0]))
-                            {
-                                split1 = dayTimeFrame[1].Split(":");
-                                split2 = dayTimeNow[1].Split(":");
-                                if (split1[0] + split1[1] == split2[0] + split2[1])
-                                {
-                                    using (WebClient webClient = new WebClient())
-                                    {
-                                        byte[] data =
-                                            webClient.DownloadData(
-                                                "http://localhost:8098/api/v1/Images/" + frame[i].ImageDataId);
-                                        string img = Convert.ToBase64String(data);
-                                        string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" + "}";
-                                        resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search", "POST",
-                                            json);
-                                        string[] splitMatch1 = resp.Split("\"matchResults\":");
-                                        splitMatch1[1] = splitMatch1[1].Remove(splitMatch1[1].Length - 2);
-                                        match = Newtonsoft.Json.JsonConvert
-                                            .DeserializeObject<List<MatchResult>>(splitMatch1[1]);
-                                        return match;
-                                    }
-                                }
-                            }
-                        }
-                    
 
-                    return match;
-            //     }
+            string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
+            //Thread.Sleep(2000);
+            string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
+            //string dayTime = "2021-10-17T22:19:25.437Z";
+            string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
+            string[] frameSplit1 = resp.Split('[', ']');
+            string[] frameSplit2 = frameSplit1[1].Split("},");
+            Frame[] frame = new Frame[frameSplit2.Length];
+            string[] dayTimeFrame = null;
+            string[] split1;
+            string[] split2;
+            // frameSplit2[frameSplit2.Length - 1] =
+            //     frameSplit2[frameSplit2.Length - 1].Remove(frameSplit2.Length - 1);
+            int time;
+            for (int i = 0; i < frameSplit2.Length; i++)
+            {
+                if (!(i == frameSplit2.Length - 1))
+                {
+                    frameSplit2[i] += "}";
+                }
+
+                frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
+                dayTimeFrame = frame[i].CreatedAt.Replace("Z", "").Split('T');
+                split1 = dayTimeFrame[1].Split(":");
+                split2 = dayTimeNow[1].Split(":");
+                time = int.Parse(split1[0]) + 3;
+                if (time >= 24)
+                {
+                    split1[0] = "";
+                    time -= 24;
+                    time += 0;
+                }
+
+                if (time < 10)
+                    split1[0] = "0";
+
+                split1[0] += time + "";
+                // if (dayTimeNow[0]==(dayTimeFrame[0]))
+                // {
+                if (split1[0] + "" + split1[1] == split2[0] + "" + split2[1])
+                {
+                    using (WebClient webClient = new WebClient())
+                    {
+                        byte[] data =
+                            webClient.DownloadData(
+                                "http://localhost:8098/api/v1/Images/" + frame[i].ImageDataId);
+                        string img = Convert.ToBase64String(data);
+                        string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
+                                      "}";
+                        resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
+                            "POST",
+                            json);
+                        string[] matches = resp.Split("},{");
+                        matches[matches.Length - 1] = matches[matches.Length - 1].Replace("]}", "");
+                        for (int j = 0; j < matches.Length; j++)
+                        {
+                            string[] splitMatch1 = matches[j].Split("\"matchResults\":");
+                            splitMatch1[1] = splitMatch1[1].Remove(splitMatch1[1].Length - 1).Replace("[", "");
+                            match.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<MatchResult>(splitMatch1[1]));
+                        }
+
+                        return match;
+                    }
+                }
+            }
+
+
+            return match;
+
             // );
             //return match;
         }

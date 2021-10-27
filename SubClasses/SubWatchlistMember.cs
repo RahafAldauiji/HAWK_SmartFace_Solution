@@ -90,13 +90,13 @@ namespace SmartfaceSolution.SubClasses
 
         public string convertImageToString(string name)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(name);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl+name);
             byte[] arrBytes;
             using (var ms = new MemoryStream())
             {
                 img.Save(ms, img.RawFormat);
                 arrBytes = ms.ToArray();
-                Console.WriteLine(Convert.ToBase64String(arrBytes));
+                //Console.WriteLine(Convert.ToBase64String(arrBytes));
             }
 
             return Convert.ToBase64String(arrBytes);
@@ -319,6 +319,7 @@ namespace SmartfaceSolution.SubClasses
                         {
                             yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                             image = Convert.ToBase64String(data);
+                            //Console.WriteLine(image);
                         }
                     }
                 }

@@ -19,7 +19,7 @@ namespace SmartfaceSolution
         {
             //Console.WriteLine(new SubMatchFaces().matchFaces().ToString());
             // new SubWatchlist().search();
-            //new SubWatchlistMember().retrievesImage("cc120ee0-98f8-4373-8ce4-9407c72f46ef");
+            //new SubWatchlistMember().convertImageToString("S.jpg");
             //  "C://Users//rahaf//Downloads//bb820d72-a6d8-4900-9952-fc74c0256d72");
             CreateHostBuilder(args).Build().Run();
         }

@@ -111,7 +111,7 @@ namespace SmartfaceSolution.SubClasses
             int time;
             for (int i = 0; i < frameSplit2.Length; i++)
             {
-                if (!(i == frameSplit2.Length - 1))
+                if (!(i == frameSplit2.Length - 1)) 
                 {
                     frameSplit2[i] += "}";
                 }

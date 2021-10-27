@@ -83,7 +83,8 @@ namespace SmartfaceSolution.Controllers
                 new SubWatchlistMember().register(watchlistMember.Id, watchlistId, imgUrl);
             return Json(registeredWatchlistMember);
         }
-
+        //cc9c8016-3489-49f1-8e2d-842c7dae3431 :S
+        //90ca71c3-2247-47a2-a78d-6a97ac5a1540 :E
         [HttpPost]
         [Route("WatchlistMember/addFace")]
         public IActionResult addFace(string watchlistMemberId, string imgUrl)

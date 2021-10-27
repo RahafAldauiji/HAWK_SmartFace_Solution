@@ -1,4 +1,7 @@
-﻿namespace SmartfaceSolution.Classes
+﻿using System;
+using Microsoft.VisualBasic.CompilerServices;
+
+namespace SmartfaceSolution.Classes
 {
     public class Face
     {
@@ -44,9 +47,9 @@
             Mask,
             NoMask
         };
-        private double faceArea;
-        private int faceOrder;
-        private int facesOnFrameCount;
+        private string faceArea;
+        private string faceOrder;
+        private string facesOnFrameCount;
         private double faceAreaChange;
         private double yawAngle;
         private double pitchAngle;
@@ -196,19 +199,19 @@
         }
         
 
-        public double FaceArea
+        public string FaceArea
         {
             get => faceArea;
             set => faceArea = value;
         }
 
-        public int FaceOrder
+        public string FaceOrder
         {
             get => faceOrder;
             set => faceOrder = value;
         }
 
-        public int FacesOnFrameCount
+        public string FacesOnFrameCount
         {
             get => facesOnFrameCount;
             set => facesOnFrameCount = value;

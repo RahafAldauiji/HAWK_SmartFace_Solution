@@ -209,8 +209,7 @@ namespace SmartfaceSolution.SubClasses
                 string imageData = convertImageToString(imgUrl);
                 string json = "{" + "\"imageData\":" + "{" + "\"data\":\"" + imageData + "\"" + "}" + "}";
                 string resp = request("/" + id + "/AddNewFace", "POST", json);
-                Console.WriteLine(resp);
-                //face = Newtonsoft.Json.JsonConvert.DeserializeObject<Face>(resp);
+                face = Newtonsoft.Json.JsonConvert.DeserializeObject<Face>(resp);
             }
             catch (Exception ex)
             {

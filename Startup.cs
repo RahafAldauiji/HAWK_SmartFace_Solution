@@ -17,7 +17,7 @@ namespace SmartfaceSolution
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,11 +28,11 @@ namespace SmartfaceSolution
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseHttpsRedirection();
+             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-             //app.UseAuthorization();
+            app.UseCors();
+             app.UseAuthorization();
             //
             // app.UseAuthentication();
             // app.UseMvc(routes =>
@@ -41,6 +41,8 @@ namespace SmartfaceSolution
             //         name: "default",
             //         template: "{controller}/{action}/");
             // });
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 

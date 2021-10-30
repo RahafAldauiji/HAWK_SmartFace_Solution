@@ -118,7 +118,7 @@
             <!--                </div>-->
             <div class="col col-3">
                 <div class="bg-white tm-block h-100">
-                    <h2 class="tm-block-title d-inline-block">Members</h2>
+                    <h2 class="tm-block-title d-inline-block">Hits</h2>
                     <table class="table table-striped mt-3">
                         <tbody>
                         <div id="tableMembers">
@@ -157,7 +157,7 @@
     let res;
     var jresult;
     var splitHits="";
-    res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers")
+    res = fetch("https://localhost:5001/HAWK/Camera/Match")
         .then(resultHits => resultHits.json())
         .then(resultHits => {
                 jresult  = JSON.stringify(resultHits);

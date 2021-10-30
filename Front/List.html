@@ -72,94 +72,84 @@
                                 <thead>
                                     <tr class="tm-bg-gray">
                                         <th scope="col">&nbsp;</th>
-                                        <th scope="col">Product Name</th>
-                                        <th scope="col" class="text-center">Units Sold</th>
-                                        <th scope="col" class="text-center">In Stock</th>
-                                        <th scope="col">Expire Date</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col" class="text-center">ID</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">1. In malesuada placerat (hover)</td>
-                                        <td class="text-center">145</td>
-                                        <td class="text-center">255</td>
-                                        <td>2018-10-28</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">2. Aenean eget urna enim. Sed enim</td>
-                                        <td class="text-center">240</td>
-                                        <td class="text-center">260</td>
-                                        <td>2018-10-24</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">3. Vivamus convallis tincidunt nisi</td>
-                                        <td class="text-center">360</td>
-                                        <td class="text-center">440</td>
-                                        <td>2019-02-14</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">4. Donec semper massa eget</td>
-                                        <td class="text-center">445</td>
-                                        <td class="text-center">655</td>
-                                        <td>2019-03-22</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">5. Donec semper massa eget</td>
-                                        <td class="text-center">445</td>
-                                        <td class="text-center">655</td>
-                                        <td>2019-03-22</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">6. Donec semper massa eget</td>
-                                        <td class="text-center">445</td>
-                                        <td class="text-center">655</td>
-                                        <td>2019-03-22</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">7. Donec semper massa eget</td>
-                                        <td class="text-center">445</td>
-                                        <td class="text-center">655</td>
-                                        <td>2019-03-22</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <input type="checkbox" aria-label="Checkbox">
-                                        </th>
-                                        <td class="tm-product-name">8. Donec semper massa eget</td>
-                                        <td class="text-center">445</td>
-                                        <td class="text-center">655</td>
-                                        <td>2019-03-22</td>
-                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                    </tr>
+                                <tbody id="membersList">
+                               
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">2. Aenean eget urna enim. Sed enim</td>-->
+<!--                                        <td class="text-center">240</td>-->
+<!--                                        <td class="text-center">260</td>-->
+<!--                                        <td>2018-10-24</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">3. Vivamus convallis tincidunt nisi</td>-->
+<!--                                        <td class="text-center">360</td>-->
+<!--                                        <td class="text-center">440</td>-->
+<!--                                        <td>2019-02-14</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">4. Donec semper massa eget</td>-->
+<!--                                        <td class="text-center">445</td>-->
+<!--                                        <td class="text-center">655</td>-->
+<!--                                        <td>2019-03-22</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">5. Donec semper massa eget</td>-->
+<!--                                        <td class="text-center">445</td>-->
+<!--                                        <td class="text-center">655</td>-->
+<!--                                        <td>2019-03-22</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">6. Donec semper massa eget</td>-->
+<!--                                        <td class="text-center">445</td>-->
+<!--                                        <td class="text-center">655</td>-->
+<!--                                        <td>2019-03-22</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">7. Donec semper massa eget</td>-->
+<!--                                        <td class="text-center">445</td>-->
+<!--                                        <td class="text-center">655</td>-->
+<!--                                        <td>2019-03-22</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <th scope="row">-->
+<!--                                            <input type="checkbox" aria-label="Checkbox">-->
+<!--                                        </th>-->
+<!--                                        <td class="tm-product-name">8. Donec semper massa eget</td>-->
+<!--                                        <td class="text-center">445</td>-->
+<!--                                        <td class="text-center">655</td>-->
+<!--                                        <td>2019-03-22</td>-->
+<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+<!--                                    </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -185,41 +175,34 @@
                     </div>
                 </div>
 
-                <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
-                        <h2 class="tm-block-title d-inline-block">Hits</h2>
-                        <table class="table table-striped mt-3">
-                            <tbody>
-                                <tr>
-                                    <td>1. Cras efficitur lacus</td>
-                                </tr>
-                                <tr>
-                                    <td>2. Pellentesque molestie</td>
-                                </tr>
-                                <tr>
-                                    <td>3. Sed feugiat nulla</td>
-                                </tr>
-                                <tr>
-                                    <td>4. Vestibulum varius arcu</td>
-                                </tr>
-                                <tr>
-                                    <td>5. Aenean eget urna enim</td>
-                                </tr>
-                                <tr>
-                                    <td>6. Condimentum viverra</td>
-                                </tr>
-                               
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
             </div>
            
         </div>
     </div>
-  
-    
+
+    <script>
+        let res;
+        var jresult;
+        var splitHits="";
+        res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers")
+            .then(resultHits => resultHits.json())
+            .then(resultHits => {
+                    jresult  = JSON.stringify(resultHits);
+                    resultHits.map(obj => {
+                        splitHits +="<tr> <th scope=\"row\"> <input type=\"checkbox\" aria-label=\"Checkbox\"></th>"
+                    splitHits += "<td className=\"tm-product-name\">";
+                        splitHits += obj.fullName +"</td> <br>";
+                       splitHits += "<td className=\"text-center\">";
+                        splitHits+=obj.id +"</td>";
+                    });
+                    
+                // splitHits += "<td>";
+                // splitHits += obj.fullName + " </tr> <br><br>";
+                     document.getElementById("membersList").innerHTML = splitHits;
+                }
+            );
+
+    </script>
 </body>
 
 </html>

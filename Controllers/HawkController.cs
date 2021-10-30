@@ -69,6 +69,14 @@ namespace SmartfaceSolution.Controllers
            
            return Json(watchlistMember.Items);
         }
+        [HttpGet]
+        [Route("WatchlistMember/getFaces")]
+        public IActionResult getWatchlistMemberFaces(string watchlistMemberId)
+        {
+            new SubWatchlistMember().getFaces(watchlistMemberId);
+           
+            return Json("");
+        }
         // [HttpPost]
         // [Route("WatchlistMember/register")]
         // public IActionResult registerWatchlistMember(string imgUrl, string id,

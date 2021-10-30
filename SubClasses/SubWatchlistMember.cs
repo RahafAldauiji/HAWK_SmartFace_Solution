@@ -294,17 +294,17 @@ namespace SmartfaceSolution.SubClasses
         public void getFaces(string id)
         {
             ///api/v1/WatchlistMembers/{id}/Faces
+            MemberFaces faces = null;
             try
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/WatchlistMembers/" + id +
-                                                       "/Faces");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "GET";
-                response(httpWebRequest);
+                string resp=requestNoBody("/" + id + "/Faces","GET");
+                Console.WriteLine(resp);
+                faces=Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
+                Console.WriteLine(faces);
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 Debug.WriteLine(ex.Message);
             }
         }

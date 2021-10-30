@@ -71,9 +71,9 @@ namespace SmartfaceSolution.Controllers
         }
         [HttpGet]
         [Route("WatchlistMember/getFaces")]
-        public IActionResult getWatchlistMemberFaces(string watchlistMemberId)
+        public IActionResult getWatchlistMemberFaces(string id)
         {
-            new SubWatchlistMember().getFaces(watchlistMemberId);
+            new SubWatchlistMember().getFaces(id);
            
             return Json("");
         }

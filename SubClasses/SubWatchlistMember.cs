@@ -291,22 +291,28 @@ namespace SmartfaceSolution.SubClasses
 
             return watchlistMember;
         }
-        public void getFaces(string id)
+        public List <string> getFaces(string id)
         {
             ///api/v1/WatchlistMembers/{id}/Faces
             MemberFaces faces = null;
+            List<string> images = new List<string>();
             try
             {
-                string resp=requestNoBody("/" + id + "/Faces","GET");
-                Console.WriteLine(resp);
+                string resp = requestNoBody("/"+id+"/Faces?PageSize=50", "GET");
                 faces=Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
-                Console.WriteLine(faces);
+                for (int i = 0; i < faces.Faces.Count; i++)
+                {
+                    images.Add(retrievesImage(faces.Faces[i].ImageDataId));
+                    Console.WriteLine(images[i]);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 Debug.WriteLine(ex.Message);
             }
+
+            return images;
         }
 
         public WatchlistMembers retrievesAllWatchlistMembers()

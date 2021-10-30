@@ -152,7 +152,6 @@
 </div>
 
 <script>
-    window.alert("f");
     let res;
     var jresult;
     var splitHits="";
@@ -162,10 +161,12 @@
                 jresult  = JSON.stringify(resultHits);
                 
                  resultHits.map(obj => {
-                     splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
-                     splitHits += obj.watchlistMemberId+"<br>";
-                     splitHits+=obj.fullName+"<br>";
-                     splitHits+=obj.score+"</i></td></tr>";
+                     for(var x in obj.matchResults) {
+                         splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
+                         splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
+                         splitHits += obj.matchResults[x].fullName + "<br>";
+                         splitHits += obj.matchResults[x].score + "</i></td></tr>";
+                     }
                  });
                 
             document.getElementById("tableMembers").innerHTML = splitHits;

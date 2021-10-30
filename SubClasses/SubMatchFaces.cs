@@ -94,10 +94,10 @@ namespace SmartfaceSolution.SubClasses
             //     {
             try
             {
-                string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
+                //string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
                 //Thread.Sleep(2000);
                 string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
-                //string dayTime = "2021-10-27T23:09:37.107Z";
+                string dayTime = "2021-10-27T23:09:37.107Z";
                 string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
                 Frames frames = Newtonsoft.Json.JsonConvert.DeserializeObject<Frames>(resp);
                 string[] dayTimeFrame = null;
@@ -111,17 +111,17 @@ namespace SmartfaceSolution.SubClasses
                     split1 = dayTimeFrame[1].Split(":");
                     split2 = dayTimeNow[1].Split(":");
                     time = int.Parse(split1[0]) + 3;
-                    if (time >= 24)
-                    {
-                        split1[0] = "";
-                        time -= 24;
-                        time += 0;
-                    }
-
-                    if (time < 10)
-                        split1[0] = "0";
-
-                    split1[0] += time + "";
+                    // if (time >= 24)
+                    // {
+                    //     split1[0] = "";
+                    //     time -= 24;
+                    //     time += 0;
+                    // }
+                    //
+                    // if (time < 10)
+                    //     split1[0] = "0";
+                    //
+                    // split1[0] += time + "";
                     // if (dayTimeNow[0]==(dayTimeFrame[0]))
                     // {
                     //Console.WriteLine(split1[0] + "" + split1[1] + "       " + split2[0] + "" + split2[1]);

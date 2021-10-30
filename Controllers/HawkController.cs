@@ -67,7 +67,7 @@ namespace SmartfaceSolution.Controllers
         {
             WatchlistMembers watchlistMember = new SubWatchlistMember().retrievesAllWatchlistMembers();
            
-           return Json(watchlistMember);
+           return Json(watchlistMember.Items);
         }
         // [HttpPost]
         // [Route("WatchlistMember/register")]

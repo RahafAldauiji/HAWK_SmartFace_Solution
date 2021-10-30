@@ -1,10 +1,12 @@
-﻿namespace SmartfaceSolution.Classes
+﻿using System.Collections.Generic;
+
+namespace SmartfaceSolution.Classes
 {
     public class WatchlistMembers
     {
-        private WatchlistMember[] items;
+        private List<WatchlistMember> items;
 
-        public WatchlistMember[] Items
+        public List<WatchlistMember> Items
         {
             get => items;
             set => items = value;

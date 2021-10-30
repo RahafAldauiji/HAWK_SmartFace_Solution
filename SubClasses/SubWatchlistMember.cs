@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -292,16 +293,21 @@ namespace SmartfaceSolution.SubClasses
             }
         }
 
-        public void retrievesAllWatchlistMembers()
+        public WatchlistMembers retrievesAllWatchlistMembers()
         {
+            WatchlistMembers watchlistMembers = null;
             try
             {
                 string resp = requestNoBody("", "GET");
+                watchlistMembers = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMembers>(resp);
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 Debug.WriteLine(ex.Message);
             }
+
+            return watchlistMembers;
         }
 
         public string retrievesImage(string imgId)

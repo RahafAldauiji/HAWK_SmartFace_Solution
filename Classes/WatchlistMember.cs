@@ -1,5 +1,15 @@
 ﻿namespace SmartfaceSolution.Classes
 {
+    public class WatchlistMembers
+    {
+        private WatchlistMember[] items;
+
+        public WatchlistMember[] Items
+        {
+            get => items;
+            set => items = value;
+        }
+    }
     public class WatchlistMember
     {
         #region variables
@@ -10,8 +20,8 @@
         private string id;
         private string createdAt;
         private string updatedAt;
-        private Watchlist[] watchlist;
-        private Face[] faces;
+        // private Watchlist[] watchlist;
+        // private Face[] faces;
 
         #endregion
 
@@ -46,7 +56,7 @@
             get => createdAt;
             set => createdAt = value;
         }
-
+        
         public string UpdatedAt
         {
             get => updatedAt;

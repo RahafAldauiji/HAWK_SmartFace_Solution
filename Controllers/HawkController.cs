@@ -61,7 +61,14 @@ namespace SmartfaceSolution.Controllers
             string deletedwatchlistMember = new SubWatchlistMember().deleteWatchListMember(watchlistMemberId);
             return Json(deletedwatchlistMember);
         }
-
+        [HttpGet]
+        [Route("WatchlistMember/GetAllWatchlistMembers")]
+        public IActionResult getAllWatchlistMembers(string watchlistMemberId)
+        {
+            WatchlistMembers watchlistMember = new SubWatchlistMember().retrievesAllWatchlistMembers();
+           
+           return Json(watchlistMember);
+        }
         // [HttpPost]
         // [Route("WatchlistMember/register")]
         // public IActionResult registerWatchlistMember(string imgUrl, string id,

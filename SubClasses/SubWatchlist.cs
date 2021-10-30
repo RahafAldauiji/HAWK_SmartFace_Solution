@@ -28,7 +28,25 @@ namespace SmartfaceSolution.SubClasses
 
             return result;
         }
+        public string requestNoBody(string reqUrl, string methodType)
+        {
+            string res = null;
+            try
+            {
+                var httpWebRequest =
+                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists/" + reqUrl);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = methodType;
+                res = response(httpWebRequest);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message);
+            }
 
+            return res;
+        }
         public string request(string reqUrl, string methodType, string json)
         {
             string res = null;
@@ -151,6 +169,22 @@ namespace SmartfaceSolution.SubClasses
             string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" + "}";
             string resp = request("/Search", "POST", json);
             Console.WriteLine(resp);
+        }
+        public WatchlistMembers retrievesWatchlistMembers(string watchlistId)
+        {
+            WatchlistMembers watchlistMembers = null;
+            try
+            {
+                string resp = requestNoBody(watchlistId+"/WatchlistMembers", "GET");
+                //Console.WriteLine(resp);
+                watchlistMembers = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMembers>(resp);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return watchlistMembers;
         }
     }
 }

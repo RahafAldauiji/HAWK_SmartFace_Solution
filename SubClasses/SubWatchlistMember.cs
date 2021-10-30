@@ -275,6 +275,22 @@ namespace SmartfaceSolution.SubClasses
             }
         }
 
+        public WatchlistMember getWatchlistMember(string id)
+        {
+            WatchlistMember watchlistMember = null;
+            try
+            {
+                string resp = requestNoBody("/"+id, "GET");
+                watchlistMember = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMember>(resp);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
+            }
+
+            return watchlistMember;
+        }
         public void getFaces(string id)
         {
             ///api/v1/WatchlistMembers/{id}/Faces

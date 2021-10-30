@@ -17,9 +17,9 @@
         private string displayName;
         private string fullName;
         private string note;
-        private string id;
-        private string createdAt;
-        private string updatedAt;
+         private string id;
+        // private string createdAt;
+        // private string updatedAt;
         // private Watchlist[] watchlist;
         // private Face[] faces;
 
@@ -51,17 +51,17 @@
             set => id = value;
         }
 
-        public string CreatedAt
-        {
-            get => createdAt;
-            set => createdAt = value;
-        }
-        
-        public string UpdatedAt
-        {
-            get => updatedAt;
-            set => updatedAt = value;
-        }
+        // public string CreatedAt
+        // {
+        //     get => createdAt;
+        //     set => createdAt = value;
+        // }
+        //
+        // public string UpdatedAt
+        // {
+        //     get => updatedAt;
+        //     set => updatedAt = value;
+        // }
 
         #endregion
     }

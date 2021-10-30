@@ -118,7 +118,20 @@ namespace SmartfaceSolution.Controllers
                 watchlistThreshold);
             return Json(watchlist);
         }
-
+        [HttpGet]
+        [Route("Watchlist/getMembers")]
+        public IActionResult getWatchlistMembers(string id)
+        {
+            WatchlistMembers watchlistMembers = new SubWatchlist().retrievesWatchlistMembers(id);
+            return Json(watchlistMembers);
+        }
+        [HttpGet]
+        [Route("WatchlistMember/getMember")]
+        public IActionResult getWatchlistMember(string id)
+        {
+            WatchlistMember watchlistMember = new SubWatchlistMember().getWatchlistMember(id);
+            return Json(watchlistMember);
+        }
         [HttpPut]
         [Route("Watchlist/upadte")]
         public IActionResult updateWatchlist(string watchlistId, string watchlistDisplayName,

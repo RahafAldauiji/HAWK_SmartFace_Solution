@@ -90,7 +90,7 @@ namespace SmartfaceSolution.SubClasses
 
         public string convertImageToString(string name)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl+name);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl + name);
             byte[] arrBytes;
             using (var ms = new MemoryStream())
             {

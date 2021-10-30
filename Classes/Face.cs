@@ -10,6 +10,7 @@ namespace SmartfaceSolution.Classes
         private string trackletId;
         private int quality;
         private int templateQuality;
+
         enum state
         {
             New,
@@ -17,6 +18,7 @@ namespace SmartfaceSolution.Classes
             Extracted,
             Error
         };
+
         private string imageDataId;
         private string processedAt;
         private double cropLeftTopX;
@@ -32,21 +34,25 @@ namespace SmartfaceSolution.Classes
         private double rightEyeX;
         private double rightEyeY;
         private string frameId;
+
         enum type
         {
             Regular,
             AutoLearn
         };
+
         private double age;
         private double gender;
         private double faceMaskConfidence;
         private double noseTipConfidence;
+
         enum faceMaskStatus
         {
             Unknown,
             Mask,
             NoMask
         };
+
         private string faceArea;
         private string faceOrder;
         private string facesOnFrameCount;
@@ -62,7 +68,7 @@ namespace SmartfaceSolution.Classes
         #endregion
 
         #region methods
-        
+
         public string TrackletId1
         {
             get => trackletId;
@@ -80,7 +86,7 @@ namespace SmartfaceSolution.Classes
             get => templateQuality;
             set => templateQuality = value;
         }
-        
+
 
         public string ImageDataId
         {
@@ -172,7 +178,6 @@ namespace SmartfaceSolution.Classes
             set => frameId = value;
         }
 
-       
 
         public double Age
         {
@@ -197,7 +202,7 @@ namespace SmartfaceSolution.Classes
             get => noseTipConfidence;
             set => noseTipConfidence = value;
         }
-        
+
 
         public string FaceArea
         {
@@ -264,6 +269,7 @@ namespace SmartfaceSolution.Classes
             get => updatedAt;
             set => updatedAt = value;
         }
+
         #endregion
     }
 }

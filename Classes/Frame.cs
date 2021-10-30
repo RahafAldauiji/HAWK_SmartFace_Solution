@@ -4,29 +4,23 @@
     {
         #region variables
 
-        // private int totalItemCount;
-        // private string items;
-        // private int pageSize;
-        // private int pageNumber;
-        // private string previousPage;
-        // private string nextPage;
-        enum state
-        {
-            New,
-            Processing,
-            Processed,
-            Error
-        };
+        private string state;
         private string imageDataId;
         private string receivedAt;
         private int positionInMs;
         private string id;
         private string createdAt;
         private string updatedAt;
-        
+
         #endregion
 
         #region methods
+
+        public string State
+        {
+            get => state;
+            set => state = value;
+        }
 
         public string ImageDataId
         {

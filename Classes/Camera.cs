@@ -3,16 +3,15 @@
     public class Camera
     {
         #region variables
+
+        private string id;
         private string name;
         private string source;
         private bool enabled = true;
-        private int[] faceDetectorConfig = new int[4]; // minFaceSize, maxFaceSize, maxFaces, confidenceThreshold
+        private FaceDetectorConfig faceDetectorConfig;
         private string faceDetectorResourceId;
-
-        private int[]
-            pedestrianDetectorConfig =
-                new int[4]; // minPedestrianSize, maxPedestrianSize, maxPedestrians, confidenceThreshold
-
+        private SpoofDetectorConfig spoofDetectorConfig;
+        private PedestrianDetectorConfig pedestrianDetectorConfig;
         private string pedestrianDetectorResourceId;
         private string templateGeneratorResourceId;
         private int redetectionTime;
@@ -28,14 +27,14 @@
         private int previewMaxDimension;
         private string serviceName;
         private string[] spoofDetectorResourceIds;
-
-        private string[]
-            spoofDetectorConfig =
-                new string [5]; // parseInt(externalScoreThreshold), parseInt(distantLivenessScoreThreshold), parseInt(nearbyLivenessScoreThreshold), distantLivenessConditions, nearbyLivenessConditions
         #endregion
 
         #region methods
-        
+        public string Id
+        {
+            get => id;
+            set => id = value;
+        }
         public string Name
         {
             get => name;
@@ -54,7 +53,7 @@
             set => enabled = value;
         }
 
-        public int[] FaceDetectorConfig
+        public FaceDetectorConfig FaceDetectorConfig
         {
             get => faceDetectorConfig;
             set => faceDetectorConfig = value;
@@ -66,7 +65,7 @@
             set => faceDetectorResourceId = value;
         }
 
-        public int[] PedestrianDetectorConfig
+        public PedestrianDetectorConfig PedestrianDetectorConfig
         {
             get => pedestrianDetectorConfig;
             set => pedestrianDetectorConfig = value;
@@ -162,11 +161,12 @@
             set => spoofDetectorResourceIds = value;
         }
 
-        public string[] SpoofDetectorConfig
+        public SpoofDetectorConfig SpoofDetectorConfig
         {
             get => spoofDetectorConfig;
             set => spoofDetectorConfig = value;
         }
+
         #endregion
     }
 }

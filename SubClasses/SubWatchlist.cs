@@ -9,6 +9,7 @@ namespace SmartfaceSolution.SubClasses
     public class SubWatchlist : Watchlist
     {
         private string imgUrl = "C://SmartFaceImages//";
+
         public string response(HttpWebRequest httpWebRequest)
         {
             var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
@@ -52,6 +53,7 @@ namespace SmartfaceSolution.SubClasses
                         }
                     }
                 }
+
                 res = response(httpWebRequest);
             }
             catch (Exception ex)
@@ -132,7 +134,7 @@ namespace SmartfaceSolution.SubClasses
 
         public string convertImageToString(string name)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl+name);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl + name);
             byte[] arrBytes;
             using (var ms = new MemoryStream())
             {

@@ -2,13 +2,19 @@
 {
     public class MatchResult
     {
+        #region variables
+
         private int score;
         private string watchlistMemberId;
         private string displayName;
         private string fullName;
-        private string watchlistFullName; 
+        private string watchlistFullName;
         private string watchlistDisplayName;
         private string watchlistId;
+
+        #endregion
+
+        #region methods
 
         public int Score
         {
@@ -51,5 +57,7 @@
             get => watchlistId;
             set => watchlistId = value;
         }
+
+        #endregion
     }
 }

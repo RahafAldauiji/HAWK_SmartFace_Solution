@@ -3,6 +3,7 @@
     public class Watchlist
     {
         #region variables
+
         private string displayName;
         private string fullName;
         private int threshold;
@@ -10,6 +11,7 @@
         private string createdAt;
         private string updatedAt;
         private WatchlistMember[] watchlistMembers;
+
         #endregion
 
         #region methods
@@ -49,6 +51,7 @@
             get => updatedAt;
             set => updatedAt = value;
         }
+
         #endregion
     }
 }

@@ -21,7 +21,7 @@ namespace SmartfaceSolution
             // new SubWatchlist().search();
             //new SubWatchlistMember().convertImageToString("S.jpg");
             //  "C://Users//rahaf//Downloads//bb820d72-a6d8-4900-9952-fc74c0256d72");
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run(); 
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

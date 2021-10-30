@@ -3,6 +3,7 @@
     public class WatchlistMember
     {
         #region variables
+
         private string displayName;
         private string fullName;
         private string note;
@@ -51,6 +52,7 @@
             get => updatedAt;
             set => updatedAt = value;
         }
+
         #endregion
     }
 }

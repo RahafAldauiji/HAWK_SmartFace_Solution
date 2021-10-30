@@ -87,85 +87,71 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
-        public List<MatchResult> matchFaces()
+        public List<MatchFaces> matchFaces()
         {
-            List<MatchResult> match = new List<MatchResult>();
-            MatchResult m;
-            //string reqUrl, string methodType, string json
+            List<MatchFaces> match = new List<MatchFaces>();
             // await Task.Run(() =>
             //     {
-
-            string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
-            //Thread.Sleep(2000);
-            string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
-            //string dayTime = "2021-10-17T22:19:25.437Z";
-            string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
-            string[] frameSplit1 = resp.Split('[', ']');
-            string[] frameSplit2 = frameSplit1[1].Split("},");
-            Frame[] frame = new Frame[frameSplit2.Length];
-            string[] dayTimeFrame = null;
-            string[] split1;
-            string[] split2;
-            // frameSplit2[frameSplit2.Length - 1] =
-            //     frameSplit2[frameSplit2.Length - 1].Remove(frameSplit2.Length - 1);
-            int time;
-            for (int i = 0; i < frameSplit2.Length; i++)
+            try
             {
-                if (!(i == frameSplit2.Length - 1)) 
+                string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
+                //Thread.Sleep(2000);
+                string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
+                //string dayTime = "2021-10-27T23:09:37.107Z";
+                string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
+                Frames frames = Newtonsoft.Json.JsonConvert.DeserializeObject<Frames>(resp);
+                string[] dayTimeFrame = null;
+                string[] split1;
+                string[] split2;
+                int time;
+                for (int i = 0; i < frames.Items.Length; i++)
                 {
-                    frameSplit2[i] += "}";
-                }
-
-                frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
-                dayTimeFrame = frame[i].CreatedAt.Replace("Z", "").Split('T');
-                split1 = dayTimeFrame[1].Split(":");
-                split2 = dayTimeNow[1].Split(":");
-                time = int.Parse(split1[0]) + 3;
-                if (time >= 24)
-                {
-                    split1[0] = "";
-                    time -= 24;
-                    time += 0;
-                }
-
-                if (time < 10)
-                    split1[0] = "0";
-
-                split1[0] += time + "";
-                // if (dayTimeNow[0]==(dayTimeFrame[0]))
-                // {
-                if (split1[0] + "" + split1[1] == split2[0] + "" + split2[1])
-                {
-                    using (WebClient webClient = new WebClient())
+                    //frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
+                    dayTimeFrame = frames.Items[i].CreatedAt.Replace("Z", "").Split('T');
+                    split1 = dayTimeFrame[1].Split(":");
+                    split2 = dayTimeNow[1].Split(":");
+                    time = int.Parse(split1[0]) + 3;
+                    if (time >= 24)
                     {
-                        byte[] data =
-                            webClient.DownloadData(
-                                "http://localhost:8098/api/v1/Images/" + frame[i].ImageDataId);
-                        string img = Convert.ToBase64String(data);
-                        string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
-                                      "}";
-                        resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
-                            "POST",
-                            json);
-                        string[] matches = resp.Split("},{");
-                        matches[matches.Length - 1] = matches[matches.Length - 1].Replace("]}", "");
-                        for (int j = 0; j < matches.Length; j++)
-                        {
-                            string[] splitMatch1 = matches[j].Split("\"matchResults\":");
-                            splitMatch1[1] = splitMatch1[1].Remove(splitMatch1[1].Length - 1).Replace("[", "");
-                            match.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<MatchResult>(splitMatch1[1]));
-                        }
+                        split1[0] = "";
+                        time -= 24;
+                        time += 0;
+                    }
 
-                        return match;
+                    if (time < 10)
+                        split1[0] = "0";
+
+                    split1[0] += time + "";
+                    // if (dayTimeNow[0]==(dayTimeFrame[0]))
+                    // {
+                    //Console.WriteLine(split1[0] + "" + split1[1] + "       " + split2[0] + "" + split2[1]);
+                    if (split1[0] + "" + split1[1] == split2[0] + "" + split2[1])
+                    {
+                        Console.WriteLine("hi");
+                        using (WebClient webClient = new WebClient())
+                        {
+                            byte[] data =
+                                webClient.DownloadData(
+                                    "http://localhost:8098/api/v1/Images/" + frames.Items[i].ImageDataId);
+                            string img = Convert.ToBase64String(data);
+                            string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
+                                          "}";
+                            resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
+                                "POST",
+                                json);
+                            match = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MatchFaces>>(resp);
+                            return match;
+                        }
                     }
                 }
             }
-
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Debug.WriteLine(e.ToString());
+            }
 
             return match;
-
-            // );
-            //return match;
         }
 
         public string convertImageToString(string url)

@@ -120,13 +120,11 @@
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title d-inline-block">Hits</h2>
                     <table class="table table-striped mt-3">
-                        <tbody>
-                        <div id="tableMembers">
+                        <tbody id="tableMembers">
                             <tr>
-                                <td><i class="fas fa-user-circle ">fs</i></td>
+                                <td><i class="fas fa-user-circle ">fhs</i></td>
 
                             </tr>
-                        </div>
                         <!--                                <tr>-->
                         <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
                         <!--                                </tr>-->
@@ -154,6 +152,7 @@
 </div>
 
 <script>
+    window.alert("f");
     let res;
     var jresult;
     var splitHits="";
@@ -161,16 +160,14 @@
         .then(resultHits => resultHits.json())
         .then(resultHits => {
                 jresult  = JSON.stringify(resultHits);
-                //splitHits = splitHits[1].split("{}");
+                
                  resultHits.map(obj => {
-                     splitHits += obj.displayName+"<br>";
-                     splitHits += obj.fullName+"<br>";
-                     splitHits+=obj.note+"<br>";
-                     splitHits+=obj.id+"<br><br>";
+                     splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
+                     splitHits += obj.watchlistMemberId+"<br>";
+                     splitHits+=obj.fullName+"<br>";
+                     splitHits+=obj.score+"</i></td></tr>";
                  });
                 
-                // (" <tr>\n" +
-                // "<td><i class=\"fas fa-user-circle \">" + ${splitHits[2]} + "</i>" + "</td>\n" + "</tr>");
             document.getElementById("tableMembers").innerHTML = splitHits;
             }
         );

@@ -57,6 +57,7 @@
                 </div>
             </div>
             <!-- row -->
+            
             <div class="row tm-content-row tm-mt-big">
                 <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                     <div class="bg-white tm-block h-100">
@@ -74,8 +75,6 @@
                                         <th scope="col">&nbsp;</th>
                                         <th scope="col">Name</th>
                                         <th scope="col" class="text-center">ID</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody id="membersList">
@@ -153,6 +152,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        
 
                         <div class="tm-table-mt tm-table-actions-row">
                         
@@ -174,7 +174,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="col col-3">
+                    <div class="bg-white tm-block h-100">
+                        <h2 class="tm-block-title d-inline-block">Membebr Information</h2>
+                        <table class="table table-striped mt-3">
+                            <tbody id="membersInfo">
+                            <!--                            <tr>-->
+                            <!--                                <td><i class="fas fa-user-circle ">fhs</i></td>-->
 
+                            <!--                            </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                            <!--                                </tr>-->
+                            <!--                                <tr>-->
+                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                            <!--                                </tr>-->
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
            
         </div>
@@ -195,13 +223,13 @@
                         splitHits += "<td className=\"text-center\">";
                         splitHits+=obj.id +"</td>";
                     });
-                    
-                // splitHits += "<td>";
-                // splitHits += obj.fullName + " </tr> <br><br>";
                      document.getElementById("membersList").innerHTML = splitHits;
                 }
             );
-
+// function memberData(){
+//    
+//     membersInfo
+// }
     </script>
 </body>
 

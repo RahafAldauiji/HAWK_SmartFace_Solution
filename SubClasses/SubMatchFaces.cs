@@ -96,7 +96,7 @@ namespace SmartfaceSolution.SubClasses
             {
                 //string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
                 //Thread.Sleep(2000);
-                string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false", "GET");
+                string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=500", "GET");
                 //http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=500
                 string dayTime = "2021-10-27T00:00:05.083Z";
                 string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');

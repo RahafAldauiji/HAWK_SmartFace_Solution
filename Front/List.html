@@ -217,7 +217,7 @@
             .then(resultHits => {
                     jresult  = JSON.stringify(resultHits);
                     resultHits.map(obj => {
-                        splitHits +="<tr> <th scope=\"row\"> <input type=\"checkbox\" aria-label=\"Checkbox\"></th>"
+                        splitHits +="<tr> <th scope=\"row\"> <input type=\"checkbox\" aria-label=\"Checkbox\" onclick=\"memberData(obj.id)\"></th>"
                         splitHits += "<td className=\"tm-product-name\">";
                         splitHits += obj.fullName +"</td> <br>";
                         splitHits += "<td className=\"text-center\">";
@@ -226,10 +226,23 @@
                      document.getElementById("membersList").innerHTML = splitHits;
                 }
             );
-// function memberData(){
-//    
-//     membersInfo
-// }
+function memberData(id){
+    window.alert(id);
+    // res = fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
+    //     .then(resultHits => resultHits.json())
+    //     .then(resultHits => {
+    //             jresult  = JSON.stringify(resultHits);
+    //             resultHits.map(obj => {
+    //                 splitHits += "<tr><td><i class=\"fas fa-user-circle \"> fsdsj";
+    //                 // splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
+    //                 // splitHits += obj.matchResults[x].fullName + "<br>";
+    //             });
+    //         splitHits += "</i></td></tr>";
+    //         document.getElementById("membersInfo").innerHTML = splitHits;
+    //         }
+    //     );
+
+}
     </script>
 </body>
 

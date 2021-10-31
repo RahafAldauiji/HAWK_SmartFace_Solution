@@ -73,9 +73,9 @@ namespace SmartfaceSolution.Controllers
         [Route("WatchlistMember/getFaces")]
         public IActionResult getWatchlistMemberFaces(string id)
         {
-            new SubWatchlistMember().getFaces(id);
+           List<string>faces =new SubWatchlistMember().getFaces(id);
            
-            return Json("");
+            return Json(faces);
         }
         // [HttpPost]
         // [Route("WatchlistMember/register")]

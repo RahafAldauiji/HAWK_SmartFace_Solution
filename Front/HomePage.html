@@ -25,7 +25,7 @@
             <div class="col-12">
                 <nav class="navbar navbar-expand-xl navbar-light bg-light">
                     <a class="navbar-brand" href="HomePage.html">
-                        <img src=https://drive.google.com/uc?export=view&id=1sFtGDeJHMvrRfgTt7PBl5m0k29bAVMjN"
+                        <img src="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN"
                              width="70" height="50">
                         <h1 class="tm-site-title mb-0">HAWK</h1>
                     </a>
@@ -63,7 +63,7 @@
         <!-- row -->
         <div class="row tm-content-row tm-mt-big">
             <div class="col">
-                <div class="bg-white tm-block h-100">
+                <div class="bg-white tm-block h-100" >
                     <h2 class="tm-block-title">In-Camera</h2>
 
 
@@ -121,10 +121,10 @@
                     <h2 class="tm-block-title d-inline-block">Hits</h2>
                     <table class="table table-striped mt-3">
                         <tbody id="tableMembers">
-                            <tr>
-                                <td><i class="fas fa-user-circle ">fhs</i></td>
+<!--                            <tr>-->
+<!--                                <td><i class="fas fa-user-circle ">fhs</i></td>-->
 
-                            </tr>
+<!--                            </tr>-->
                         <!--                                <tr>-->
                         <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
                         <!--                                </tr>-->
@@ -162,9 +162,9 @@
                 
                  resultHits.map(obj => {
                      for(var x in obj.matchResults) {
-                         splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
-                         splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
-                         splitHits += obj.matchResults[x].fullName + "<br>";
+                         splitHits += "<tr><td><i class=\"fas fa-user-circle \"> ";
+                         splitHits += obj.matchResults[x].fullName + "<br> ID: ";
+                         splitHits += obj.matchResults[x].watchlistMemberId + "<br> Score: ";
                          splitHits += obj.matchResults[x].score + "</i></td></tr>";
                      }
                  });

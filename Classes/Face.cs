@@ -6,12 +6,12 @@ namespace SmartfaceSolution.Classes
 {
     public class MemberFaces
     {
-        private List<Face> faces;
+        private List<Face> items;
 
-        public List<Face> Faces
+        public List<Face> Items
         {
-            get => faces;
-            set => faces = value;
+            get => items;
+            set => items = value;
         }
     }
     public class Face
@@ -64,9 +64,9 @@ namespace SmartfaceSolution.Classes
             NoMask
         };
 
-        // private string faceArea;
-        // private string faceOrder;
-        // private string facesOnFrameCount;
+        private string faceArea;
+        private string faceOrder;
+        private string facesOnFrameCount;
         private double faceAreaChange;
         private double yawAngle;
         private double pitchAngle;
@@ -215,23 +215,23 @@ namespace SmartfaceSolution.Classes
         }
 
 
-        // public string FaceArea
-        // {
-        //     get => faceArea;
-        //     set => faceArea = value;
-        // }
-        //
-        // public string FaceOrder
-        // {
-        //     get => faceOrder;
-        //     set => faceOrder = value;
-        // }
-        //
-        // public string FacesOnFrameCount
-        // {
-        //     get => facesOnFrameCount;
-        //     set => facesOnFrameCount = value;
-        // }
+        public string FaceArea
+        {
+            get => faceArea;
+            set => faceArea = value;
+        }
+        
+        public string FaceOrder
+        {
+            get => faceOrder;
+            set => faceOrder = value;
+        }
+        
+        public string FacesOnFrameCount
+        {
+            get => facesOnFrameCount;
+            set => facesOnFrameCount = value;
+        }
 
         public double FaceAreaChange
         {

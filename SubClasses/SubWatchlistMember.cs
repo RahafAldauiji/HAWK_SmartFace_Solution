@@ -293,17 +293,17 @@ namespace SmartfaceSolution.SubClasses
         }
         public List <string> getFaces(string id)
         {
-            ///api/v1/WatchlistMembers/{id}/Faces
-            MemberFaces faces = null;
+            
+            MemberFaces faces;
             List<string> images = new List<string>();
             try
             {
-                string resp = requestNoBody("/"+id+"/Faces?PageSize=50", "GET");
+                string resp = requestNoBody("/"+id.Trim()+"/Faces?PageSize=50", "GET");
                 faces=Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
-                for (int i = 0; i < faces.Faces.Count; i++)
+                for (int i = 0; i < faces.Items.Count; i++)
                 {
-                    images.Add(retrievesImage(faces.Faces[i].ImageDataId));
-                    Console.WriteLine(images[i]);
+                    images.Add(retrievesImage(faces.Items[i].ImageDataId));
+                    //Console.WriteLine(images[i]);
                 }
             }
             catch (Exception ex)
@@ -344,7 +344,8 @@ namespace SmartfaceSolution.SubClasses
                     {
                         using (var yourImage = Image.FromStream(mem))
                         {
-                            yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+                            var resizeImage = (Image) (new Bitmap(yourImage, new Size(120, 120)));
+                            resizeImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                             image = Convert.ToBase64String(data);
                             //Console.WriteLine(image);
                         }
@@ -359,7 +360,7 @@ namespace SmartfaceSolution.SubClasses
             return image;
         }
 
-        public byte[] CropImageFile(string imgId)
+        public byte[] cropImageFile(string imgId)
         {
             //string imgId = "bb820d72-a6d8-4900-9952-fc74c0256d72";
             using (WebClient webClient = new WebClient())
@@ -369,7 +370,7 @@ namespace SmartfaceSolution.SubClasses
                 MemoryStream imgMemoryStream = new MemoryStream();
                 System.Drawing.Image imgPhoto = System.Drawing.Image.FromStream(new MemoryStream(data));
 
-                Bitmap bmPhoto = new Bitmap(200, 200, PixelFormat.Format24bppRgb);
+                Bitmap bmPhoto = new Bitmap(150, 150, PixelFormat.Format24bppRgb);
                 bmPhoto.SetResolution(72, 72);
 
                 Graphics grPhoto = Graphics.FromImage(bmPhoto);
@@ -379,15 +380,16 @@ namespace SmartfaceSolution.SubClasses
 
                 try
                 {
-                    grPhoto.DrawImage(imgPhoto, new Rectangle(0, 0, 200, 200),
+                    grPhoto.DrawImage(imgPhoto, new Rectangle(0, 0, 150, 150),
                         0, 0, imgPhoto.Width, imgPhoto.Height, GraphicsUnit.Pixel);
                     bmPhoto.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
                 }
-
-                return imgMemoryStream.GetBuffer();
+                return  imgMemoryStream.GetBuffer();
             }
         }
     }

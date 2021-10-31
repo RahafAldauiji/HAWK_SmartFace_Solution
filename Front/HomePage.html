@@ -152,27 +152,30 @@
 </div>
 
 <script>
-    let res;
-    var jresult;
-    var splitHits="";
-    res = fetch("https://localhost:5001/HAWK/Camera/Match")
-        .then(resultHits => resultHits.json())
-        .then(resultHits => {
-                jresult  = JSON.stringify(resultHits);
-                
-                 resultHits.map(obj => {
-                     for(var x in obj.matchResults) {
-                         splitHits += "<tr><td><i class=\"fas fa-user-circle \"> ";
-                         splitHits += obj.matchResults[x].fullName + "<br> ID: ";
-                         splitHits += obj.matchResults[x].watchlistMemberId + "<br> Score: ";
-                         splitHits += obj.matchResults[x].score + "</i></td></tr>";
-                     }
-                 });
-                
-            document.getElementById("tableMembers").innerHTML = splitHits;
-            }
-        );
-   
+    var myInterval = setInterval(hitsSript);
+    function hitsSript(){
+        let res;
+        var jresult;
+        var splitHits="";
+        res = fetch("https://localhost:5001/HAWK/Camera/Match")
+            .then(resultHits => resultHits.json())
+            .then(resultHits => {
+                    jresult  = JSON.stringify(resultHits);
+
+                    resultHits.map(obj => {
+                        for(var x in obj.matchResults) {
+                            splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
+                            splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
+                            splitHits += obj.matchResults[x].fullName + "<br>";
+                            splitHits += obj.matchResults[x].score + "</i></td></tr>";
+                        }
+                    });
+
+                    document.getElementById("tableMembers").innerHTML = splitHits;
+                }
+            );
+    }
+    var myInterval = setInterval(hitsSript, 1000);
 </script>
 </body>
 

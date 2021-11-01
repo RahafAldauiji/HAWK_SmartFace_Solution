@@ -1,5 +1,6 @@
 ﻿namespace SmartfaceSolution.Classes
 {
+    
     public class MatchFaces
     {
         #region variables

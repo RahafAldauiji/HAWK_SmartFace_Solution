@@ -280,7 +280,7 @@ namespace SmartfaceSolution.SubClasses
             WatchlistMember watchlistMember = null;
             try
             {
-                string resp = requestNoBody("/"+id, "GET");
+                string resp = requestNoBody("/" + id, "GET");
                 watchlistMember = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMember>(resp);
             }
             catch (Exception e)
@@ -291,19 +291,18 @@ namespace SmartfaceSolution.SubClasses
 
             return watchlistMember;
         }
-        public List <string> getFaces(string id)
+
+        public List<string> getFaces(string id)
         {
-            
             MemberFaces faces;
             List<string> images = new List<string>();
             try
             {
-                string resp = requestNoBody("/"+id.Trim()+"/Faces?PageSize=50", "GET");
-                faces=Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
+                string resp = requestNoBody("/" + id.Trim() + "/Faces?PageSize=50", "GET");
+                faces = Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
                 for (int i = 0; i < faces.Items.Count; i++)
                 {
                     images.Add(retrievesImage(faces.Items[i].ImageDataId));
-                    //Console.WriteLine(images[i]);
                 }
             }
             catch (Exception ex)
@@ -314,6 +313,26 @@ namespace SmartfaceSolution.SubClasses
 
             return images;
         }
+
+        public string getMemberFace(string id)
+        {
+            MemberFaces faces;
+            string images = null;
+            try
+            {
+                string resp = requestNoBody("/" + id.Trim() + "/Faces?Ascending=true&PageSize=5", "GET");
+                faces = Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
+                images = retrievesImage(faces.Items[faces.Items.Count-1].ImageDataId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Debug.WriteLine(ex.Message);
+            }
+
+            return images;
+        }
+
 
         public WatchlistMembers retrievesAllWatchlistMembers()
         {
@@ -389,7 +408,8 @@ namespace SmartfaceSolution.SubClasses
                     Console.WriteLine(ex.Message);
                     Debug.WriteLine(ex.Message);
                 }
-                return  imgMemoryStream.GetBuffer();
+
+                return imgMemoryStream.GetBuffer();
             }
         }
     }

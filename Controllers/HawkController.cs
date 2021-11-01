@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
@@ -70,11 +72,17 @@ namespace SmartfaceSolution.Controllers
            return Json(watchlistMember.Items);
         }
         [HttpGet]
+        [Route("WatchlistMember/getMemberFace")]
+        public IActionResult getMemberFaces(string id)
+        {
+            string img = new SubWatchlistMember().getMemberFace(id);
+            return Json(img);
+        }
+        [HttpGet]
         [Route("WatchlistMember/getFaces")]
         public IActionResult getWatchlistMemberFaces(string id)
         {
            List<string>faces =new SubWatchlistMember().getFaces(id);
-           
             return Json(faces);
         }
         // [HttpPost]

@@ -63,12 +63,12 @@
         <!-- row -->
         <div class="row tm-content-row tm-mt-big">
             <div class="col-8">
-                <div class="bg-white tm-block h-100" >
+                <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title">In-Camera</h2>
 
 
                     <!--                        <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>-->
-                    <canvas class="camera" id="video" ></canvas>
+                    <canvas class="camera" id="video"></canvas>
                     <script type="text/javascript" src="jsmpeg.min.js"></script>
                     <script type="text/javascript">
 
@@ -121,10 +121,10 @@
                     <h2 class="tm-block-title d-inline-block">Hits</h2>
                     <table class="table table-striped mt-3">
                         <tbody id="tableMembers">
-<!--                            <tr>-->
-<!--                                <td><i class="fas fa-user-circle ">fhs</i></td>-->
+                        <!--                            <tr>-->
+                        <!--                                <td><i class="fas fa-user-circle ">fhs</i></td>-->
 
-<!--                            </tr>-->
+                        <!--                            </tr>-->
                         <!--                                <tr>-->
                         <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
                         <!--                                </tr>-->
@@ -140,7 +140,8 @@
                         <!--                                <tr>-->
                         <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
                         <!--                                </tr>-->
-
+<!--                           // <tr><td><<button type="button" onclick="hitsSript()">Request data</button>-->
+<!--                                <img id="myImg"></td></tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -152,31 +153,64 @@
 </div>
 
 <script>
-    var myInterval = setInterval(hitsSript);
-    function hitsSript(){
+    //var myInterval = setInterval(hitsSript);
+
+    function hitsSript() {
         let res;
         var jresult;
-        var splitHits="";
+        var splitHits = "";
+        var img="";
         res = fetch("https://localhost:5001/HAWK/Camera/Match")
             .then(resultHits => resultHits.json())
             .then(resultHits => {
-                    jresult  = JSON.stringify(resultHits);
+                jresult = JSON.stringify(resultHits);
 
-                    resultHits.map(obj => {
-                        for(var x in obj.matchResults) {
-                            splitHits += "<tr><td><i class=\"fas fa-user-circle \">";
-                            splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
-                            splitHits += obj.matchResults[x].fullName + "<br>";
-                            splitHits += obj.matchResults[x].score + "</i></td></tr>";
-                        }
-                    });
+                resultHits.map(obj => {
+                    for (var x in obj.matchResults) {
+                        ///////////////////////////////////////////////////////
+                            
+                        fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id="+obj.matchResults[x].watchlistMemberId)
+                            .then(resultHits => resultHits.json())
+                            .then(resultHits => {
+                                jresult = JSON.stringify(resultHits);
+                                //alert(jresult)
+                                img="<img src='data:image/(png|jpg|jpeg);base64,/"+jresult+"' width='50px'height='50px'>";
+                                // const img = new Image();
+                                //img.src="data:image;base64,"+splitHits;
+                                splitHits+=img;
+                                alert(img)
+                                // splitHits +="<img src=data:image/jpeg;base64,"+ jresult +"alt = Larry >"
+                                // var image = new Image();
+                                // image.onload = function(){
+                                //     console.log(image.width); // image is loaded and we have image width 
+                                // }
+                                i//mage.src = 'data:image/jpeg;base64,'+jresult;
+                                //splitHits +="<img src='https://drive.google.com/uc?export=view&id=14zbJAhasjUX_Gj11QEahKAu3F8ivW8_a'>"
 
+                                //.getElementById("tableMembers").innerHTML = img;
+                            });
+                        // //////////////////////////////////////////////////
+                        // //splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
+                        // //splitHits +="<img src='https://drive.google.com/uc?export=view&id=14zbJAhasjUX_Gj11QEahKAu3F8ivW8_a' widht='70px' height='70px' style='margin-right: -60px'><br></td><td>"
+
+                        //splitHits += "<img src=\"https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN\"width=\"70\" height=\"50\">";
+                        //////////////////////////////////////////////////////
+                        splitHits += "<tr></tr><td><i class=\"fas\">";
+                        splitHits += img + "<br>";
+                        splitHits += obj.matchResults[x].fullName + "<br>";
+                        splitHits += "Match Score: " + obj.matchResults[x].score + "</i></td></tr>";
+                        //alert(splitHits)
+                    }
+                });
+                
+                
+                    
                     document.getElementById("tableMembers").innerHTML = splitHits;
-                }
-            );
-    }
-    
-    var myInterval = setInterval(hitsSript, 1000);
+                    }
+                    );
+                    }
+
+                    var myInterval = setInterval(hitsSript, 1000);
 </script>
 </body>
 

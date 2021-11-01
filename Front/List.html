@@ -178,7 +178,7 @@
                     <div class="bg-white tm-block h-100">
                         <h2 class="tm-block-title d-inline-block">Membebr Information</h2>
                         <table class="table table-striped mt-3">
-                            <tbody id="membersInfo">
+                            <tbody id="membersInfo" >
                             <!--                            <tr>-->
                             <!--                                <td><i class="fas fa-user-circle ">fhs</i></td>-->
 
@@ -217,32 +217,34 @@
             .then(resultHits => {
                     jresult  = JSON.stringify(resultHits);
                     resultHits.map(obj => {
-                        splitHits +="<tr> <th scope=\"row\"> <input type=\"checkbox\" aria-label=\"Checkbox\" onclick=\"memberData(obj.id)\"></th>"
+                        splitHits +="<tr> <th scope=\"row\"> <input class=\"messageCheckbox\" type=\"checkbox\" aria-label=\"Checkbox\" onclick='memberData(obj.id)'></th>"
                         splitHits += "<td className=\"tm-product-name\">";
                         splitHits += obj.fullName +"</td> <br>";
                         splitHits += "<td className=\"text-center\">";
                         splitHits+=obj.id +"</td>";
+                    
                     });
                      document.getElementById("membersList").innerHTML = splitHits;
+                
                 }
             );
-function memberData(id){
-    window.alert(id);
-    // res = fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
-    //     .then(resultHits => resultHits.json())
-    //     .then(resultHits => {
-    //             jresult  = JSON.stringify(resultHits);
-    //             resultHits.map(obj => {
-    //                 splitHits += "<tr><td><i class=\"fas fa-user-circle \"> fsdsj";
-    //                 // splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
-    //                 // splitHits += obj.matchResults[x].fullName + "<br>";
-    //             });
-    //         splitHits += "</i></td></tr>";
-    //         document.getElementById("membersInfo").innerHTML = splitHits;
-    //         }
-    //     );
-
-}
+// function memberData(id){
+//     window.alert(id);
+//     res = fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
+//         .then(resultHits => resultHits.json())
+//         .then(resultHits => {
+//                 jresult  = JSON.stringify(resultHits);
+//                 resultHits.map(obj => {
+//                     splitHits += "<tr><td><i class=\"fas fa-user-circle \"> fsdsj";
+//                     // splitHits += obj.matchResults[x].watchlistMemberId + "<br>";
+//                      splitHits += obj.matchResults[x].fullName + "<br>";
+//                 });
+//             splitHits += "</i></td></tr>";
+//             document.getElementById("membersInfo").innerHTML = splitHits;
+//             }
+//         );
+//
+// }
     </script>
 </body>
 

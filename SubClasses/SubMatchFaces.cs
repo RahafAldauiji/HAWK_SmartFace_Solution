@@ -87,9 +87,10 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
+        
         public List<MatchFaces> matchFaces()
         {
-            List<MatchFaces> match = new List<MatchFaces>();
+            List<MatchFaces> match =null;
             // await Task.Run(() =>
             //     {
             try
@@ -100,7 +101,7 @@ namespace SmartfaceSolution.SubClasses
                 //http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=500
                 string dayTime = "2021-10-27T00:00:05.083Z";
                 string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
-                Frames frames = Newtonsoft.Json.JsonConvert.DeserializeObject<Frames>(resp);
+                Frames frames = Newtonsoft.Json.JsonConvert.DeserializeObject<Frames>(resp);  
                 string[] dayTimeFrame = null;
                 string[] split1;
                 string[] split2;

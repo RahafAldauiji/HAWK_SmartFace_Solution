@@ -80,3 +80,4 @@ C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solut
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\obj\Debug\net5.0\ref\SmartfaceSolution.dll
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\obj\Debug\net5.0\SmartfaceSolution.pdb
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\obj\Debug\net5.0\SmartfaceSolution.genruntimeconfig.cache
+C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\bin\Debug\net5.0\package.json

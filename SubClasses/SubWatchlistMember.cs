@@ -97,7 +97,7 @@ namespace SmartfaceSolution.SubClasses
             {
                 img.Save(ms, img.RawFormat);
                 arrBytes = ms.ToArray();
-                //Console.WriteLine(Convert.ToBase64String(arrBytes));
+                Console.WriteLine(Convert.ToBase64String(arrBytes));
             }
 
             return Convert.ToBase64String(arrBytes);

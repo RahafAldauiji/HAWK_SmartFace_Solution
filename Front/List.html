@@ -244,27 +244,23 @@
             .then(resultHits => resultHits.json())
             .then(resultHits => {
                     jresult = JSON.stringify(resultHits);
-                   // document.getElementById("memberBody").innerHTML = jresult;
                     member += "<tr><td><i class=\"fas fa-user-circle \"> Full Name: ";
                     member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                     member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
-                    member += resultHits.note + "<br> &emsp;&nbsp;Images: <br></i></td>";
+                    member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
+                    
                         fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
-                            .then(resultHits1 => resultHits.json())
+                            .then(resultHits1 => resultHits1.json())
                             .then(resultHits1 => {
-                                jresult = JSON.stringify(resultHits);
+                                jresult = JSON.stringify(resultHits1);
                                 resultHits1.map(obj => {
-                                    splitHits += "<tr><td><i class=\"fas\">";
-                                    splitHits += "<img src=\'data:image/(png|jpg|jpeg);base64," +
-                                        image.replaceAll("\"", " ") + "'width='50px'height='50px'><br>";
-                                    splitHits += obj.matchResults[x].fullName + "<br>";
-                                    splitHits += "Match Score: " + obj.matchResults[x].score + "</i></td></tr>";
-                                    document.getElementById("tableMembers").innerHTML = splitHits;
+                                    member += "<img src=\'data:image/(png|jpg|jpeg);base64," +
+                                        obj.toString()+ "'width='50px'height='50px'><br>";
                                 });
+                                member +=  "</i></td></tr>";
+                                document.getElementById("memberBody").innerHTML = member;
 
                             });
-                member +="</tr>";
-                    document.getElementById("memberBody").innerHTML = member;
                 }
             );
         

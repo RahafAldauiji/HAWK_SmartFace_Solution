@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>List Page</title>
-   
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
     <!-- https://fonts.google.com/specimen/Open+Sans -->
     <link rel="stylesheet" href="css/fontawesome.min.css">
@@ -17,243 +17,244 @@
 </head>
 
 <body id="reportsPage" class="bg02">
-    <div class="" id="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar navbar-expand-xl navbar-light bg-light">
-                        <a class="navbar-brand" href="HomePage.html">
-                            <img src ="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN"width="70" height="50" >
-                            <h1 class="tm-site-title mb-0">HAWK</h1>
-                        </a>
-                        <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+<div class="" id="home">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-xl navbar-light bg-light">
+                    <a class="navbar-brand" href="HomePage.html">
+                        <img src="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN"
+                             width="70" height="50">
+                        <h1 class="tm-site-title mb-0">HAWK</h1>
+                    </a>
+                    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-    
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav mx-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="HomePage.html">Live
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                              
-                                <li class="nav-item">
-                                    <a class="nav-link" href="List.html">List</a>
-                                </li>
-    
-                            </ul>
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link d-flex" href="login.html">
-                                        <i class="far fa-user mr-2 tm-logout-icon"></i>
-                                        <span>Logout</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <!-- row -->
-            
-            <div class="row tm-content-row tm-mt-big">
-                <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-                    <div class="bg-white tm-block h-100">
-                        <div class="row">
-                            <div class="col-md-8 col-sm-12">
-                                <h2 class="tm-block-title d-inline-block">People</h2>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                            </div>
-                          
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped tm-table-striped-even mt-3">
-                                <thead>
-                                    <tr class="tm-bg-gray">
-                                        <th scope="col">&nbsp;</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col" class="text-center">ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="membersList">
-                               
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">2. Aenean eget urna enim. Sed enim</td>-->
-<!--                                        <td class="text-center">240</td>-->
-<!--                                        <td class="text-center">260</td>-->
-<!--                                        <td>2018-10-24</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">3. Vivamus convallis tincidunt nisi</td>-->
-<!--                                        <td class="text-center">360</td>-->
-<!--                                        <td class="text-center">440</td>-->
-<!--                                        <td>2019-02-14</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">4. Donec semper massa eget</td>-->
-<!--                                        <td class="text-center">445</td>-->
-<!--                                        <td class="text-center">655</td>-->
-<!--                                        <td>2019-03-22</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">5. Donec semper massa eget</td>-->
-<!--                                        <td class="text-center">445</td>-->
-<!--                                        <td class="text-center">655</td>-->
-<!--                                        <td>2019-03-22</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">6. Donec semper massa eget</td>-->
-<!--                                        <td class="text-center">445</td>-->
-<!--                                        <td class="text-center">655</td>-->
-<!--                                        <td>2019-03-22</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">7. Donec semper massa eget</td>-->
-<!--                                        <td class="text-center">445</td>-->
-<!--                                        <td class="text-center">655</td>-->
-<!--                                        <td>2019-03-22</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <input type="checkbox" aria-label="Checkbox">-->
-<!--                                        </th>-->
-<!--                                        <td class="tm-product-name">8. Donec semper massa eget</td>-->
-<!--                                        <td class="text-center">445</td>-->
-<!--                                        <td class="text-center">655</td>-->
-<!--                                        <td>2019-03-22</td>-->
-<!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
-<!--                                    </tr>-->
-                                </tbody>
-                            </table>
-                        </div>
-                        
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="HomePage.html">Live
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
 
-                        <div class="tm-table-mt tm-table-actions-row">
-                        
-                            <div class="tm-table-actions-col-right">
-                                <span class="tm-pagination-label">Page</span>
-                                <nav aria-label="Page navigation" class="d-inline-block">
-                                    <ul class="pagination tm-pagination">
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <span class="tm-dots d-block">...</span>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">13</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">14</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                            <li class="nav-item">
+                                <a class="nav-link" href="List.html">List</a>
+                            </li>
+
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link d-flex" href="login.html">
+                                    <i class="far fa-user mr-2 tm-logout-icon"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="col col-4" id="membersInfo" style="display: none">
-                    <div class="bg-white tm-block h-100">
-                        <h2 class="tm-block-title d-inline-block">Membebr Information</h2>
-                        <table class="table table-striped mt-3">
-                            <tbody id="memberBody">
-<!--                                                        <tr><td><i class="fas fa-user-circle ">fhs</i></td>-->
+                </nav>
+            </div>
+        </div>
+        <!-- row -->
 
-                            <!--                            </tr>-->
-                            <!--                                <tr>-->
-                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
-                            <!--                                </tr>-->
-                            <!--                                <tr>-->
-                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
-                            <!--                                </tr>-->
-                            <!--                                <tr>-->
-                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
-                            <!--                                </tr>-->
-                            <!--                                <tr>-->
-                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
-                            <!--                                </tr>-->
-                            <!--                                <tr>-->
-                            <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
-                            <!--                                </tr>-->
+        <div class="row tm-content-row tm-mt-big">
+            <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                <div class="bg-white tm-block h-100">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <h2 class="tm-block-title d-inline-block">People</h2>
 
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <thead>
+                            <tr class="tm-bg-gray">
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" class="text-center">ID</th>
+                            </tr>
+                            </thead>
+                            <tbody id="membersList">
+
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">2. Aenean eget urna enim. Sed enim</td>-->
+                            <!--                                        <td class="text-center">240</td>-->
+                            <!--                                        <td class="text-center">260</td>-->
+                            <!--                                        <td>2018-10-24</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">3. Vivamus convallis tincidunt nisi</td>-->
+                            <!--                                        <td class="text-center">360</td>-->
+                            <!--                                        <td class="text-center">440</td>-->
+                            <!--                                        <td>2019-02-14</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">4. Donec semper massa eget</td>-->
+                            <!--                                        <td class="text-center">445</td>-->
+                            <!--                                        <td class="text-center">655</td>-->
+                            <!--                                        <td>2019-03-22</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">5. Donec semper massa eget</td>-->
+                            <!--                                        <td class="text-center">445</td>-->
+                            <!--                                        <td class="text-center">655</td>-->
+                            <!--                                        <td>2019-03-22</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">6. Donec semper massa eget</td>-->
+                            <!--                                        <td class="text-center">445</td>-->
+                            <!--                                        <td class="text-center">655</td>-->
+                            <!--                                        <td>2019-03-22</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">7. Donec semper massa eget</td>-->
+                            <!--                                        <td class="text-center">445</td>-->
+                            <!--                                        <td class="text-center">655</td>-->
+                            <!--                                        <td>2019-03-22</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
+                            <!--                                    <tr>-->
+                            <!--                                        <th scope="row">-->
+                            <!--                                            <input type="checkbox" aria-label="Checkbox">-->
+                            <!--                                        </th>-->
+                            <!--                                        <td class="tm-product-name">8. Donec semper massa eget</td>-->
+                            <!--                                        <td class="text-center">445</td>-->
+                            <!--                                        <td class="text-center">655</td>-->
+                            <!--                                        <td>2019-03-22</td>-->
+                            <!--                                        <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>-->
+                            <!--                                    </tr>-->
                             </tbody>
                         </table>
                     </div>
+
+
+                    <div class="tm-table-mt tm-table-actions-row">
+
+                        <div class="tm-table-actions-col-right">
+                            <span class="tm-pagination-label">Page</span>
+                            <nav aria-label="Page navigation" class="d-inline-block">
+                                <ul class="pagination tm-pagination">
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <span class="tm-dots d-block">...</span>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">13</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">14</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
-           
-        </div>
-    </div>
+            <div class="col col-4" id="membersInfo" style="display: none">
+                <div class="bg-white tm-block h-100">
+                    <h2 class="tm-block-title d-inline-block">Membebr Information</h2>
+                    <table class="table table-striped mt-3">
+                        <tbody id="memberBody">
+                        <!--                                                        <tr><td><i class="fas fa-user-circle ">fhs</i></td>-->
 
-    <script>
-        let res;
-        var jresult;
-        var splitHits="";
-        res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers")
-            .then(resultHits => resultHits.json())
-            .then(resultHits => {
-                    jresult  = JSON.stringify(resultHits);
-                    resultHits.map(obj => {
-                        splitHits +="<tr> <th scope=\"row\"> <input class=\"messageCheckbox\" type=\"checkbox\" aria-label=\"Checkbox\" onclick=\"memberData()\"></th>"
-                        splitHits += "<td className=\"tm-product-name\">";
-                        splitHits += obj.fullName +"</td> <br>";
-                        splitHits += "<td className=\"text-center\">";
-                        splitHits+=obj.id +"</td>";
-                        
-                    });
-                     document.getElementById("membersList").innerHTML = splitHits;
-                
-                }
-            );
-function memberData(){
-    // if(isChecked === true){
-        document.getElementById("membersInfo").style.display = "block";
-    // }else if(isChecked === false){
-    //     document.getElementById("membersInfo").style.display = "none";
-    // }
-    var shahad = "1fd84ecb-021a-4487-9ea3-2d51abf15920"
-    var member=""; 
-    res = fetch("https://localhost:5001/HAWK/WatchlistMember/getMember?id=" + shahad)
+                        <!--                            </tr>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                        <!--                                </tr>-->
+                        <!--                                <tr>-->
+                        <!--                                    <td><i class="fas fa-user-circle "></i></td>-->
+                        <!--                                </tr>-->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let res;
+    var jresult;
+    var splitHits = "";
+    res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers")
         .then(resultHits => resultHits.json())
         .then(resultHits => {
-            jresult  = JSON.stringify(resultHits);
-            document.getElementById("memberBody").innerHTML = jresult;
-            resultHits.map(obj => {
-                 window.alert(member);
+                jresult = JSON.stringify(resultHits);
+                resultHits.map(obj => {
+                  //  window.alert(obj.fullName);
+                    splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+ "\" name='member' type=\"radio\" onclick=\"memberData('" + obj.id+"')\"></th>";
+                    splitHits += "<td className=\"tm-product-name\">";
+                    splitHits += obj.fullName + "</td> <br>";
+                    splitHits += "<td className=\"text-center\">";
+                    splitHits += obj.id + "</td>";
 
-                 // member += "<tr><td><i class=\"fas fa-user-circle \">";
-                 //     member += obj.id + "<br>";
-                 //     member += jresult + "<br>";
-             });
-            //  member += "</i></td></tr>";
-            // document.getElementById("memberBody").innerHTML = member;
+                });
+                document.getElementById("membersList").innerHTML = splitHits;
+
             }
         );
 
-}
-    </script>
+    function memberData(id) {
+        var radioValue = document.getElementById(id).checked;
+        if(radioValue === true) {
+             document.getElementById("membersInfo").style.display = "block";
+        }else {
+            document.getElementById("membersInfo").style.display = "none";
+        } 
+        var member = "";
+        var jresult="";
+         fetch("https://localhost:5001/HAWK/WatchlistMember/getMember?id=" + id)
+            .then(resultHits => resultHits.json())
+            .then(resultHits => {
+                    jresult = JSON.stringify(resultHits);
+                   // document.getElementById("memberBody").innerHTML = jresult;
+                    member += "<tr><td><i class=\"fas fa-user-circle \"> Full Name: ";
+                    member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
+                member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
+                    member += "</i></td></tr>";
+                    document.getElementById("memberBody").innerHTML = member;
+                }
+            );
+
+    }
+</script>
 </body>
 
 </html>

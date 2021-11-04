@@ -1,34 +1,19 @@
-/*
-
-Template 2108 Dashboard
-
-http://www.tooplate.com/view/2108-dashboard
-	
-
-COLOR CODES
-
-  Dark Gray: #656565
-  Light Gray: #E6E6E6
-  Blue: #0062BB
-  
-*/
 
 html {
   font-size: 17px;
 }
-.camera {
+./*camera {
 	width: 800px;
 	height: 500px;
 	background-color: #666;
-}
+}*/
+
 body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   overflow-x: hidden;
 }
-/*#0F4C81  ,  #434343  */  
 body {
-  /*background-image: url(../img/dash-bg-01.jpg);*/
-  background-color: #434343;
+  background-color: #262626;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -62,7 +47,7 @@ a:focus {
 }
 
 .tm-site-icon {
-  color: #434343;
+  color: #262626;
 }
 
 .tm-site-title {
@@ -71,7 +56,7 @@ a:focus {
   font-size: 3rem;
   font-weight: bolder;
   margin-left: 1rem;
-  color: #0F4C81;
+  color: #004B8B;
   letter-spacing: 1px;
 }
 
@@ -104,13 +89,13 @@ a:focus {
 
 .tm-block-title {
   font-size: 1.4rem;
-  color: #0F4C81;
+  color: #004B8B;
   margin-bottom: 30px;
   font-weight: bolder;
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: #0F4C81;
+  color: #004B8B;
 }
 
 .navbar-light .navbar-nav .nav-link,
@@ -164,7 +149,7 @@ a:focus {
 
 .tm-link-black:hover,
 .tm-link-black:focus {
-  color: #0266c4;
+  color: #004B8B;
 }
 
 ol {
@@ -189,7 +174,7 @@ ol {
 }
 
 .tm-list-group > li:hover {
-  color: #0266c4;
+  color: #004B8B;
 }
 
 .tm-list-group-alternate-color > li:nth-child(odd) {

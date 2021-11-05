@@ -19,7 +19,6 @@ namespace SmartfaceSolution
         {
             //Console.WriteLine(new SubMatchFaces().matchFaces().ToString());
             // new SubWatchlist().search();
-            //Console.WriteLine(new SubWatchlistMember().convertImageToString("E1.jpeg"));
             //  "C://Users//rahaf//Downloads//bb820d72-a6d8-4900-9952-fc74c0256d72");
             CreateHostBuilder(args).Build().Run(); 
         }

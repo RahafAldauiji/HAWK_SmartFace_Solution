@@ -358,7 +358,7 @@ namespace SmartfaceSolution.SubClasses
             {
                 using (WebClient webClient = new WebClient())
                 {
-                    byte[] data = webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
+                    byte[] data =webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
                     using (MemoryStream mem = new MemoryStream(data))
                     {
                         using (var yourImage = Image.FromStream(mem))

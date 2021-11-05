@@ -81,3 +81,7 @@ C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solut
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\obj\Debug\net5.0\SmartfaceSolution.pdb
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\obj\Debug\net5.0\SmartfaceSolution.genruntimeconfig.cache
 C:\Users\HP\Documents\Uni 9\CPIT498\Hawk_Smartface_Solution\HAWK_SmartFace_Solution\bin\Debug\net5.0\package.json
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\MailKit.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\MimeKit.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Front\package.json

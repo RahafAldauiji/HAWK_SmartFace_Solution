@@ -138,7 +138,7 @@
         .then(resultHits => {
                 jresult = JSON.stringify(resultHits);
                 resultHits.map(obj => {
-                  //  window.alert(obj.fullName);
+                    //  window.alert(obj.fullName);
                     splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+ "\" name='member' type=\"radio\" onclick=\"memberData('" + obj.id+"')\"></th>";
                     splitHits += "<td className=\"tm-product-name\">";
                     splitHits += obj.fullName + "</td> <br>";
@@ -154,13 +154,13 @@
     function memberData(id) {
         var radioValue = document.getElementById(id).checked;
         if(radioValue === true) {
-             document.getElementById("membersInfo").style.display = "block";
+            document.getElementById("membersInfo").style.display = "block";
         }else {
             document.getElementById("membersInfo").style.display = "none";
-        } 
+        }
         var member = "";
         var jresult="";
-         fetch("https://localhost:5001/HAWK/WatchlistMember/getMember?id=" + id)
+        fetch("https://localhost:5001/HAWK/WatchlistMember/getMember?id=" + id)
             .then(resultHits => resultHits.json())
             .then(resultHits => {
                     jresult = JSON.stringify(resultHits);
@@ -168,22 +168,27 @@
                     member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                     member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
                     member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
-                    
-                        fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
-                            .then(resultHits1 => resultHits1.json())
-                            .then(resultHits1 => {
-                                jresult = JSON.stringify(resultHits1);
-                                resultHits1.map(obj => {
-                                    member += "<img src=\'data:image/(png|jpg|jpeg);base64," +
-                                        obj.toString()+ "'width='50px'height='50px'><br>";
-                                });
-                                member +=  "</i></td></tr>";
-                                document.getElementById("memberBody").innerHTML = member;
-
+                    var counter =0;
+                    fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id)
+                        .then(resultHits1 => resultHits1.json())
+                        .then(resultHits1 => {
+                            jresult = JSON.stringify(resultHits1);
+                            resultHits1.map(obj => {
+                                member += "<img src=\'data:image/(png|jpg|jpeg);base64," +
+                                    obj.toString()+ "'width='70px'height='70px'>";
+                                counter++;
+                                if (counter ===3){
+                                    member += "<br>&emsp;&nbsp;";
+                                    counter = 0;
+                                }
                             });
+                            member +=  "</i></td></tr>";
+                            document.getElementById("memberBody").innerHTML = member;
+
+                        });
                 }
             );
-        
+
     }
 </script>
 </body>

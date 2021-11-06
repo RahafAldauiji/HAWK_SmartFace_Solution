@@ -34,7 +34,7 @@ namespace SmartfaceSolution.Controllers
         }
 
         [HttpPost]
-        [Route("Camera/createCamera")]
+        [Route("Camera/create")]
         public IActionResult createCamera(string rtsp, string cameraName)
         {
             Camera camera = new SubCamera().createCamera(rtsp: rtsp, cameraName: cameraName);
@@ -42,7 +42,7 @@ namespace SmartfaceSolution.Controllers
         }
 
         // [HttpPut] NOT WORKING
-        // [Route("Camera/updateCamera")]
+        // [Route("Camera/update")]
         // public IActionResult updateCamera(string cam)
         // {
         //     Camera camera = new SubCamera().updateCamera(cam);
@@ -50,7 +50,7 @@ namespace SmartfaceSolution.Controllers
         // }
 
         [HttpDelete]
-        [Route("Camera/deleteCamera")]
+        [Route("Camera/delete")]
         public IActionResult deleteCamera(string id)
         {
             Camera camera = new SubCamera().deleteCamera(id);

@@ -88,46 +88,23 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
-        
+
         public List<MatchFaces> matchFaces()
         {
-            List<MatchFaces> match =null;
+            List<MatchFaces> match = null;
             // await Task.Run(() =>
             //     {
             try
             {
-                string dayTime = DateTime.Now.ToString("yyyy-M-ddTHH:mm:ss.ffZ");
-                //Thread.Sleep(2000);
+                DateTime dayTime = DateTime.Now.ToLocalTime();
                 string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=100", "GET");
-                //http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=500
-                //string dayTime = "2021-10-27T23:09:35.503Z";
-                string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
-                Frames frames = JsonSerializer.Deserialize<Frames>(resp);  
-                string[] dayTimeFrame = null;
-                string[] split1;
-                string[] split2;
-                int time;
+                Frames frames = JsonSerializer.Deserialize<Frames>(resp);
+                DateTime frameDateTime;
                 for (int i = 0; i < frames.items.Length; i++)
                 {
-                    //frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
-                    dayTimeFrame = frames.items[i].createdAt.Replace("Z", "").Split('T');
-                    split1 = dayTimeFrame[1].Split(":");
-                    split2 = dayTimeNow[1].Split(":");
-                    time = int.Parse(split1[0]) + 3;
-                    split1[0] = "";
-                    if (time >= 24)
-                    {
-                        time -= 24;
-                        time += 0;
-                    }
-                    
-                    if (time < 10)
-                        split1[0] = "0";
-                    split1[0] += time + "";
-                    // if (dayTimeNow[0]==(dayTimeFrame[0]))
-                    // {
-                    Console.WriteLine(split1[0] + "" + split1[1] + "       " + split2[0] + "" + split2[1]);
-                    if (split1[0] + "" + split1[1] == split2[0] + "" + split2[1])
+                    frameDateTime = DateTime.Parse(frames.items[i].createdAt);
+                    //Console.WriteLine("Now="+ dayTime+" Frame="+frameDateTime);
+                    if (frameDateTime.Hour == dayTime.Hour && frameDateTime.Minute == dayTime.Minute)
                     {
                         Console.WriteLine("hi");
                         using (WebClient webClient = new WebClient())

@@ -2,62 +2,29 @@
 {
     public class MatchResult
     {
-        #region variables
+ 
+        // private int score;
+        // private string watchlistMemberId;
+        // private string displayName;
+        // private string fullName;
+        // private string watchlistFullName;
+        // private string watchlistDisplayName;
+        // private string watchlistId;
 
-        private int score;
-        private string watchlistMemberId;
-        private string displayName;
-        private string fullName;
-        private string watchlistFullName;
-        private string watchlistDisplayName;
-        private string watchlistId;
 
-        #endregion
+        public int score { get; set; }
 
-        #region methods
+        public string watchlistMemberId { get; set; }
 
-        public int Score
-        {
-            get => score;
-            set => score = value;
-        }
+        public string displayName { get; set; }
 
-        public string WatchlistMemberId
-        {
-            get => watchlistMemberId;
-            set => watchlistMemberId = value;
-        }
+        public string fullName { get; set; }
 
-        public string DisplayName
-        {
-            get => displayName;
-            set => displayName = value;
-        }
+        public string watchlistFullName { get; set; }
 
-        public string FullName
-        {
-            get => fullName;
-            set => fullName = value;
-        }
+        public string watchlistDisplayName { get; set; }
 
-        public string WatchlistFullName
-        {
-            get => watchlistFullName;
-            set => watchlistFullName = value;
-        }
+        public string watchlistId { get; set; }
 
-        public string WatchlistDisplayName
-        {
-            get => watchlistDisplayName;
-            set => watchlistDisplayName = value;
-        }
-
-        public string WatchlistId
-        {
-            get => watchlistId;
-            set => watchlistId = value;
-        }
-
-        #endregion
     }
 }

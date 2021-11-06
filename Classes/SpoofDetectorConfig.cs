@@ -2,48 +2,23 @@
 {
     public class SpoofDetectorConfig
     {
-        #region variables
+     
+        // private double externalScoreThreshold;
+        // private double distantLivenessScoreThreshold;
+        // private double nearbyLivenessScoreThreshold;
+        // private string distantLivenessConditions;
+        // private string nearbyLivenessConditions;
 
-        private double externalScoreThreshold;
-        private double distantLivenessScoreThreshold;
-        private double nearbyLivenessScoreThreshold;
-        private string distantLivenessConditions;
-        private string nearbyLivenessConditions;
+   
+        public double externalScoreThreshold { get; set; }
 
-        #endregion
+        public double distantLivenessScoreThreshold { get; set; }
 
-        #region methods
+        public double nearbyLivenessScoreThreshold { get; set; }
 
-        public double ExternalScoreThreshold
-        {
-            get => externalScoreThreshold;
-            set => externalScoreThreshold = value;
-        }
+        public string distantLivenessConditions { get; set; }
 
-        public double DistantLivenessScoreThreshold
-        {
-            get => distantLivenessScoreThreshold;
-            set => distantLivenessScoreThreshold = value;
-        }
+        public string nearbyLivenessConditions { get; set; }
 
-        public double NearbyLivenessScoreThreshold
-        {
-            get => nearbyLivenessScoreThreshold;
-            set => nearbyLivenessScoreThreshold = value;
-        }
-
-        public string DistantLivenessConditions
-        {
-            get => distantLivenessConditions;
-            set => distantLivenessConditions = value;
-        }
-
-        public string NearbyLivenessConditions
-        {
-            get => nearbyLivenessConditions;
-            set => nearbyLivenessConditions = value;
-        }
-
-        #endregion
     }
 }

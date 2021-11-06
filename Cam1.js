@@ -9,6 +9,7 @@ stream = new Stream({
     }
 })
 
+
 // const onvif = require('node-onvif');
 //
 // console.log('Start the discovery process.');

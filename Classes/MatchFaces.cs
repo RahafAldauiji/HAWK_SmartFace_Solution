@@ -1,10 +1,8 @@
 ﻿namespace SmartfaceSolution.Classes
 {
-    
     public class MatchFaces
     {
-        #region variables
-
+ 
         // private double cropLeftTopX;
         // private double cropLeftTopY;
         // private double cropRightTopX;
@@ -24,11 +22,8 @@
         // private double faceMaskConfidence;
         // private double noseTipConfidence;
         // private string faceMaskStatus;
-        private MatchResult[] matchResults;
+        // private MatchResult[] matchResults;
 
-        #endregion
-
-        #region methods
 
         // public double CropLeftTopX
         // {
@@ -145,12 +140,7 @@
         //     set => noseTipConfidence = value;
         // }
 
-        public MatchResult[] MatchResults
-        {
-            get => matchResults;
-            set => matchResults = value;
-        }
+        public MatchResult[] matchResults { get; set; }
 
-        #endregion
     }
 }

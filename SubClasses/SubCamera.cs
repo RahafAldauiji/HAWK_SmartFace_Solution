@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using SmartfaceSolution.Classes;
 
 namespace SmartfaceSolution.SubClasses
@@ -91,7 +92,7 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string result = requestNoBody(id, "GET");
-                camera = Newtonsoft.Json.JsonConvert.DeserializeObject<Camera>(result);
+                camera = JsonSerializer.Deserialize<Camera>(result);
             }
             catch (Exception ex)
             {
@@ -108,7 +109,8 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string result = requestNoBody("", "GET");
-                cameras = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Camera>>(result);
+                //Console.WriteLine(result);
+                cameras = JsonSerializer.Deserialize<List<Camera>>(result);
             }
             catch (Exception ex)
             {
@@ -127,7 +129,7 @@ namespace SmartfaceSolution.SubClasses
                 string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
                               true + "\"}";
                 string result = requestWithBody("", "POST", json);
-                camera = Newtonsoft.Json.JsonConvert.DeserializeObject<Camera>(result);
+                camera = JsonSerializer.Deserialize<Camera>(result);
             }
             catch (Exception ex)
             {
@@ -144,7 +146,7 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string result = requestWithBody("", "PUT", jsonCam);
-                camera = Newtonsoft.Json.JsonConvert.DeserializeObject<Camera>(result);
+                camera = JsonSerializer.Deserialize<Camera>(result);
             }
             catch (Exception ex)
             {
@@ -161,7 +163,7 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string result = requestNoBody(id, "DELETE");
-                camera = Newtonsoft.Json.JsonConvert.DeserializeObject<Camera>(result);
+                camera = JsonSerializer.Deserialize<Camera>(result);
             }
             catch (Exception ex)
             {

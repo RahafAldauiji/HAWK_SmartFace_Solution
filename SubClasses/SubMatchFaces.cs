@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using SmartfaceSolution.Classes;
@@ -101,15 +102,15 @@ namespace SmartfaceSolution.SubClasses
                 //http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=500
                 //string dayTime = "2021-10-27T23:09:35.503Z";
                 string[] dayTimeNow = dayTime.Replace("Z", "").Split('T');
-                Frames frames = Newtonsoft.Json.JsonConvert.DeserializeObject<Frames>(resp);  
+                Frames frames = JsonSerializer.Deserialize<Frames>(resp);  
                 string[] dayTimeFrame = null;
                 string[] split1;
                 string[] split2;
                 int time;
-                for (int i = 0; i < frames.Items.Length; i++)
+                for (int i = 0; i < frames.items.Length; i++)
                 {
                     //frame[i] = Newtonsoft.Json.JsonConvert.DeserializeObject<Frame>(frameSplit2[i]);
-                    dayTimeFrame = frames.Items[i].CreatedAt.Replace("Z", "").Split('T');
+                    dayTimeFrame = frames.items[i].createdAt.Replace("Z", "").Split('T');
                     split1 = dayTimeFrame[1].Split(":");
                     split2 = dayTimeNow[1].Split(":");
                     time = int.Parse(split1[0]) + 3;
@@ -122,7 +123,7 @@ namespace SmartfaceSolution.SubClasses
                     
                     if (time < 10)
                         split1[0] = "0";
-                     split1[0] += time + "";
+                    split1[0] += time + "";
                     // if (dayTimeNow[0]==(dayTimeFrame[0]))
                     // {
                     Console.WriteLine(split1[0] + "" + split1[1] + "       " + split2[0] + "" + split2[1]);
@@ -133,14 +134,14 @@ namespace SmartfaceSolution.SubClasses
                         {
                             byte[] data =
                                 webClient.DownloadData(
-                                    "http://localhost:8098/api/v1/Images/" + frames.Items[i].ImageDataId);
+                                    "http://localhost:8098/api/v1/Images/" + frames.items[i].imageDataId);
                             string img = Convert.ToBase64String(data);
                             string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
                                           "}";
                             resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
                                 "POST",
                                 json);
-                            match = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MatchFaces>>(resp);
+                            match = JsonSerializer.Deserialize<List<MatchFaces>>(resp);
                             Console.WriteLine(match);
                             return match;
                         }

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using SmartfaceSolution.Classes;
-
+using System.Text.Json;
 namespace SmartfaceSolution.SubClasses
 {
     public class SubWatchlist : Watchlist
@@ -91,7 +91,7 @@ namespace SmartfaceSolution.SubClasses
                 string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
                               "\",\"threshold\":" + threshold + "}";
                 string resp = request("", "POST", json);
-                watchlist = Newtonsoft.Json.JsonConvert.DeserializeObject<Watchlist>(resp);
+                watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace SmartfaceSolution.SubClasses
                               fullName + "\",\"threshold\":" + threshold + "}";
                 string resp = request("", "PUT", json);
 
-                watchlist = Newtonsoft.Json.JsonConvert.DeserializeObject<Watchlist>(resp);
+                watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             }
             catch (Exception ex)
             {
@@ -177,7 +177,7 @@ namespace SmartfaceSolution.SubClasses
             {
                 string resp = requestNoBody(watchlistId+"/WatchlistMembers", "GET");
                 //Console.WriteLine(resp);
-                watchlistMembers = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMembers>(resp);
+                watchlistMembers = JsonSerializer.Deserialize<WatchlistMembers>(resp);
             }
             catch (Exception ex)
             {

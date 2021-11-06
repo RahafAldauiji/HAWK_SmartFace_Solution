@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 using SmartfaceSolution.Classes;
 using SmartfaceSolution.SubClasses;
 
@@ -16,155 +15,7 @@ namespace SmartfaceSolution.Controllers
     [ApiController]
     public class HawkController : Controller
     {
-        [HttpGet]
-        [Route("Camera/Match")]
-        public IActionResult getMatch()
-        {
-            List<MatchFaces> matchs = new SubMatchFaces().matchFaces();
-            return Json(matchs);
-        }
-
-        [HttpPut]
-        [Route("WatchlistMember/update")]
-        public IActionResult updateWatchlistMember(string id, string displayName, string fullName, string note)
-        {
-            // id = "916255be-0ca7-43e9-ab7e-727c665bbd7a";
-            // displayName = "t";
-            // fullName = "e";
-            // note = "dfd";
-            WatchlistMember updatedwatchlistMember = new SubWatchlistMember().updateWatchListMember(id,
-                displayName, fullName, note);
-            return Json(updatedwatchlistMember);
-        }
-
-        [HttpPost]
-        [Route("WatchlistMember/link")]
-        public IActionResult linkWatchlistMember(string watchlistMember,
-            string watchlistId)
-        {
-            string linkedwatchlistMember = new SubWatchlistMember().linkWatchListMember(watchlistId, watchlistMember);
-            return Json(linkedwatchlistMember);
-        }
-
-        [HttpPost]
-        [Route("WatchlistMember/unlink")]
-        public IActionResult unlinkWatchlistMember(string watchlistMember,
-            string watchlistId)
-        {
-            string linkedwatchlistMember =
-                new SubWatchlistMember().unlinkWatchListMember(watchlistId, watchlistMember);
-            return Json(linkedwatchlistMember);
-        }
-
-        [HttpDelete]
-        [Route("WatchlistMember/delete")]
-        public IActionResult deleteWatchlistMember(string watchlistMemberId)
-        {
-            string deletedwatchlistMember = new SubWatchlistMember().deleteWatchListMember(watchlistMemberId);
-            return Json(deletedwatchlistMember);
-        }
-        [HttpGet]
-        [Route("WatchlistMember/GetAllWatchlistMembers")]
-        public IActionResult getAllWatchlistMembers(string watchlistMemberId)
-        {
-            WatchlistMembers watchlistMember = new SubWatchlistMember().retrievesAllWatchlistMembers();
-           
-           return Json(watchlistMember.Items);
-        }
-        [HttpGet]
-        [Route("WatchlistMember/getMemberFace")]
-        public IActionResult getMemberFaces(string id)
-        {
-            string img = new SubWatchlistMember().getMemberFace(id);
-            return Json(img);
-        }
-        [HttpGet]
-        [Route("WatchlistMember/getFaces")]
-        public IActionResult getWatchlistMemberFaces(string id)
-        {
-           List<string>faces =new SubWatchlistMember().getFaces(id);
-            return Json(faces);
-        }
-        // [HttpPost]
-        // [Route("WatchlistMember/register")]
-        // public IActionResult registerWatchlistMember(string imgUrl, string id,
-        //     string watchlistId)
-        // {
-        //     string registeredWatchlistMember =
-        //         new SubWatchlistMember().register(id, watchlistId, imgUrl);
-        //     return Json(registeredWatchlistMember);
-        // }
-        [HttpPost]
-        [Route("WatchlistMember/CreateAndResgister")]
-        public IActionResult createWatchlistMember(string displayName, string fullName, string note, string watchlistId,
-            string imgUrl)
-        {
-            WatchlistMember watchlistMember =
-                new SubWatchlistMember().createWatchListMember(displayName,
-                    fullName, note);
-            string registeredWatchlistMember =
-                new SubWatchlistMember().register(watchlistMember.Id, watchlistId, imgUrl);
-            return Json(registeredWatchlistMember);
-        }
-
-        //cc9c8016-3489-49f1-8e2d-842c7dae3431 :S
-        //90ca71c3-2247-47a2-a78d-6a97ac5a1540 :E
-        [HttpPost]
-        [Route("WatchlistMember/addFace")]
-        public IActionResult addFace(string watchlistMemberId, string imgUrl)
-        {
-            Face face = new SubWatchlistMember().addNewFace(watchlistMemberId, imgUrl);
-            return Json(face);
-        }
-
-        [HttpPost]
-        [Route("WatchlistMember/removeFace")]
-        public IActionResult removeFace(string id, string faceId)
-        {
-            string removedFace = new SubWatchlistMember().removeFace(id, faceId);
-            return Json(removedFace);
-        }
-
-        [HttpPost]
-        [Route("Watchlist/create")]
-        public IActionResult createWatchlist(string watchlistDisplayName,
-            string watchlistFullName, int watchlistThreshold)
-        {
-            Watchlist watchlist = new SubWatchlist().createWatchList(watchlistDisplayName, watchlistFullName,
-                watchlistThreshold);
-            return Json(watchlist);
-        }
-        [HttpGet]
-        [Route("Watchlist/getMembers")]
-        public IActionResult getWatchlistMembers(string id)
-        {
-            WatchlistMembers watchlistMembers = new SubWatchlist().retrievesWatchlistMembers(id);
-            return Json(watchlistMembers);
-        }
-        [HttpGet]
-        [Route("WatchlistMember/getMember")]
-        public IActionResult getWatchlistMember(string id)
-        {
-            WatchlistMember watchlistMember = new SubWatchlistMember().getWatchlistMember(id);
-            return Json(watchlistMember);
-        }
-        [HttpPut]
-        [Route("Watchlist/upadte")]
-        public IActionResult updateWatchlist(string watchlistId, string watchlistDisplayName,
-            string watchlistFullName, int watchlistThreshold)
-        {
-            Watchlist updatedwatchlist = new SubWatchlist().updateWatchList(watchlistId, watchlistDisplayName,
-                watchlistFullName, watchlistThreshold);
-            return Json(updatedwatchlist);
-        }
-
-        [HttpDelete]
-        [Route("Watchlist/delete")]
-        public IActionResult deleteWatchlist(string watchlistId)
-        {
-            string deletedwatchlist = new SubWatchlist().deleteWatchList(watchlistId);
-            return Json(deletedwatchlist);
-        }
+        #region Camera
 
         [HttpGet]
         [Route("Camera/getCamera")]
@@ -205,5 +56,172 @@ namespace SmartfaceSolution.Controllers
             Camera camera = new SubCamera().deleteCamera(id);
             return Json(camera);
         }
+
+        [HttpGet]
+        [Route("Camera/Match")]
+        public IActionResult getMatch()
+        {
+            List<MatchFaces> matchs = new SubMatchFaces().matchFaces();
+            return Json(matchs);
+        }
+
+        #endregion
+
+        #region Watchlist
+
+        [HttpPost]
+        [Route("Watchlist/create")]
+        public IActionResult createWatchlist(string watchlistDisplayName,
+            string watchlistFullName, int watchlistThreshold)
+        {
+            Watchlist watchlist = new SubWatchlist().createWatchList(watchlistDisplayName, watchlistFullName,
+                watchlistThreshold);
+            return Json(watchlist);
+        }
+
+        [HttpGet]
+        [Route("Watchlist/getMembers")]
+        public IActionResult getWatchlistMembers(string id)
+        {
+            WatchlistMembers watchlistMembers = new SubWatchlist().retrievesWatchlistMembers(id);
+            return Json(watchlistMembers);
+        }
+
+        [HttpGet]
+        [Route("WatchlistMember/getMember")]
+        public IActionResult getWatchlistMember(string id)
+        {
+            WatchlistMember watchlistMember = new SubWatchlistMember().getWatchlistMember(id);
+            return Json(watchlistMember);
+        }
+
+        [HttpPut]
+        [Route("Watchlist/upadte")]
+        public IActionResult updateWatchlist(string watchlistId, string watchlistDisplayName,
+            string watchlistFullName, int watchlistThreshold)
+        {
+            Watchlist updatedwatchlist = new SubWatchlist().updateWatchList(watchlistId, watchlistDisplayName,
+                watchlistFullName, watchlistThreshold);
+            return Json(updatedwatchlist);
+        }
+
+        [HttpDelete]
+        [Route("Watchlist/delete")]
+        public IActionResult deleteWatchlist(string watchlistId)
+        {
+            string deletedwatchlist = new SubWatchlist().deleteWatchList(watchlistId);
+            return Json(deletedwatchlist);
+        }
+
+        #endregion
+
+        #region WatchlistMember
+
+        [HttpPut]
+        [Route("WatchlistMember/update")]
+        public IActionResult updateWatchlistMember(string id, string displayName, string fullName, string note)
+        {
+            // id = "916255be-0ca7-43e9-ab7e-727c665bbd7a";
+            // displayName = "t";
+            // fullName = "e";
+            // note = "dfd";
+            WatchlistMember updatedwatchlistMember = new SubWatchlistMember().updateWatchListMember(id,
+                displayName, fullName, note);
+            return Json(updatedwatchlistMember);
+        }
+
+        [HttpPost]
+        [Route("WatchlistMember/link")]
+        public IActionResult linkWatchlistMember(string watchlistMember,
+            string watchlistId)
+        {
+            string linkedwatchlistMember = new SubWatchlistMember().linkWatchListMember(watchlistId, watchlistMember);
+            return Json(linkedwatchlistMember);
+        }
+
+        [HttpPost]
+        [Route("WatchlistMember/unlink")]
+        public IActionResult unlinkWatchlistMember(string watchlistMember,
+            string watchlistId)
+        {
+            string linkedwatchlistMember =
+                new SubWatchlistMember().unlinkWatchListMember(watchlistId, watchlistMember);
+            return Json(linkedwatchlistMember);
+        }
+
+        [HttpDelete]
+        [Route("WatchlistMember/delete")]
+        public IActionResult deleteWatchlistMember(string watchlistMemberId)
+        {
+            string deletedwatchlistMember = new SubWatchlistMember().deleteWatchListMember(watchlistMemberId);
+            return Json(deletedwatchlistMember);
+        }
+
+        [HttpGet]
+        [Route("WatchlistMember/GetAllWatchlistMembers")]
+        public IActionResult getAllWatchlistMembers(string watchlistMemberId)
+        {
+            Members watchlistMember = new SubWatchlistMember().retrievesAllWatchlistMembers();
+
+            return Json(watchlistMember.items);
+        }
+
+        [HttpGet]
+        [Route("WatchlistMember/getMemberFace")]
+        public IActionResult getMemberFaces(string id)
+        {
+            string img = new SubWatchlistMember().getMemberFace(id);
+            return Json(img);
+        }
+
+        [HttpGet]
+        [Route("WatchlistMember/getFaces")]
+        public IActionResult getWatchlistMemberFaces(string id)
+        {
+            List<string> faces = new SubWatchlistMember().getFaces(id);
+            return Json(faces);
+        }
+
+        // [HttpPost]
+        // [Route("WatchlistMember/register")]
+        // public IActionResult registerWatchlistMember(string imgUrl, string id,
+        //     string watchlistId)
+        // {
+        //     string registeredWatchlistMember =
+        //         new SubWatchlistMember().register(id, watchlistId, imgUrl);
+        //     return Json(registeredWatchlistMember);
+        // }
+        [HttpPost]
+        [Route("WatchlistMember/CreateAndResgister")]
+        public IActionResult createWatchlistMember(string displayName, string fullName, string note, string watchlistId,
+            string imgUrl)
+        {
+            WatchlistMember watchlistMember =
+                new SubWatchlistMember().createWatchListMember(displayName,
+                    fullName, note);
+            string registeredWatchlistMember =
+                new SubWatchlistMember().register(watchlistMember.id, watchlistId, imgUrl);
+            return Json(registeredWatchlistMember);
+        }
+
+        //cc9c8016-3489-49f1-8e2d-842c7dae3431 :S
+        //90ca71c3-2247-47a2-a78d-6a97ac5a1540 :E
+        [HttpPost]
+        [Route("WatchlistMember/addFace")]
+        public IActionResult addFace(string watchlistMemberId, string imgUrl)
+        {
+            Face face = new SubWatchlistMember().addNewFace(watchlistMemberId, imgUrl);
+            return Json(face);
+        }
+
+        [HttpPost]
+        [Route("WatchlistMember/removeFace")]
+        public IActionResult removeFace(string id, string faceId)
+        {
+            string removedFace = new SubWatchlistMember().removeFace(id, faceId);
+            return Json(removedFace);
+        }
+
+        #endregion
     }
 }

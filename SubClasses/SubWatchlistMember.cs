@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using SmartfaceSolution.Classes;
 
@@ -23,6 +24,7 @@ namespace SmartfaceSolution.SubClasses
                 try
                 {
                     result = streamReader.ReadToEnd();
+                    //Console.WriteLine(result);
                 }
                 finally
                 {
@@ -111,7 +113,7 @@ namespace SmartfaceSolution.SubClasses
                 string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName + "\",\"note\":\"" +
                               note + "\"}";
                 string result = request("", "POST", json);
-                watchlistMember = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMember>(result);
+                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
             }
             catch (Exception ex)
             {
@@ -146,7 +148,8 @@ namespace SmartfaceSolution.SubClasses
                 string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName +
                               "\",\"fullName\":\"" + fullName + "\",\"note\":\"" + note + "\"}";
                 string result = request("", "PUT", json);
-                watchlistMember = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMember>(result);
+                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
+                Console.WriteLine(watchlistMember.id);
             }
             catch (Exception ex)
             {
@@ -210,7 +213,7 @@ namespace SmartfaceSolution.SubClasses
                 string imageData = convertImageToString(imgUrl);
                 string json = "{" + "\"imageData\":" + "{" + "\"data\":\"" + imageData + "\"" + "}" + "}";
                 string resp = request("/" + id + "/AddNewFace", "POST", json);
-                face = Newtonsoft.Json.JsonConvert.DeserializeObject<Face>(resp);
+                face = JsonSerializer.Deserialize<Face>(resp);
             }
             catch (Exception ex)
             {
@@ -281,7 +284,7 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string resp = requestNoBody("/" + id, "GET");
-                watchlistMember = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMember>(resp);
+                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(resp);
             }
             catch (Exception e)
             {
@@ -299,10 +302,10 @@ namespace SmartfaceSolution.SubClasses
             try
             {
                 string resp = requestNoBody("/" + id.Trim() + "/Faces?PageSize=50", "GET");
-                faces = Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
-                for (int i = 0; i < faces.Items.Count; i++)
+                faces = JsonSerializer.Deserialize<MemberFaces>(resp);
+                for (int i = 0; i < faces.items.Count; i++)
                 {
-                    images.Add(retrievesImage(faces.Items[i].ImageDataId));
+                    images.Add(retrievesImage(faces.items[i].imageDataId));
                 }
             }
             catch (Exception ex)
@@ -320,9 +323,9 @@ namespace SmartfaceSolution.SubClasses
             string images = null;
             try
             {
-                string resp = requestNoBody("/" + id.Trim() + "/Faces?Ascending=true&PageSize=5", "GET");
-                faces = Newtonsoft.Json.JsonConvert.DeserializeObject<MemberFaces>(resp);
-                images = retrievesImage(faces.Items[faces.Items.Count-1].ImageDataId);
+                string resp = requestNoBody("/" + id.Trim() + "/Faces?Ascending=true&PageSize=3", "GET");
+                faces = JsonSerializer.Deserialize<MemberFaces>(resp);
+                images = retrievesImage(faces.items[faces.items.Count-1].imageDataId);
             }
             catch (Exception ex)
             {
@@ -334,13 +337,15 @@ namespace SmartfaceSolution.SubClasses
         }
 
 
-        public WatchlistMembers retrievesAllWatchlistMembers()
+        public Members retrievesAllWatchlistMembers()
         {
-            WatchlistMembers watchlistMembers = null;
+            Members watchlistMembers = null;
             try
             {
                 string resp = requestNoBody("", "GET");
-                watchlistMembers = Newtonsoft.Json.JsonConvert.DeserializeObject<WatchlistMembers>(resp);
+                //Console.WriteLine(resp);
+                watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
+                Console.WriteLine(watchlistMembers.items.Length);
             }
             catch (Exception ex)
             {

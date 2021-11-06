@@ -2,41 +2,19 @@
 {
     public class PedestrianDetectorConfig
     {
-        #region variables
+ 
+        // private double minPedestrianSize;
+        // private double maxPedestrianSize;
+        // private double maxPedestrians;
+        // private double confidenceThreshold;
 
-        private double minPedestrianSize;
-        private double maxPedestrianSize;
-        private double maxPedestrians;
-        private double confidenceThreshold;
+        public double minPedestrianSize { get; set; }
 
-        #endregion
+        public double maxPedestrianSize { get; set; }
 
-        #region methods
+        public double maxPedestrians { get; set; }
 
-        public double MinPedestrianSize
-        {
-            get => minPedestrianSize;
-            set => minPedestrianSize = value;
-        }
+        public double confidenceThreshold { get; set; }
 
-        public double MaxPedestrianSize
-        {
-            get => maxPedestrianSize;
-            set => maxPedestrianSize = value;
-        }
-
-        public double MaxPedestrians
-        {
-            get => maxPedestrians;
-            set => maxPedestrians = value;
-        }
-
-        public double ConfidenceThreshold
-        {
-            get => confidenceThreshold;
-            set => confidenceThreshold = value;
-        }
-
-        #endregion
     }
 }

@@ -12,59 +12,34 @@ namespace SmartfaceSolution.Classes
             set => items = value;
         }
     }
+
+    public class Members
+    {
+        //sprivate WatchlistMember[] items;
+
+        public WatchlistMember[] items { get; set; }
+    }
+
     public class WatchlistMember
     {
-        #region variables
 
-        private string displayName;
-        private string fullName;
-        private string note;
-        private string id;
+        // private string displayName;
+        // private string fullName;
+        // private string note;
+        // private string id;
         // private string createdAt;
         // private string updatedAt;
         // private Watchlist[] watchlist;
         // private Face[] faces;
 
-        #endregion
+ 
+        public string displayName { get; set; }
 
-        #region methods
+        public string fullName { get; set; }
 
-        public string DisplayName
-        {
-            get => displayName;
-            set => displayName = value;
-        }
+        public string note { get; set; }
 
-        public string FullName
-        {
-            get => fullName;
-            set => fullName = value;
-        }
+        public string id { get; set; }
 
-        public string Note
-        {
-            get => note;
-            set => note = value;
-        }
-
-        public string Id
-        {
-            get => id;
-            set => id = value;
-        }
-
-        // public string CreatedAt
-        // {
-        //     get => createdAt;
-        //     set => createdAt = value;
-        // }
-        //
-        // public string UpdatedAt
-        // {
-        //     get => updatedAt;
-        //     set => updatedAt = value;
-        // }
-
-        #endregion
     }
 }

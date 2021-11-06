@@ -2,55 +2,27 @@
 {
     public class Frames
     {
-        #region variables
+ 
+        // private int totalItemCount;
+        // private Frame[] items;
+        // private int pageSize;
+        // private int pageNumber;
+        // private string previousPage;
+        // private string nextPage;
 
-        private int totalItemCount;
-        private Frame[] items;
-        private int pageSize;
-        private int pageNumber;
-        private string previousPage;
-        private string nextPage;
+ 
+        public int totalItemCount { get; set; }
 
-        #endregion
+        public Frame[] items { get; set; }
 
-        #region methods
+        public int pageSize { get; set; }
 
-        public int TotalItemCount
-        {
-            get => totalItemCount;
-            set => totalItemCount = value;
-        }
+        public int pageNumber { get; set; }
 
-        public Frame[] Items
-        {
-            get => items;
-            set => items = value;
-        }
+        public string previousPage { get; set; }
 
-        public int PageSize
-        {
-            get => pageSize;
-            set => pageSize = value;
-        }
+        public string nextPage { get; set; }
 
-        public int PageNumber
-        {
-            get => pageNumber;
-            set => pageNumber = value;
-        }
-
-        public string PreviousPage
-        {
-            get => previousPage;
-            set => previousPage = value;
-        }
-
-        public string NextPage
-        {
-            get => nextPage;
-            set => nextPage = value;
-        }
-
-        #endregion
+      
     }
 }

@@ -2,62 +2,29 @@
 {
     public class Frame
     {
-        #region variables
+        // private string state;
+        // private string imageDataId;
+        // private string receivedAt;
+        // private int positionInMs;
+        // private string id;
+        // private string createdAt;
+        // private string updatedAt;
 
-        private string state;
-        private string imageDataId;
-        private string receivedAt;
-        private int positionInMs;
-        private string id;
-        private string createdAt;
-        private string updatedAt;
 
-        #endregion
+        public string state { get; set; }
 
-        #region methods
+        public string imageDataId { get; set; }
 
-        public string State
-        {
-            get => state;
-            set => state = value;
-        }
+        public string receivedAt { get; set; }
 
-        public string ImageDataId
-        {
-            get => imageDataId;
-            set => imageDataId = value;
-        }
+        public int positionInMs { get; set; }
 
-        public string ReceivedAt
-        {
-            get => receivedAt;
-            set => receivedAt = value;
-        }
+        public string id { get; set; }
 
-        public int PositionInMs
-        {
-            get => positionInMs;
-            set => positionInMs = value;
-        }
+        public string createdAt { get; set; }
 
-        public string Id
-        {
-            get => id;
-            set => id = value;
-        }
+        public string updatedAt { get; set; }
 
-        public string CreatedAt
-        {
-            get => createdAt;
-            set => createdAt = value;
-        }
-
-        public string UpdatedAt
-        {
-            get => updatedAt;
-            set => updatedAt = value;
-        }
-
-        #endregion
+      
     }
 }

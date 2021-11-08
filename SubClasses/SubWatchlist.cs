@@ -4,6 +4,8 @@ using System.IO;
 using System.Net;
 using SmartfaceSolution.Classes;
 using System.Text.Json;
+using System.Threading.Tasks;
+
 namespace SmartfaceSolution.SubClasses
 {
     public class SubWatchlist : Watchlist
@@ -28,126 +30,139 @@ namespace SmartfaceSolution.SubClasses
 
             return result;
         }
-        public string requestNoBody(string reqUrl, string methodType)
+        public async Task<string> requestNoBody(string reqUrl, string methodType)
         {
             string res = null;
-            try
+            await Task.Run(() =>
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists/" + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    var httpWebRequest =
+                        (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists/" + reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    res = response(httpWebRequest);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
-        public string request(string reqUrl, string methodType, string json)
+        public async Task<string> request(string reqUrl, string methodType, string json)
         {
             string res = null;
-            try
+            await Task.Run(() =>
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists" + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                if (!methodType.Equals("DELETE"))
+                try
                 {
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    var httpWebRequest =
+                        (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists" + reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    if (!methodType.Equals("DELETE"))
                     {
-                        try
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
-                            streamWriter.Write(json);
-                        }
-                        finally
-                        {
-                            streamWriter.Flush();
-                            streamWriter.Close();
+                            try
+                            {
+                                streamWriter.Write(json);
+                            }
+                            finally
+                            {
+                                streamWriter.Flush();
+                                streamWriter.Close();
+                            }
                         }
                     }
+
+                    res = response(httpWebRequest);
                 }
-
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
 
-        public Watchlist createWatchList(string displayName, string fullName, int threshold)
+        public async Task<Watchlist> createWatchList(string displayName, string fullName, int threshold)
         {
             Watchlist watchlist = null;
-            try
+            await Task.Run(async () =>
             {
-                string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
-                              "\",\"threshold\":" + threshold + "}";
-                string resp = request("", "POST", json);
-                watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
+                                  "\",\"threshold\":" + threshold + "}";
+                    string resp = await request("", "POST", json);
+                    watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            });
             return watchlist;
         }
 
-        public Watchlist updateWatchList(string id, string displayName, string fullName, int threshold)
+        public async Task<Watchlist> updateWatchList(string id, string displayName, string fullName, int threshold)
         {
             Watchlist watchlist = null;
-            try
+            await Task.Run(async() =>
             {
-                string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName + "\",\"fullName\":\"" +
-                              fullName + "\",\"threshold\":" + threshold + "}";
-                string resp = request("", "PUT", json);
+                try
+                {
+                    string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName + "\",\"fullName\":\"" +
+                                  fullName + "\",\"threshold\":" + threshold + "}";
+                    string resp = await request("", "PUT", json);
 
-                watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
+                    watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            });
             return watchlist;
         }
 
-        public string deleteWatchList(String id)
+        public async Task<string> deleteWatchList(String id)
         {
             string resp = null;
-            try
+            await Task.Run(async() =>
             {
-                resp = request("/" + id, "DELETE", "");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    resp = await request("/" + id, "DELETE", "");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            });
             return resp;
         }
 
-        public void retrievesAllWatchlists()
+        public async Task retrievesAllWatchlists()
         {
-            try
+            await Task.Run(async() =>
             {
-                var httpWebRequest = (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists");
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "GET";
-                response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
+                try
+                {
+                    var httpWebRequest = (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Watchlists");
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "GET";
+                    response(httpWebRequest);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            });
         }
 
         public string convertImageToString(string name)
@@ -163,27 +178,29 @@ namespace SmartfaceSolution.SubClasses
             return Convert.ToBase64String(arrBytes);
         }
 
-        public void search()
+        public async Task search()
         {
             string img = convertImageToString("R.jpg");
             string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" + "}";
-            string resp = request("/Search", "POST", json);
+            string resp = await request("/Search", "POST", json);
             Console.WriteLine(resp);
         }
-        public WatchlistMembers retrievesWatchlistMembers(string watchlistId)
+        public async Task<WatchlistMembers> retrievesWatchlistMembers(string watchlistId)
         {
             WatchlistMembers watchlistMembers = null;
-            try
+            await Task.Run(async () =>
             {
-                string resp = requestNoBody(watchlistId+"/WatchlistMembers", "GET");
-                //Console.WriteLine(resp);
-                watchlistMembers = JsonSerializer.Deserialize<WatchlistMembers>(resp);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    string resp = await requestNoBody(watchlistId + "/WatchlistMembers", "GET");
+                    //Console.WriteLine(resp);
+                    watchlistMembers = JsonSerializer.Deserialize<WatchlistMembers>(resp);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            });
             return watchlistMembers;
         }
     }

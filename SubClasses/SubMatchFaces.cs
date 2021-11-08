@@ -33,106 +33,113 @@ namespace SmartfaceSolution.SubClasses
             return result;
         }
 
-        public string requestNoBody(string reqUrl, string methodType)
+        public async Task<string> requestNoBody(string reqUrl, string methodType)
         {
             string res = null;
-            try
+            await Task.Run(() =>
             {
-                var httpWebRequest = (HttpWebRequest) WebRequest.Create(reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    var httpWebRequest = (HttpWebRequest) WebRequest.Create(reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    res = response(httpWebRequest);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
 
-        public string requestWithBody(string reqUrl, string methodType, string json)
+        public async Task<string> requestWithBody(string reqUrl, string methodType, string json)
         {
             string res = null;
-            try
+            await Task.Run(() =>
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create(reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                if (!methodType.Equals("DELETE"))
+                try
                 {
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    var httpWebRequest =
+                        (HttpWebRequest) WebRequest.Create(reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    if (!methodType.Equals("DELETE"))
                     {
-                        try
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
-                            streamWriter.Write(json);
-                        }
-                        finally
-                        {
-                            streamWriter.Flush();
-                            streamWriter.Close();
+                            try
+                            {
+                                streamWriter.Write(json);
+                            }
+                            finally
+                            {
+                                streamWriter.Flush();
+                                streamWriter.Close();
+                            }
                         }
                     }
+
+                    res = response(httpWebRequest);
                 }
-
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
 
 
-        public List<MatchFaces> matchFaces()
+        public async Task<List<MatchFaces>> matchFaces()
         {
             List<MatchFaces> match = null;
-            // await Task.Run(() =>
-            //     {
-            try
+            await Task.Run(async () =>
             {
-                DateTime dayTime = DateTime.Now.ToLocalTime();
-                string resp = requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=100", "GET");
-                Frames frames = JsonSerializer.Deserialize<Frames>(resp);
-                DateTime frameDateTime;
-                for (int i = 0; i < frames.items.Length; i++)
+                try
                 {
-                    frameDateTime = DateTime.Parse(frames.items[i].createdAt);
-                    //Console.WriteLine("Now="+ dayTime+" Frame="+frameDateTime);
-                    if (frameDateTime.Hour == dayTime.Hour && frameDateTime.Minute == dayTime.Minute)
+                    DateTime dayTime = DateTime.Now.ToLocalTime();
+                    string resp = await requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=100",
+                        "GET");
+                    Frames frames = JsonSerializer.Deserialize<Frames>(resp);
+                    DateTime frameDateTime;
+                    for (int i = 0; i < frames.items.Length; i++)
                     {
-                        Console.WriteLine("hi");
-                        using (WebClient webClient = new WebClient())
+                        frameDateTime = DateTime.Parse(frames.items[i].createdAt);
+                        //Console.WriteLine("Now="+ dayTime+" Frame="+frameDateTime);
+                        if (frameDateTime.Hour == dayTime.Hour && frameDateTime.Minute == dayTime.Minute)
                         {
-                            byte[] data =
-                                webClient.DownloadData(
-                                    "http://localhost:8098/api/v1/Images/" + frames.items[i].imageDataId);
-                            string img = Convert.ToBase64String(data);
-                            string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
-                                          "}";
-                            resp = requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
-                                "POST",
-                                json);
-                            match = JsonSerializer.Deserialize<List<MatchFaces>>(resp);
-                            Console.WriteLine(match);
-                            return match;
+                            Console.WriteLine("hi");
+                            using (WebClient webClient = new WebClient())
+                            {
+                                byte[] data =
+                                    webClient.DownloadData(
+                                        "http://localhost:8098/api/v1/Images/" + frames.items[i].imageDataId);
+                                string img = Convert.ToBase64String(data);
+                                string json = "{" + "\"image\":" + "{" + "\"data\":\"" + img + "\"" + "}" +
+                                              "}";
+                                resp = await requestWithBody("http://localhost:8098/api/v1/Watchlists/Search",
+                                    "POST",
+                                    json);
+                                match = JsonSerializer.Deserialize<List<MatchFaces>>(resp);
+                                Console.WriteLine(match);
+                                return match;
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                Debug.WriteLine(e.ToString());
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    Debug.WriteLine(e.ToString());
+                }
 
-            return match;
-        }
+                return match;
+            });
+                return match;
+            }
 
         public string convertImageToString(string url)
         {
@@ -149,29 +156,31 @@ namespace SmartfaceSolution.SubClasses
         }
 
 
-        public string saveImage(string imgId)
+        public async Task<string> saveImage(string imgId)
         {
             string image = "";
-            try
+            await Task.Run(async() =>
             {
-                using (WebClient webClient = new WebClient())
+                try
                 {
-                    byte[] data = webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
-                    using (MemoryStream mem = new MemoryStream(data))
+                    using (WebClient webClient = new WebClient())
                     {
-                        using (var yourImage = Image.FromStream(mem))
+                        byte[] data =  webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
+                        using (MemoryStream mem = new MemoryStream(data))
                         {
-                            yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
-                            image = Convert.ToBase64String(data);
+                            using (var yourImage = Image.FromStream(mem))
+                            {
+                                yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+                                image = Convert.ToBase64String(data);
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return image;
         }
     }

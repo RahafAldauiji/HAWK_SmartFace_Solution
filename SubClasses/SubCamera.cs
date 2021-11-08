@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
 using SmartfaceSolution.Classes;
 
 namespace SmartfaceSolution.SubClasses
@@ -13,6 +14,7 @@ namespace SmartfaceSolution.SubClasses
     {
         public string response(HttpWebRequest httpWebRequest)
         {
+            
             var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
             string result = "";
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
@@ -30,147 +32,163 @@ namespace SmartfaceSolution.SubClasses
             return result;
         }
 
-        public string requestNoBody(string reqUrl, string methodType)
+        public async Task<string> requestNoBody(string reqUrl, string methodType)
         {
             string res = null;
-            try
+            await Task.Run(async () =>
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Cameras/" + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    var httpWebRequest =
+                        (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Cameras/" + reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    res = response(httpWebRequest);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
 
-        public string requestWithBody(string reqUrl, string methodType, string json)
+        public async Task<string> requestWithBody(string reqUrl, string methodType, string json)
         {
             string res = null;
-            try
+            await Task.Run(async () =>
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Cameras/" + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                if (!methodType.Equals("DELETE"))
+                try
                 {
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    var httpWebRequest =
+                        (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Cameras/" + reqUrl);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = methodType;
+                    if (!methodType.Equals("DELETE"))
                     {
-                        try
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
-                            streamWriter.Write(json);
-                        }
-                        finally
-                        {
-                            streamWriter.Flush();
-                            streamWriter.Close();
+                            try
+                            {
+                                streamWriter.Write(json);
+                            }
+                            finally
+                            {
+                                streamWriter.Flush();
+                                streamWriter.Close();
+                            }
                         }
                     }
+
+                    res = response(httpWebRequest);
                 }
-
-                res = response(httpWebRequest);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return res;
         }
 
-        public Camera getCamera(string id)
+        public async Task<Camera> getCamera(string id)
         {
             Camera camera = null;
-            try
+            await Task.Run(async () =>
             {
-                string result = requestNoBody(id, "GET");
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.ToString());
-            }
-
+                try
+                {
+                    string result = await requestNoBody(id, "GET");
+                    camera = JsonSerializer.Deserialize<Camera>(result);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.ToString());
+                }
+            });
             return camera;
         }
 
-        public List<Camera> getAllCameras()
+        public async Task<List<Camera>> getAllCameras()
         {
             List<Camera> cameras = null;
-            try
+            await Task.Run(async () =>
             {
-                string result = requestNoBody("", "GET");
-                //Console.WriteLine(result);
-                cameras = JsonSerializer.Deserialize<List<Camera>>(result);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
+                try
+                {
+                    string result = await requestNoBody("", "GET");
+                    //Console.WriteLine(result);
+                    cameras = JsonSerializer.Deserialize<List<Camera>>(result);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
 
+                
+            });
             return cameras;
         }
 
-        public Camera createCamera(string rtsp, string cameraName)
+        public async Task<Camera> createCamera(string rtsp, string cameraName)
         {
             Camera camera = null;
-            try
+            await Task.Run(async() =>
             {
-                string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
-                              true + "\"}";
-                string result = requestWithBody("", "POST", json);
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
+                                  true + "\"}";
+                    string result = await requestWithBody("", "POST", json);
+                    camera = JsonSerializer.Deserialize<Camera>(result);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return camera;
         }
 
-        public Camera updateCamera(string jsonCam)
+        public async Task<Camera> updateCamera(string jsonCam)
         {
             Camera camera = null;
-            try
+            await Task.Run(async() =>
             {
-                string result = requestWithBody("", "PUT", jsonCam);
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    string result = await requestWithBody("", "PUT", jsonCam);
+                    camera = JsonSerializer.Deserialize<Camera>(result);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return camera;
         }
 
-        public Camera deleteCamera(string id)
+        public async Task<Camera> deleteCamera(string id)
         {
             Camera camera = null;
-            try
+            await Task.Run(async() =>
             {
-                string result = requestNoBody(id, "DELETE");
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-
+                try
+                {
+                    string result = await requestNoBody(id, "DELETE");
+                    camera = JsonSerializer.Deserialize<Camera>(result);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);
+                }
+            });
             return camera;
         }
     }

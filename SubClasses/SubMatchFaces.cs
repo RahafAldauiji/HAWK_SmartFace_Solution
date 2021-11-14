@@ -103,7 +103,7 @@ namespace SmartfaceSolution.SubClasses
                     DateTime dayTime = DateTime.Now.ToLocalTime();
                     string resp = await requestNoBody("http://localhost:8098/api/v1/Frames?Ascending=false&PageSize=100",
                         "GET");
-                    Frames frames = JsonSerializer.Deserialize<Frames>(resp);
+                    CameraFrames frames = JsonSerializer.Deserialize<CameraFrames>(resp);
                     DateTime frameDateTime;
                     for (int i = 0; i < frames.items.Length; i++)
                     {
@@ -140,48 +140,48 @@ namespace SmartfaceSolution.SubClasses
             });
                 return match;
             }
-
-        public string convertImageToString(string url)
-        {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(url);
-
-            byte[] arrBytes;
-            using (var ms = new MemoryStream())
-            {
-                img.Save(ms, img.RawFormat);
-                arrBytes = ms.ToArray();
-            }
-
-            return Convert.ToBase64String(arrBytes);
-        }
-
-
-        public async Task<string> saveImage(string imgId)
-        {
-            string image = "";
-            await Task.Run(async() =>
-            {
-                try
-                {
-                    using (WebClient webClient = new WebClient())
-                    {
-                        byte[] data =  webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
-                        using (MemoryStream mem = new MemoryStream(data))
-                        {
-                            using (var yourImage = Image.FromStream(mem))
-                            {
-                                yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
-                                image = Convert.ToBase64String(data);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            });
-            return image;
-        }
+        
+        // public string convertImageToString(string url)
+        // {
+        //     System.Drawing.Image img = System.Drawing.Image.FromFile(url);
+        //
+        //     byte[] arrBytes;
+        //     using (var ms = new MemoryStream())
+        //     {
+        //         img.Save(ms, img.RawFormat);
+        //         arrBytes = ms.ToArray();
+        //     }
+        //
+        //     return Convert.ToBase64String(arrBytes);
+        // }
+        //
+        //
+        // public async Task<string> saveImage(string imgId)
+        // {
+        //     string image = "";
+        //     await Task.Run(async() =>
+        //     {
+        //         try
+        //         {
+        //             using (WebClient webClient = new WebClient())
+        //             {
+        //                 byte[] data =  webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
+        //                 using (MemoryStream mem = new MemoryStream(data))
+        //                 {
+        //                     using (var yourImage = Image.FromStream(mem))
+        //                     {
+        //                         yourImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+        //                         image = Convert.ToBase64String(data);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         catch (Exception ex)
+        //         {
+        //             Console.WriteLine(ex.Message);
+        //         }
+        //     });
+        //     return image;
+        // }
     }
 }

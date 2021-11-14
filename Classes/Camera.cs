@@ -30,19 +30,16 @@
 
 
         public string id { get; set; }
+        
         public string name { get; set; }
 
         public string source { get; set; }
 
         public bool enabled { get; set; }
-
-        public FaceDetectorConfig faceDetectorConfig { get; set; }
-
+        
         public string faceDetectorResourceId { get; set; }
-
-        public PedestrianDetectorConfig pedestrianDetectorConfig { get; set; }
-
-        public string PedestrianDetectorResourceId { get; set; }
+        
+        public string pedestrianDetectorResourceId { get; set; }
 
         public string templateGeneratorResourceId { get; set; }
 
@@ -72,7 +69,6 @@
 
         public string[] spoofDetectorResourceIds { get; set; }
 
-        public SpoofDetectorConfig spoofDetectorConfig { get; set; }
 
     }
 }

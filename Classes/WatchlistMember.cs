@@ -2,16 +2,16 @@
 
 namespace SmartfaceSolution.Classes
 {
-    public class WatchlistMembers
-    {
-        private List<WatchlistMember> items;
-
-        public List<WatchlistMember> Items
-        {
-            get => items;
-            set => items = value;
-        }
-    }
+    // public class WatchlistMembers
+    // {
+    //     private List<WatchlistMember> items;
+    //
+    //     public List<WatchlistMember> Items
+    //     {
+    //         get => items;
+    //         set => items = value;
+    //     }
+    // }
 
     public class Members
     {

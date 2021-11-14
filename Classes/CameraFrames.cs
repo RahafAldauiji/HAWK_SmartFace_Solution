@@ -1,6 +1,6 @@
 ﻿namespace SmartfaceSolution.Classes
 {
-    public class Frames
+    public class CameraFrames
     {
  
         // private int totalItemCount;

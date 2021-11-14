@@ -58,7 +58,7 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
-        public async Task<string> request(string reqUrl, string methodType, string json)
+        public async Task<string> requestWithBody(string reqUrl, string methodType, string json)
         {
             string res = null;
             await Task.Run(() =>
@@ -96,7 +96,7 @@ namespace SmartfaceSolution.SubClasses
             return res;
         }
 
-        public string convertImageToString(string name)
+        public string convertImageToBase64String(string name)
         {
             System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl + name);
             byte[] arrBytes;
@@ -120,7 +120,7 @@ namespace SmartfaceSolution.SubClasses
                     string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
                                   "\",\"note\":\"" +
                                   note + "\"}";
-                    string result = await request("", "POST", json);
+                    string result = await requestWithBody("", "POST", json);
                     watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
                 }
                 catch (Exception ex)
@@ -140,7 +140,7 @@ namespace SmartfaceSolution.SubClasses
                 {
                     string json = "{\"watchlistId\":\"" + watchlistId + "\",\"watchlistMembersIds\":[\"" +
                                   watchlistMembersIds + "\"]}";
-                    resp = await request("/LinkToWatchlist", "POST", json);
+                    resp = await requestWithBody("/LinkToWatchlist", "POST", json);
                 }
                 catch (Exception ex)
                 {
@@ -159,7 +159,7 @@ namespace SmartfaceSolution.SubClasses
                 {
                     string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName +
                                   "\",\"fullName\":\"" + fullName + "\",\"note\":\"" + note + "\"}";
-                    string result = await request("", "PUT", json);
+                    string result = await requestWithBody("", "PUT", json);
                     watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
                     Console.WriteLine(watchlistMember.id);
                 }
@@ -188,22 +188,22 @@ namespace SmartfaceSolution.SubClasses
             return resp;
         }
 
-        public async Task addFaceFromSystem(string memberId, string faceId)
-        {
-            // There is a problem with this method 
-            await Task.Run(async () =>
-            {
-                try
-                {
-                    string json = "{" + "\"faceId\":\"" + faceId + "\"" + "}";
-                    string resp = await request("/" + memberId + "/AddFaceFromSystem", "POST", json);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            });
-        }
+        // public async Task addFaceFromSystem(string memberId, string faceId)
+        // {
+        //     // There is a problem with this method 
+        //     await Task.Run(async () =>
+        //     {
+        //         try
+        //         {
+        //             string json = "{" + "\"faceId\":\"" + faceId + "\"" + "}";
+        //             string resp = await requestWithBody("/" + memberId + "/AddFaceFromSystem", "POST", json);
+        //         }
+        //         catch (Exception ex)
+        //         {
+        //             Debug.WriteLine(ex.Message);
+        //         }
+        //     });
+        // }
 
         public async Task<string> unlinkWatchListMember(string watchlistId, string watchlistMembersIds)
         {
@@ -214,7 +214,7 @@ namespace SmartfaceSolution.SubClasses
                 {
                     string json = "{\"watchlistId\":\"" + watchlistId + "\",\"watchlistMembersIds\":[\"" +
                                   watchlistMembersIds + "\"]}";
-                    resp = await request("/UnlinkFromWatchlist", "POST", json);
+                    resp = await requestWithBody("/UnlinkFromWatchlist", "POST", json);
                 }
                 catch (Exception ex)
                 {
@@ -231,9 +231,9 @@ namespace SmartfaceSolution.SubClasses
             {
                 try
                 {
-                    string imageData = convertImageToString(imgUrl);
+                    string imageData = convertImageToBase64String(imgUrl);
                     string json = "{" + "\"imageData\":" + "{" + "\"data\":\"" + imageData + "\"" + "}" + "}";
-                    string resp =await request("/" + id + "/AddNewFace", "POST", json);
+                    string resp =await requestWithBody("/" + id + "/AddNewFace", "POST", json);
                     face = JsonSerializer.Deserialize<Face>(resp);
                 }
                 catch (Exception ex)
@@ -245,19 +245,19 @@ namespace SmartfaceSolution.SubClasses
             return face;
         }
 
-        public async Task<string> register(string id, string watchlistId, string imgUrl)
+        public async Task<string> registerNewMember(string id, string watchlistId, string imgUrl)
         {
             string resp = null;
             await Task.Run(async () =>
             {
                 try
                 {
-                    string imageData = convertImageToString(imgUrl);
+                    string imageData = convertImageToBase64String(imgUrl);
                     string json = "{" +
                                   "\"id\":\"" + id + "\",\"images\": [" + "{" + "\"data\":\"" + imageData + "\"" + "}" +
                                   "],"
                                   + "\"watchlistIds\":[" + "\"" + watchlistId + "\"" + "]" + "}";
-                    resp = await request("/Register", "POST", json);
+                    resp = await requestWithBody("/Register", "POST", json);
                 }
                 catch (Exception ex)
                 {
@@ -276,7 +276,7 @@ namespace SmartfaceSolution.SubClasses
                 try
                 {
                     string json = "{" + "\"faceId\":\"" + faceId + "\"" + "}";
-                    resp = await request("/" + id + "/RemoveFace", "POST", json);
+                    resp = await requestWithBody("/" + id + "/RemoveFace", "POST", json);
                 }
                 catch (Exception ex)
                 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder; 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SmartfaceSolution.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using WebApi.Helpers;
+using WebApi.Services;
 
 namespace SmartfaceSolution
 {
@@ -29,34 +32,27 @@ namespace SmartfaceSolution
            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
             services.AddControllers();
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // })
-            //     .AddJwtBearer(jwt => {
-            //         var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
-            //
-            //         jwt.SaveToken = true;
-            //         jwt.TokenValidationParameters = new TokenValidationParameters {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<IUserService, UserService>();
+            // var key = Encoding.ASCII.GetBytes(Settings.Secret);
+            // services.AddAuthentication(x =>
+            //     {
+            //         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     })
+            //     .AddJwtBearer(x =>
+            //     {
+            //         x.RequireHttpsMetadata = false;
+            //         x.SaveToken = true;
+            //         x.TokenValidationParameters = new TokenValidationParameters
+            //         {
             //             ValidateIssuerSigningKey = true,
             //             IssuerSigningKey = new SymmetricSecurityKey(key),
             //             ValidateIssuer = false,
-            //             ValidateAudience = false,
-            //             ValidateLifetime = true,
-            //             RequireExpirationTime = false
+            //             ValidateAudience = false
             //         };
+            //
             //     });
- 
-            // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<ApiDbContext>();
-
-            // services.AddControllers();
-            // services.AddSwaggerGen(c =>
-            // {
-            //     c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApp", Version = "v1" });
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,14 +69,14 @@ namespace SmartfaceSolution
             app.UseCors();
             app.UseAuthorization();
             //
-             app.UseAuthentication();
+            app.UseAuthentication();
             // app.UseMvc(routes =>
             // {
             //     routes.MapRoute(
             //         name: "default",
             //         template: "{controller}/{action}/");
             // });
-            
+            app.UseMiddleware<JwtMiddleware>();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

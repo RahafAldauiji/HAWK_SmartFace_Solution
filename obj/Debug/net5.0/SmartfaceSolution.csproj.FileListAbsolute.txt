@@ -75,3 +75,11 @@ C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\Smart
 C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\MimeKit.dll
 C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Front\package.json
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\rahaf\OneDrive\Documents\Level 9\Senior Project\Smartface Project\SmartfaceSolution\SmartfaceSolution\bin\Debug\net5.0\omnisharp.json

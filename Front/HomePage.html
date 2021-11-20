@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +16,6 @@
     <link rel="stylesheet" href="css/tooplate.css">
     <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.0.5/dist/webcam-easy.min.js"></script>
     <script type="text/javascript" src="jsmpeg.min.js"></script>
-
-
 </head>
 
 <body id="HomePage">
@@ -46,7 +43,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Cameras</a>
+                                <a class="nav-link" href="Cameras.html">Cameras</a>
                             </li>
 
                             <li class="nav-item">
@@ -72,27 +69,76 @@
         </div>
         <!-- row -->
         <div class="row tm-content-row tm-mt-big">
-            <div class="col col-8 ">
+            <div class="col col-5 ">
                 <div class="bg-white tm-block h-100">
-                    <h2 class="tm-block-title">In-Camera</h2>
+                    <h2 class="tm-block-title" style="color: #262626">In-Camera</h2>
                     <!-- <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>-->
                     <canvas class="col col-12" id="video"></canvas>
                 </div>
             </div>
-           
-            <div class="col col-4">
+            
+            <div class="col col-5 ">
                 <div class="bg-white tm-block h-100">
-                    <h2 class="tm-block-title d-inline-block">Hits <img id="xxx" src=""></h2>
+                    <h2 class="tm-block-title" style="color: #262626">Out-Camera</h2>
+                    <!-- <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>-->
+                    <canvas class="col col-12" id="video1"></canvas>
+                </div>
+            </div>
+           
+            <div class="col col-2">
+                <div class="bg-white tm-block h-100">
+                    <h2 class="tm-block-title d-inline-block" style="color: #262626">Hits <img id="xxx" src=""></h2>
                     <table class="table table-striped mt-3">
                         <tbody id="tableMembers">
-                       
                         </tbody>
                     </table>
                 </div>
             </div>
 
         </div>
+        <footer class="text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: Social media -->
+                <section class="mb-4">
+                    <!-- Facebook -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-facebook-f"></i
+                    ></a>
 
+                    <!-- Twitter -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-twitter"></i
+                    ></a>
+
+                    <!-- Google -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-google"></i
+                    ></a>
+
+                    <!-- Instagram -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-instagram"></i
+                    ></a>
+
+                    <!-- Linkedin -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-linkedin-in"></i
+                    ></a>
+
+                    <!-- Github -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+                    ><i class="fab fa-github"></i
+                    ></a>
+                </section>
+                <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: black;">2021 <a class="text-white" href="#">HAWK</a></div>
+            <!-- Copyright -->
+        </footer>
     </div>
 </div>
 

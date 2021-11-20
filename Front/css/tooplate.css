@@ -8,6 +8,17 @@ html {
 	background-color: #666;
 }*/
 
+
+
+.table-hover{
+  width: 100%;
+}
+.table-hover tbody{
+}
+th {
+  color:white ;
+}
+
 body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   overflow-x: hidden;
@@ -89,7 +100,7 @@ a:focus {
 
 .tm-block-title {
   font-size: 1.4rem;
-  color: #004B8B;
+  color: white;
   margin-bottom: 30px;
   font-weight: bolder;
 }
@@ -202,15 +213,41 @@ ol {
   height: 50px;
 }
 
+.Camera-form {
+  border-radius: 5px;
+  background-color: #F3F3F3;
+  padding: 100px;
+  width: 60%;
+  position: relative;
+  top: 10%;
+  left: 20%;
+}  
+
+
+
 label {
   margin-bottom: 18px;
 }
 
+.input-group-text{
+  color: white;
+  background-color:#004B8B ;
+}
+.btn-action{
+  color: white;
+  background-color:#004B8B ;
+
+}
+
+.btn-sh{
+  color: #004B8B;
+  margin-right: 10px;
+}
 .btn {
-  border-radius: 0;
   padding: 13px 28px;
   transition: all 0.2s ease;
   max-width: 100%;
+  
 }
 
 .btn-small {
@@ -218,9 +255,9 @@ label {
 }
 
 .btn-primary {
-  background-color: transparent;
+  background-color: #004B8B;
   color: black;
-  border-color: #999999;
+  border-color: #004B8B;
 }
 
 .btn-primary:hover,
@@ -234,15 +271,13 @@ label {
 }
 
 .btn-danger {
-  color: #9f1321;
+  color: #004B8B;
   background-color: transparent;
-  border-color: #9f1321;
 }
 
 .btn-danger:hover {
-  color: #9f1321;
-  background-color: rgba(159, 19, 32, 0.27);
-  border-color: #9f1321;
+  color:  #004B8B;
+  background-color: #999999;
 }
 
 .custom-file-input {
@@ -268,7 +303,7 @@ label {
 }
 
 .tm-bg-gray {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: #262626;
 }
 
 .tm-table-striped-even.table-striped tbody tr:nth-of-type(even) {
@@ -362,7 +397,6 @@ input[type="checkbox"]:focus {
 }
 
 .tm-trash-icon:hover {
-  color: #9f1321;
 }
 
 .tm-trash-icon-cell {

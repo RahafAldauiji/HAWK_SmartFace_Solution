@@ -42,7 +42,7 @@ namespace SmartfaceSolution.Controllers
 
         #region Camera
 
-        [Authorize]
+       // [Authorize]
         [HttpGet]
         [Route("Camera/getCamera")]
         public async Task<IActionResult> getCamera(string id)
@@ -51,7 +51,7 @@ namespace SmartfaceSolution.Controllers
             return Json(camera);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpGet]
         [Route("Camera/getAllCameras")]
         public async Task<IActionResult> getAllCameras()
@@ -60,7 +60,7 @@ namespace SmartfaceSolution.Controllers
             return Json(cameras);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("Camera/create")]
         public async Task<IActionResult> createCamera(string rtsp, string cameraName)
@@ -77,16 +77,17 @@ namespace SmartfaceSolution.Controllers
         //     Camera camera = new SubCamera().updateCamera(cam);
         //     return Json(camera);
         // }
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("Camera/delete")]
         public async Task<IActionResult> deleteCamera(string id)
         {
-            Camera camera = await new SubCamera().deleteCamera(id);
+            Console.WriteLine("in");
+            string camera = await new SubCamera().deleteCamera(id);
             return Json(camera);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("Camera/Match")]
         public async Task<IActionResult> getMatch()
@@ -99,7 +100,7 @@ namespace SmartfaceSolution.Controllers
 
         #region Watchlist
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("Watchlist/create")]
         public async Task<IActionResult> createWatchlist(string watchlistDisplayName,
@@ -110,7 +111,7 @@ namespace SmartfaceSolution.Controllers
             return Json(watchlist);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("Watchlist/getMembers")]
         public async Task<IActionResult> getWatchlistMembers(string id)
@@ -118,8 +119,14 @@ namespace SmartfaceSolution.Controllers
             Members watchlistMembers = await new SubWatchlist().retrievesWatchlistMembers(id);
             return Json(watchlistMembers);
         }
-
-        [Authorize]
+        [HttpGet]
+        [Route("Watchlist/getAllWatchlist")]
+        public async Task<IActionResult> getAllWatchlist()
+        {
+            List<Watchlist> watchlistMembers = await new SubWatchlist().retrievesAllWatchlist();
+            return Json(watchlistMembers);
+        }
+       // [Authorize]
         [HttpPut]
         [Route("Watchlist/upadte")]
         public async Task<IActionResult> updateWatchlist(string watchlistId, string watchlistDisplayName,
@@ -130,7 +137,7 @@ namespace SmartfaceSolution.Controllers
             return Json(updatedwatchlist);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete]
         [Route("Watchlist/delete")]
         public async Task<IActionResult> deleteWatchlist(string watchlistId)
@@ -143,7 +150,7 @@ namespace SmartfaceSolution.Controllers
 
         #region WatchlistMember
 
-        [Authorize]
+       // [Authorize]
         [HttpGet]
         [Route("WatchlistMember/getMember")]
         public async Task<IActionResult> getWatchlistMember(string id)
@@ -152,7 +159,7 @@ namespace SmartfaceSolution.Controllers
             return Json(watchlistMember);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
         [Route("WatchlistMember/update")]
         public async Task<IActionResult> updateWatchlistMember(string id, string displayName, string fullName,
@@ -167,7 +174,7 @@ namespace SmartfaceSolution.Controllers
             return Json(updatedwatchlistMember);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPost]
         [Route("WatchlistMember/link")]
         public async Task<IActionResult> linkWatchlistMember(string watchlistMember,
@@ -178,7 +185,7 @@ namespace SmartfaceSolution.Controllers
             return Json(linkedwatchlistMember);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("WatchlistMember/unlink")]
         public async Task<IActionResult> unlinkWatchlistMember(string watchlistMember,
@@ -189,7 +196,7 @@ namespace SmartfaceSolution.Controllers
             return Json(linkedwatchlistMember);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpDelete]
         [Route("WatchlistMember/delete")]
         public async Task<IActionResult> deleteWatchlistMember(string watchlistMemberId)
@@ -198,26 +205,26 @@ namespace SmartfaceSolution.Controllers
             return Json(deletedwatchlistMember);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpGet]
         [Route("WatchlistMember/GetAllWatchlistMembers")]
-        public async Task<IActionResult> getAllWatchlistMembers(string watchlistMemberId)
+        public async Task<IActionResult> getAllWatchlistMembers()
         {
             Members watchlistMember = await new SubWatchlistMember().retrievesAllWatchlistMembers();
 
             return Json(watchlistMember.items);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("WatchlistMember/getMemberFace")]
-        public async Task<IActionResult> getMemberFaces(string id)
+        public async Task<IActionResult> getMemberFace(string id)
         {
             string img = await new SubWatchlistMember().getMemberFace(id);
             return Json(img);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("WatchlistMember/getFaces")]
         public async Task<IActionResult> getWatchlistMemberFaces(string id)
@@ -235,7 +242,7 @@ namespace SmartfaceSolution.Controllers
         //         new SubWatchlistMember().register(id, watchlistId, imgUrl);
         //     return Json(registeredWatchlistMember);
         // }
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("WatchlistMember/CreateAndResgister")]
         public async Task<IActionResult> createWatchlistMember(string displayName, string fullName, string note,
@@ -252,7 +259,7 @@ namespace SmartfaceSolution.Controllers
 
         //cc9c8016-3489-49f1-8e2d-842c7dae3431 :S
         //90ca71c3-2247-47a2-a78d-6a97ac5a1540 :E
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("WatchlistMember/addFace")]
         public async Task<IActionResult> addFace(string watchlistMemberId, string imgUrl)
@@ -261,7 +268,7 @@ namespace SmartfaceSolution.Controllers
             return Json(face);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("WatchlistMember/removeFace")]
         public async Task<IActionResult> removeFace(string id, string faceId)

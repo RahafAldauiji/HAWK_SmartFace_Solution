@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -204,6 +205,26 @@ namespace SmartfaceSolution.SubClasses
                 }
             });
             return watchlistMembers;
+        }
+        public async Task<List<Watchlist>> retrievesAllWatchlist()
+        {
+            List<Watchlist> watchlists = null;
+            await Task.Run(async() =>
+            {
+                try
+                {
+                    string resp = await requestNoBody("", "GET");
+                    //Console.WriteLine(resp);
+                    watchlists = JsonSerializer.Deserialize<List<Watchlist>>(resp);
+                   // Console.WriteLine(watchlistMembers.items.Length);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    Debug.WriteLine(ex.Message);
+                }
+            });
+            return watchlists;
         }
     }
 }

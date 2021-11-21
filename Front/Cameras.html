@@ -81,35 +81,35 @@
                         <table class="table table-hover table-striped tm-table-striped-even mt-3">
                             <thead>
                             <tr class="tm-bg-gray">
-                                <th scope="col">Camera</th>
-                                <th scope="col">State</th>
+                                <th scope="col" colspan="2">Camera</th>
+                                <th scope="col">Enable</th>
                                 <th scope="col"></th>
                             </tr>
                             </thead>
-                            <tbody id="membersList">
-                            <td>Camera 1 </td>
-                            <td>Enable </td>
-                          <td>
-                              <button  onclick="EditPage()" type="button" class=" btn btn-sh btn-sm "  style="float: right"><i class="fas fa-edit fa-lg " ></i></button>
-                              <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>
-                          </td>
-                            <tr>
-                                <td>Camera 2 </td>
-                                <td>Enable </td>
-                                <td>
-                                    <button onclick="EditPage()" type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="fas fa-edit fa-lg " ></i></button>
-                                    <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Camera 3 </td>
-                                <td>Enable </td>
-                                <td>
-                                    <button onclick="EditPage()" type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="fas fa-edit fa-lg " ></i></button>
-                                    <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>
-                                </td>
-                            </tr>
-                            
+                            <tbody id="cameraList">
+<!--                            <td>Camera 1 </td>-->
+<!--                            <td>Enable </td>-->
+<!--                          <td>-->
+<!--                              <button  onclick="EditPage()" type="button" class=" btn btn-sh btn-sm "  style="float: right"><i class="fas fa-edit fa-lg " ></i></button>-->
+<!--                              <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>-->
+<!--                          </td>-->
+<!--                            <tr>-->
+<!--                                <td>Camera 2 </td>-->
+<!--                                <td>Enable </td>-->
+<!--                                <td>-->
+<!--                                    <button onclick="EditPage()" type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="fas fa-edit fa-lg " ></i></button>-->
+<!--                                    <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>Camera 3 </td>-->
+<!--                                <td>Enable </td>-->
+<!--                                <td>-->
+<!--                                    <button onclick="EditPage()" type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="fas fa-edit fa-lg " ></i></button>-->
+<!--                                    <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            -->
                             
                             </tbody>
                         </table>
@@ -123,11 +123,41 @@
 </div>
 </body>
 <script>
+    
+    res = fetch("https://localhost:5001/HAWK/Camera/getAllCameras")
+        .then(resultHits => resultHits.json())
+        .then(resultHits => {
+            var splitHits="";
+                jresult = JSON.stringify(resultHits);
+                resultHits.map(obj => {
+                      //window.alert(obj.id);
+                     splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+ 
+                         "\" name='camera' type=\"radio\"></th>";
+                    //splitHits += "<tr>";
+                    splitHits += "<td className=\"tm-product-name\">";
+                    splitHits += obj.name + "</td> <br>";
+                    splitHits += "<td className=\"text-center\">";
+                    splitHits += obj.enabled + "</td>";
+                    splitHits+="<td> " +
+                        "<button  onclick=\"EditPage()\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\"><i class=\"fas fa-edit fa-lg \" ></i></button>" +
+                        "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\"><i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" +obj.id+"')\"></i></button>" +
+                        "</td>";
+                    //splitHits += "</tr>";
+
+                });
+                document.getElementById("cameraList").innerHTML = splitHits;
+
+            }
+        );
     function AddPage(){
         window.open("addCamera.html");
     }
     function EditPage(){
         window.open("editCamera.html");
+    }
+    function deleteCam(id){
+        alert(id)
+        fetch("https://localhost:5001/HAWK/Camera/delete?id="+id);
     }
 </script>
 </html>

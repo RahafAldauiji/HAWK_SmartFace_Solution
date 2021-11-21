@@ -173,15 +173,16 @@ namespace SmartfaceSolution.SubClasses
             return camera;
         }
 
-        public async Task<Camera> deleteCamera(string id)
+        public async Task<string> deleteCamera(string id)
         {
-            Camera camera = null;
+            string camera = "";
             await Task.Run(async() =>
             {
                 try
                 {
+                    Console.WriteLine(id);
                     string result = await requestNoBody(id, "DELETE");
-                    camera = JsonSerializer.Deserialize<Camera>(result);
+                    camera = result;
                 }
                 catch (Exception ex)
                 {

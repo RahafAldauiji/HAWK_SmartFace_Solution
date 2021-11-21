@@ -1,4 +1,4 @@
-namespace WebApi.Helpers
+namespace SmartfaceSolution.Helpers
 {
     public class AppSettings
     {

@@ -1,6 +1,6 @@
-using WebApi.Entities;
+using SmartfaceSolution.Entities;
 
-namespace WebApi.Models
+namespace SmartfaceSolution.Models
 {
     public class AuthenticateResponse
     {
@@ -14,8 +14,6 @@ namespace WebApi.Models
         public AuthenticateResponse(User user, string token)
         {
             Id = user.Id;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
             Username = user.Username;
             Token = token;
         }

@@ -13,8 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Helpers;
-using WebApi.Services;
+using SmartfaceSolution.Helpers;
+using SmartfaceSolution.Services;
 
 namespace SmartfaceSolution
 {
@@ -31,7 +31,18 @@ namespace SmartfaceSolution
         {
            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
             services.AddControllers();
-            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
+            services.AddCors(options =>
+            {
+               
+                options.AddPolicy("AnotherPolicy",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+            //services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IUserService, UserService>();
             // var key = Encoding.ASCII.GetBytes(Settings.Secret);

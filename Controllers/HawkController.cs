@@ -9,14 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 using SmartfaceSolution.Classes;
 using SmartfaceSolution.Repositories;
 using SmartfaceSolution.SubClasses;
-using WebApi.Models;
-using WebApi.Services;
+using SmartfaceSolution.Models;
+using SmartfaceSolution.Services;
 
 namespace SmartfaceSolution.Controllers
 {
     [Produces("application/json")]
     [Route("HAWK")]
     [ApiController]
+    [EnableCors("AnotherPolicy")]
+
+
     public class HawkController : Controller
     {
         private IUserService _userService;
@@ -51,7 +54,7 @@ namespace SmartfaceSolution.Controllers
             return Json(camera);
         }
 
-       // [Authorize]
+        [Authorize]
         [HttpGet]
         [Route("Camera/getAllCameras")]
         public async Task<IActionResult> getAllCameras()
@@ -63,9 +66,10 @@ namespace SmartfaceSolution.Controllers
         //[Authorize]
         [HttpPost]
         [Route("Camera/create")]
-        public async Task<IActionResult> createCamera(string rtsp, string cameraName)
+        public async Task<IActionResult> createCamera([FromBody]Camera cam)
         {
-            Camera camera = await new SubCamera().createCamera(rtsp: rtsp, cameraName: cameraName);
+            Console.WriteLine("in");
+            Camera camera = await new SubCamera().createCamera(rtsp: cam.source, cameraName: cam.name);
             return Json(camera);
         }
 

@@ -6,9 +6,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebApi.Services;
+using SmartfaceSolution.Services;
 
-namespace WebApi.Helpers
+namespace SmartfaceSolution.Helpers
 {
     public class JwtMiddleware
     {

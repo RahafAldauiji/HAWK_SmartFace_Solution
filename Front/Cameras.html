@@ -123,14 +123,23 @@
 </div>
 </body>
 <script>
-    
-    res = fetch("https://localhost:5001/HAWK/Camera/getAllCameras")
+    var bearer_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYmYiOjE2Mzc1MTQ3MTcsImV4cCI6MTYzODExOTUxNywiaWF0IjoxNjM3NTE0NzE3fQ.UBfJ7II2Ma7fR30AUxmmJ3CInTlDp9kRUwSedrgWBTA';
+    var bearer = 'Bearer ' + bearer_token;
+    res = fetch("https://localhost:5001/HAWK/Camera/getAllCameras",{
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+            'Authorization': bearer,
+            'Content-Type': 'application/json'
+        }
+    })
         .then(resultHits => resultHits.json())
         .then(resultHits => {
             var splitHits="";
                 jresult = JSON.stringify(resultHits);
+           // window.alert(jresult);
                 resultHits.map(obj => {
-                      //window.alert(obj.id);
+                      
                      splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+ 
                          "\" name='camera' type=\"radio\"></th>";
                     //splitHits += "<tr>";
@@ -139,13 +148,16 @@
                     splitHits += "<td className=\"text-center\">";
                     splitHits += obj.enabled + "</td>";
                     splitHits+="<td> " +
-                        "<button  onclick=\"EditPage()\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\"><i class=\"fas fa-edit fa-lg \" ></i></button>" +
-                        "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\"><i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" +obj.id+"')\"></i></button>" +
+                        "<button  onclick=\"EditPage()\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\">" +
+                        "<i class=\"fas fa-edit fa-lg \" ></i></button>" +
+                        "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">" +
+                        "<i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" +obj.id+"')\"></i></button>" +
                         "</td>";
                     //splitHits += "</tr>";
 
                 });
-                document.getElementById("cameraList").innerHTML = splitHits;
+            localStorage.setItem('userT', bearer);
+            document.getElementById("cameraList").innerHTML = splitHits;
 
             }
         );
@@ -153,11 +165,18 @@
         window.open("addCamera.html");
     }
     function EditPage(){
+        localStorage.setItem('userT', bearer);
         window.open("editCamera.html");
     }
     function deleteCam(id){
-        alert(id)
-        fetch("https://localhost:5001/HAWK/Camera/delete?id="+id);
+        //alert(id)
+        fetch("https://localhost:5001/HAWK/Camera/delete?id="+id,{
+            method: 'DELETE',
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(o=>location.reload());
     }
 </script>
 </html>

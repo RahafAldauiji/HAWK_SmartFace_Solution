@@ -6,11 +6,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using WebApi.Entities;
-using WebApi.Helpers;
-using WebApi.Models;
+using SmartfaceSolution.Entities;
+using SmartfaceSolution.Helpers;
+using SmartfaceSolution.Models;
 
-namespace WebApi.Services
+namespace SmartfaceSolution.Services
 {
     public interface IUserService
     {

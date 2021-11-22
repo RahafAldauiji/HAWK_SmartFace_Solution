@@ -29,7 +29,7 @@
                     <div class="row mt-2">
                         <div class="col-12">
 
-                            <form action="HomePage.html">
+                            <form action="#">
                                 <div class="input-group">
                                     <label for="username" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Username</label>
                                     <input name="username" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" id="username" required>
@@ -39,8 +39,8 @@
                                     <input name="password" type="password" class="form-control validate" id="password" required>
                                 </div>
                                 <div class="input-group mt-3">
-                                    <button onclick="RegistrationPage()"type="submit" class="btn btn-primary d-inline-block mx-auto">Registration</button>
-                                    <button type="submit" class="btn btn-primary d-inline-block mx-auto">Login</button>
+                                    <button onclick="login()"type="submit" class="btn btn-primary d-inline-block mx-auto">Registration</button>
+                                    <button type="submit" class="btn btn-primary d-inline-block mx-auto"onclick="login()">Login</button>
                                 </div>
                                
                             </form>
@@ -51,8 +51,31 @@
         </div>
     </div>
 <script>
-    function RegistrationPage(){
-        window.open("registrationPage.html");
+    function login() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        let data = {username: username, password: password};
+        let r=fetch("https://localhost:5001/HAWK/authenticate", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => {
+            if(res.ok){
+                //localStorage.setItem("userT",res.Token)
+                //alert(res.response);
+                window.open("HomePage.html", "_self");
+            }else{
+                //alert(JSON.stringify(res.body));
+                alert("Wrong Username or Password!")
+            }
+            
+            }  
+        );
+    }
+    function RegistrationPage() {
+        window.open("registrationPage.html", "_self");
     }
 </script>
 </body>

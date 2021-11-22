@@ -125,6 +125,7 @@
 <script>
     var bearer_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYmYiOjE2Mzc1MTQ3MTcsImV4cCI6MTYzODExOTUxNywiaWF0IjoxNjM3NTE0NzE3fQ.UBfJ7II2Ma7fR30AUxmmJ3CInTlDp9kRUwSedrgWBTA';
     var bearer = 'Bearer ' + bearer_token;
+    var selectedCamID;
     res = fetch("https://localhost:5001/HAWK/Camera/getAllCameras",{
         method: 'GET',
         withCredentials: true,
@@ -139,7 +140,7 @@
                 jresult = JSON.stringify(resultHits);
            // window.alert(jresult);
                 resultHits.map(obj => {
-                      
+                    selectedCamID=obj.id;
                      splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+ 
                          "\" name='camera' type=\"radio\"></th>";
                     //splitHits += "<tr>";
@@ -162,11 +163,12 @@
             }
         );
     function AddPage(){
-        window.open("addCamera.html");
+        window.open("addCamera.html", "_self");
     }
     function EditPage(){
         localStorage.setItem('userT', bearer);
-        window.open("editCamera.html");
+        localStorage.setItem('cameraId', selectedCamID);
+        window.open("editCamera.html", "_self");
     }
     function deleteCam(id){
         //alert(id)
@@ -176,7 +178,8 @@
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(o=>location.reload());
+        }).then(o=>location.reload())
+        
     }
 </script>
 </html>

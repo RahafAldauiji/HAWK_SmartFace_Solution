@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -32,11 +34,12 @@ namespace SmartfaceSolution.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateRequest model)
         {
             var response = _userService.Authenticate(model);
             if (response == null)
                 return BadRequest(new {message = "Username or password is incorrect"});
+            
             return Ok(response);
         }
 
@@ -74,13 +77,14 @@ namespace SmartfaceSolution.Controllers
         }
 
         // [Authorize]
-        // [HttpPut] NOT WORKING
-        // [Route("Camera/update")]
-        // public IActionResult updateCamera(string cam)
-        // {
-        //     Camera camera = new SubCamera().updateCamera(cam);
-        //     return Json(camera);
-        // }
+        [HttpPut] 
+        [Route("Camera/update")]
+        public IActionResult updateCamera([FromBody]Camera cam)
+        {
+            Console.WriteLine(Json(cam));
+            Task<Camera> camera = new SubCamera().updateCamera(cam);
+            return Json(camera);
+        }
         //[Authorize]
         [HttpDelete]
         [Route("Camera/delete")]

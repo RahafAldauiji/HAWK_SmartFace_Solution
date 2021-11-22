@@ -109,15 +109,13 @@
         let name = document.getElementById("inlineFormInputGroupUsername1").value;
         let source=document.getElementById("inlineFormInputGroupUsername2").value;
         let data = {source: source, name: name};
-        alert(data)
         fetch("https://localhost:5001/HAWK/Camera/create",{
             method: 'POST',
-            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res=>window.open("Cameras.html"));
+        }).then(res=>window.open("Cameras.html","_self"));
     }
 </script>
 </body>

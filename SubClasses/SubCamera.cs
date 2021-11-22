@@ -65,8 +65,7 @@ namespace SmartfaceSolution.SubClasses
                         (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/Cameras/" + reqUrl);
                     httpWebRequest.ContentType = "application/json";
                     httpWebRequest.Method = methodType;
-                    if (!methodType.Equals("DELETE"))
-                    {
+                    
                         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
                             try
@@ -79,7 +78,7 @@ namespace SmartfaceSolution.SubClasses
                                 streamWriter.Close();
                             }
                         }
-                    }
+                    
 
                     res = response(httpWebRequest);
                 }
@@ -154,9 +153,13 @@ namespace SmartfaceSolution.SubClasses
             return camera;
         }
 
-        public async Task<Camera> updateCamera(string jsonCam)
+        public async Task<Camera> updateCamera(Camera cam)
         {
             Camera camera = null;
+            string jsonCam = JsonSerializer.Serialize(cam);
+                // "{\"id\":\""+cam.id+"\",\"name\":\"" + cam.name + "\",\"source\":\"" + cam.source + "\",\"enabled\":\"" +
+                //              cam.enabled + "\"}";
+            Console.WriteLine(jsonCam);
             await Task.Run(async() =>
             {
                 try

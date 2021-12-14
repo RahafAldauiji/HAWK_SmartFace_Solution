@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using SmartfaceSolution.Classes;
-using SmartfaceSolution.Repositories;
-using SmartfaceSolution.SubClasses;
+using Newtonsoft.Json;
+using SmartfaceSolution.Entities;
+using SmartfaceSolution.SubEntities;
 using SmartfaceSolution.Models;
 using SmartfaceSolution.Services;
 
@@ -38,14 +34,22 @@ namespace SmartfaceSolution.Controllers
         {
             var response = _userService.Authenticate(model);
             if (response == null)
+            {
                 return BadRequest(new {message = "Username or password is incorrect"});
-            
+            }
+
             return Ok(response);
         }
-
+        [HttpGet]
+        [Route("Exception")]
+        public async Task<IActionResult> Exception()
+        {
+            throw new Exception("Exception while fetching data");
+            return Ok();
+        }
         /////////////////////////////////
         ///
-
+        
         #region Camera
 
        // [Authorize]
@@ -57,7 +61,7 @@ namespace SmartfaceSolution.Controllers
             return Json(camera);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("Camera/getAllCameras")]
         public async Task<IActionResult> getAllCameras()
@@ -71,26 +75,26 @@ namespace SmartfaceSolution.Controllers
         [Route("Camera/create")]
         public async Task<IActionResult> createCamera([FromBody]Camera cam)
         {
-            Console.WriteLine("in");
+            
             Camera camera = await new SubCamera().createCamera(rtsp: cam.source, cameraName: cam.name);
             return Json(camera);
         }
 
         // [Authorize]
-        [HttpPut] 
+        [HttpPost] 
         [Route("Camera/update")]
-        public IActionResult updateCamera([FromBody]Camera cam)
+        public async Task<IActionResult> updateCamera(string camera)
         {
-            Console.WriteLine(Json(cam));
-            Task<Camera> camera = new SubCamera().updateCamera(cam);
-            return Json(camera);
+            Camera cam = JsonConvert.DeserializeObject<Camera>(camera);
+            Camera updatedCamera = await new SubCamera().updateCamera(cam);
+            return Json(updatedCamera);
         }
         //[Authorize]
         [HttpDelete]
         [Route("Camera/delete")]
         public async Task<IActionResult> deleteCamera(string id)
         {
-            Console.WriteLine("in");
+            
             string camera = await new SubCamera().deleteCamera(id);
             return Json(camera);
         }

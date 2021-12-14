@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SmartfaceSolution.Classes
+namespace SmartfaceSolution.Entities
 {
     // public class WatchlistMembers
     // {

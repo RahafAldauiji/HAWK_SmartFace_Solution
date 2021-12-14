@@ -1,5 +1,6 @@
-﻿namespace SmartfaceSolution.Classes
+﻿namespace SmartfaceSolution.Entities
 {
+    
     public class Camera
     {
 
@@ -50,7 +51,6 @@
         public string trackMotionOptimization { get; set; }
 
         public string faceSaveStrategy { get; set; }
-
         public string maskImagePath { get; set; }
 
         public bool saveFrameImageData { get; set; }
@@ -68,7 +68,11 @@
         public string serviceName { get; set; }
 
         public string[] spoofDetectorResourceIds { get; set; }
-
-
+        //
+        public VideoFaceDetectorConfig faceDetectorConfig{ get; set; }
+        
+        public VideoPedestrianDetectorConfig pedestrianDetectorConfig{ get; set; }
+        
+        public SpoofDetectorConfig spoofDetectorConfig { get; set; }
     }
 }

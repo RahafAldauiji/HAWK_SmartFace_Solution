@@ -1,4 +1,4 @@
-﻿namespace SmartfaceSolution.Classes
+﻿namespace SmartfaceSolution.Entities
 {
     public class MatchResult
     {

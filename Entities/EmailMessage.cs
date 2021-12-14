@@ -1,7 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
 
-namespace SmartfaceSolution.Classes
+namespace SmartfaceSolution.Entities
 {
     public class EmailMessage
     {

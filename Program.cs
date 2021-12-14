@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SmartfaceSolution.Classes;
-using SmartfaceSolution.SubClasses;
+using SmartfaceSolution.Entities;
+using SmartfaceSolution.SubEntities;
 
 namespace SmartfaceSolution
 {

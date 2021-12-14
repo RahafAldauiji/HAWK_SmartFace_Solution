@@ -126,7 +126,7 @@
 <script>
     let cameraId=localStorage.getItem('cameraId');
     let userT=localStorage.getItem('userT');
-    var jresult;
+    var camera;
     var res = fetch("https://localhost:5001/HAWK/Camera/getCamera?id="+cameraId,{
         method: 'GET',
         withCredentials: true,
@@ -137,7 +137,7 @@
     })
         .then(resultHits => resultHits.json())
         .then(resultHits => {
-                jresult = resultHits;
+                camera = resultHits;
                 document.getElementById("inlineFormInputGroupUsername1").value=resultHits.id;
                 document.getElementById("inlineFormInputGroupUsername2").value=resultHits.name;
                 document.getElementById("inlineFormInputGroupUsername3").value=resultHits.enabled;
@@ -166,19 +166,18 @@
             }
         );
         function updateCam(){
-            jresult.id=document.getElementById("inlineFormInputGroupUsername1").value;
-            jresult.name=document.getElementById("inlineFormInputGroupUsername2").value;
-            jresult.enabled=document.getElementById("inlineFormInputGroupUsername3").value;
-            jresult.source=document.getElementById("inlineFormInputGroupUsername4").value;
-            let data = JSON.stringify(jresult);
-            alert(data)
-            fetch("https://localhost:5001/HAWK/Camera/update",{
-                method: 'PUT',
+            camera.id=document.getElementById("inlineFormInputGroupUsername1").value;
+            camera.name=document.getElementById("inlineFormInputGroupUsername2").value;
+            camera.enabled=document.getElementById("inlineFormInputGroupUsername3").value;
+            camera.source=document.getElementById("inlineFormInputGroupUsername4").value;
+            let cam =  JSON.stringify(camera);
+            fetch("https://localhost:5001/HAWK/Camera/update?camera="+cam,{
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: data
-            });
+                body: cam
+            }).then(res=>window.open("Cameras.html", "_self"));
         }
 </script>
 </body>

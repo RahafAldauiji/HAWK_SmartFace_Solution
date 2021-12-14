@@ -1,20 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder; 
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.Services;
+using SmartfaceSolution.Extensions;
+using SmartfaceSolution.Middleware;
 
 namespace SmartfaceSolution
 {
@@ -69,24 +62,25 @@ namespace SmartfaceSolution
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //app.ConfigureExceptionHandler(env);
+            app.UseMiddleware<ExceptionMiddleware>();
+            // if (env.IsDevelopment())
+            // {
+            //     app.UseDeveloperExceptionPage();
+            // }else
+            // {
+            //     app.UseExceptionHandler("/Error");
+            //     app.UseHsts();
+            // }
 
-             app.UseHttpsRedirection();
-
+           // app.UseMiddleware<ExceptionMiddlewareExtensions>();
+           
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors();
             app.UseAuthorization();
             //
             app.UseAuthentication();
-            // app.UseMvc(routes =>
-            // {
-            //     routes.MapRoute(
-            //         name: "default",
-            //         template: "{controller}/{action}/");
-            // });
             app.UseMiddleware<JwtMiddleware>();
             app.UseDefaultFiles();
             app.UseStaticFiles();

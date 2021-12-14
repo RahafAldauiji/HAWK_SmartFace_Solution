@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace SmartfaceSolution.Classes
+namespace SmartfaceSolution.Entities
 {
     public class MemberFaces
     {

@@ -105,6 +105,25 @@ namespace SmartfaceSolution.SubEntities
                                 "POST",
                                 json);
                             match = JsonSerializer.Deserialize<List<MatchFaces>>(resp);
+                            // send message
+                            for (int j = 0; j < match.Count; j++)
+                            {
+                                for (int k = 0; k < match[j].matchResults.Length; k++)
+                                {
+                                    WatchlistMember watchlistMember =
+                                        await new SubWatchlistMember().getWatchlistMember(match[j].matchResults[k]
+                                            .watchlistMemberId);
+                                    //match[j].matchResults[k].watchlistMemberId;
+                                    string email = watchlistMember.note.Split(',')[0];
+                                    string phoneNumber = watchlistMember.note.Split(',')[1];
+                                    Message.Message message =
+                                        new Message.Message(1, watchlistMember.displayName, frameDateTime.ToString());
+                                    message.sendEmail(email);
+                                    message.sendSMS(phoneNumber);
+                                }
+                            }
+
+                            //
                             return match;
                         }
                     }

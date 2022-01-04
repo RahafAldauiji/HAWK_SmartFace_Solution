@@ -16,64 +16,76 @@
 </head>
 
 <body class="bg03">
-    <div class="container">
-        <div class="row tm-mt-big">
-            <div class="col-12 mx-auto tm-login-col">
-                <div class="bg-white tm-block">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <img src="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN" width="110" height="80">
-                            <h2 class="tm-block-title mt-3">Login</h2>
-                        </div>
+<div class="container">
+    <div class="row tm-mt-big">
+        <div class="col-12 mx-auto tm-login-col">
+            <div class="bg-white tm-block">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <img src="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN"
+                             width="110" height="80">
+                        <h2 class="tm-block-title mt-3">Login</h2>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-12">
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
 
-                            <form action="#">
-                                <div class="input-group">
-                                    <label for="username" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Username</label>
-                                    <input name="username" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" id="username" required>
-                                </div>
-                                <div class="input-group mt-3">
-                                    <label for="password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Password</label>
-                                    <input name="password" type="password" class="form-control validate" id="password" required>
-                                </div>
-                                <div class="input-group mt-3">
-                                    <button onclick="login()"type="submit" class="btn btn-primary d-inline-block mx-auto">Registration</button>
-                                    <button type="submit" class="btn btn-primary d-inline-block mx-auto"onclick="login()">Login</button>
-                                </div>
-                               
-                            </form>
-                        </div>
+                        <form action="#">
+                            <div class="input-group">
+                                <label for="username" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Username</label>
+                                <input name="username" type="text"
+                                       class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" id="username"
+                                       required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <label for="password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Password</label>
+                                <input name="password" type="password" class="form-control validate" id="password"
+                                       required>
+                            </div>
+                            <div class="input-group mt-3">
+                                <button onclick="login()" type="submit" class="btn btn-primary d-inline-block mx-auto">
+                                    Registration
+                                </button>
+                                <button type="submit" class="btn btn-primary d-inline-block mx-auto" onclick="login()">
+                                    Login
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <script>
     function login() {
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+        var username = document.getElementById("username").value.trim();
+        var password = document.getElementById("password").value.trim();
         let data = {username: username, password: password};
-        let r=fetch("https://localhost:5001/HAWK/authenticate", {
+        console.log(JSON.stringify(data))
+        let r = fetch("https://localhost:5001/HAWK/authenticate", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => {
-            if(res.ok){
-                //localStorage.setItem("userT",res.Token)
-                //alert(res.response);
-                window.open("HomePage.html", "_self");
-            }else{
-                //alert(JSON.stringify(res.body));
-                alert("Wrong Username or Password!")
+        }).then(response =>response.json()
+            .then(res => {
+                jresult = JSON.stringify(res);
+                if(response.status===200){
+                    var bearer = 'Bearer ' + res.token;
+                    sessionStorage.setItem("userT",bearer);
+                    window.open("HomePage.html", "_self");
+                }else{
+                    alert("Wrong username or password");
+                }
+
             }
-            
-            }  
-        );
+        ))
+       
     }
+
     function RegistrationPage() {
         window.open("editMember.html", "_self");
     }

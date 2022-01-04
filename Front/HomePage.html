@@ -155,13 +155,13 @@
         audio: false,
         loop: true
     });
-    var canvas1 = document.getElementById('video1');
-    var player1 = new JSMpeg.Player("ws://localhost:9901", {
-        canvas: canvas1,
-        autoplay: true,
-        audio: false,
-        loop: true
-    });
+    // var canvas1 = document.getElementById('video1');
+    // var player1 = new JSMpeg.Player("ws://localhost:9901", {
+    //     canvas: canvas1,
+    //     autoplay: true,
+    //     audio: false,
+    //     loop: true
+    // });
     
     function hitsSript() {
         let res;
@@ -169,14 +169,26 @@
         var splitHits = "";
         var image;
 
-        res = fetch("https://localhost:5001/HAWK/Camera/Match")
+        res = fetch("https://localhost:5001/HAWK/Camera/Match", {
+            method: 'GET',
+            headers: {
+                'Authorization': sessionStorage.getItem('userT'),
+                'Content-Type': 'application/json'
+            },
+        })
             .then(resultHits => resultHits.json())
             .then(resultHits => {
                     jresult = JSON.stringify(resultHits);
 
                     resultHits.map(obj => {
                         for (var x in obj.matchResults) {
-                            fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + obj.matchResults[x].watchlistMemberId)
+                            fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + obj.matchResults[x].watchlistMemberId, {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': sessionStorage.getItem('userT'),
+                                    'Content-Type': 'application/json'
+                                },
+                            })
                                 .then(resultHits => resultHits.json())
                                 .then(resultHits => {
                                     jresult = JSON.stringify(resultHits);

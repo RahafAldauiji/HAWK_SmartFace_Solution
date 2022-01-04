@@ -124,14 +124,14 @@
     </div>
 </div>
 <script>
-    let cameraId=localStorage.getItem('cameraId');
-    let userT=localStorage.getItem('userT');
+    let cameraId=sessionStorage.getItem('cameraId');
+    let userT=sessionStorage.getItem('userT');
     var camera;
     var res = fetch("https://localhost:5001/HAWK/Camera/getCamera?id="+cameraId,{
         method: 'GET',
         withCredentials: true,
         headers: {
-            'Authorization': userT,
+            'Authorization': sessionStorage.getItem('userT'),
             'Content-Type': 'application/json'
         }
     })
@@ -160,7 +160,6 @@
                 //     //splitHits += "</tr>";
                 //
                 // });
-                localStorage.setItem('userT', userT);
                 // document.getElementById("cameraList").innerHTML = splitHits;
 
             }
@@ -174,6 +173,7 @@
             fetch("https://localhost:5001/HAWK/Camera/update?camera="+cam,{
                 method: 'POST',
                 headers: {
+                    'Authorization': sessionStorage.getItem('userT'),
                     'Content-Type': 'application/json',
                 },
                 body: cam

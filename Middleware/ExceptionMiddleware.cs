@@ -25,7 +25,7 @@ namespace SmartfaceSolution.Middleware
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.Message);
+                logger.LogError(ex.ToString());
                 await context.Response.WriteAsync(new ErrorDetails()
                 {
                     StatusCode = 500,

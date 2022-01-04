@@ -123,18 +123,16 @@
 </div>
 </body>
 <script>
-    var bearer_token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYmYiOjE2Mzc1MTQ3MTcsImV4cCI6MTYzODExOTUxNywiaWF0IjoxNjM3NTE0NzE3fQ.UBfJ7II2Ma7fR30AUxmmJ3CInTlDp9kRUwSedrgWBTA';
-    var bearer = 'Bearer ' + bearer_token;
     var selectedCamID;
     res = fetch("https://localhost:5001/HAWK/Camera/getAllCameras",{
         method: 'GET',
         withCredentials: true,
         headers: {
-            'Authorization': bearer,
+            'Authorization': sessionStorage.getItem('userT'),
             'Content-Type': 'application/json'
         }
     })
-        .then(resultHits => resultHits.json())
+        .then(resultHit => resultHit.json()
         .then(resultHits => {
             var splitHits="";
                 jresult = JSON.stringify(resultHits);
@@ -157,17 +155,16 @@
                     //splitHits += "</tr>";
 
                 });
-            localStorage.setItem('userT', bearer);
+            
             document.getElementById("cameraList").innerHTML = splitHits;
 
             }
-        );
+        ));
     function AddPage(){
         window.open("addCamera.html", "_self");
     }
     function EditPage(){
-        localStorage.setItem('userT', bearer);
-        localStorage.setItem('cameraId', selectedCamID);
+        sessionStorage.setItem('cameraId', selectedCamID);
         window.open("editCamera.html", "_self");
     }
     function deleteCam(id){
@@ -176,6 +173,7 @@
             method: 'DELETE',
             withCredentials: true,
             headers: {
+                'Authorization': sessionStorage.getItem('userT'),
                 'Content-Type': 'application/json'
             }
         }).then(o=>location.reload())

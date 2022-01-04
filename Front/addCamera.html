@@ -112,6 +112,7 @@
         fetch("https://localhost:5001/HAWK/Camera/create",{
             method: 'POST',
             headers: {
+                'Authorization': sessionStorage.getItem('userT'), 
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)

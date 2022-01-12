@@ -70,7 +70,7 @@
         </div>
         <!-- row -->
         <div class="row tm-content-row tm-mt-big">
-            <div class="col col-5 ">
+            <div class="col col-9 ">
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title" style="color: #262626">In-Camera</h2>
                     <!-- <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>-->
@@ -78,15 +78,15 @@
                 </div>
             </div>
 
-            <div class="col col-5 ">
-                <div class="bg-white tm-block h-100">
-                    <h2 class="tm-block-title" style="color: #262626">Out-Camera</h2>
-                    <!-- <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>-->
-                    <canvas class="col col-12" id="video1"></canvas>
-                </div>
-            </div>
+<!--            <div class="col col-5 ">-->
+<!--                <div class="bg-white tm-block h-100">-->
+<!--                    <h2 class="tm-block-title" style="color: #262626">Out-Camera</h2>-->
+<!--                    &lt;!&ndash; <video autoplay="true" id="videoElement"src="rtsp://admin:Admin12!@192.168.1.64/cam0/mjpeg"> </video>&ndash;&gt;-->
+<!--                    <canvas class="col col-12" id="video1"></canvas>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="col col-2">
+            <div class="col col-3">
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title d-inline-block" style="color: #262626">Hits <img id="xxx" src=""></h2>
                     <table class="table table-striped mt-3">
@@ -162,7 +162,7 @@
     //     audio: false,
     //     loop: true
     // });
-    
+
     function hitsSript() {
         let res;
         var jresult;
@@ -179,7 +179,35 @@
             .then(resultHits => resultHits.json())
             .then(resultHits => {
                     jresult = JSON.stringify(resultHits);
-
+                //     console.log(resultHits.watchlistMemberId);
+                // //
+                // fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + resultHits.watchlistMemberId, {
+                //                     method: 'GET',
+                //                     headers: {
+                //                         'Authorization': sessionStorage.getItem('userT'),
+                //                         'Content-Type': 'application/json'
+                //                     },
+                //                 }).then(resultHits => resultHits.json())
+                //                  .then(obj => {
+                //                      image = JSON.stringify(obj);
+                //                      console.log(image);
+                //                      //image=image.replaceAll("\"", " ");
+                //                      splitHits += "<tr><td><i class=\"fas\">";
+                //                      splitHits += "<img src=\'data:image/(png|jpg|jpeg);base64," +
+                //                          image.replaceAll("\"", " ")+ "'width='90px'height='90px'><br>";
+                //                      splitHits += resultHits.watchlistMemberFullName + "<br>";
+                //                      splitHits += "Match Score: " + resultHits.score + "</i></td></tr>";
+                //                      document.getElementById("tableMembers").innerHTML = splitHits;
+                //                  });
+                // image = resultHits.cropImage;
+                // console.log(image)
+                // splitHits += "<tr><td><i class=\"fas\">";
+                // splitHits += "<img src=\'data:image/(png|jpg|jpeg);base64," +
+                //     image+ "'width='90px'height='90px'><br>";
+                // splitHits += resultHits.watchlistMemberFullName + "<br>";
+                // splitHits += "Match Score: " + resultHits.score + "</i></td></tr>";
+                // document.getElementById("tableMembers").innerHTML = splitHits;
+                //
                     resultHits.map(obj => {
                         for (var x in obj.matchResults) {
                             fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + obj.matchResults[x].watchlistMemberId, {

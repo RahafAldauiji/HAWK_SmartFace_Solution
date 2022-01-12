@@ -33,10 +33,13 @@
     ".NETCoreApp,Version=v5.0": {
       "SmartfaceSolution/1.0.0": {
         "dependencies": {
+          "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64": "3.16.0",
           "MailKit": "3.0.0-preview1",
           "Microsoft.AspNet.WebApi.Cors": "5.2.7",
           "Microsoft.AspNetCore.Authentication": "2.2.0",
+          "Microsoft.AspNetCore.WebSockets.Server": "0.1.0",
           "Microsoft.Extensions.Logging.Abstractions": "5.0.0",
+          "NetMQ": "4.0.1.7-pre",
           "System.Drawing.Common": "5.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.6.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
@@ -187,7 +190,7 @@
           "System.Data.Common": "5.0.0.0",
           "System.Data.DataSetExtensions": "4.0.0.0",
           "System.Data": "4.0.0.0",
-          "System.Diagnostics.Contracts": "5.0.0.0",
+          "System.Diagnostics.Contracts.Reference": "5.0.0.0",
           "System.Diagnostics.Debug.Reference": "5.0.0.0",
           "System.Diagnostics.DiagnosticSource.Reference": "5.0.0.0",
           "System.Diagnostics.EventLog": "5.0.0.0",
@@ -242,11 +245,11 @@
           "System.Net.WebHeaderCollection": "5.0.0.0",
           "System.Net.WebProxy": "5.0.0.0",
           "System.Net.WebSockets.Client": "5.0.0.0",
-          "System.Net.WebSockets": "5.0.0.0",
+          "System.Net.WebSockets.Reference": "5.0.0.0",
           "System.Numerics": "4.0.0.0",
           "System.Numerics.Vectors": "5.0.0.0",
           "System.ObjectModel.Reference": "5.0.0.0",
-          "System.Reflection.DispatchProxy": "5.0.0.0",
+          "System.Reflection.DispatchProxy.Reference": "5.0.0.0",
           "System.Reflection.Reference": "5.0.0.0",
           "System.Reflection.Emit.Reference": "5.0.0.0",
           "System.Reflection.Emit.ILGeneration.Reference": "5.0.0.0",
@@ -307,7 +310,7 @@
           "System.Threading.Timer.Reference": "5.0.0.0",
           "System.Transactions": "4.0.0.0",
           "System.Transactions.Local": "5.0.0.0",
-          "System.ValueTuple": "4.0.3.0",
+          "System.ValueTuple.Reference": "4.0.3.0",
           "System.Web": "4.0.0.0",
           "System.Web.HttpUtility": "5.0.0.0",
           "System.Windows": "4.0.0.0",
@@ -328,6 +331,26 @@
         },
         "compile": {
           "SmartfaceSolution.dll": {}
+        }
+      },
+      "AsyncIO/0.1.69": {
+        "runtime": {
+          "lib/netstandard2.0/AsyncIO.dll": {
+            "assemblyVersion": "0.1.69.0",
+            "fileVersion": "0.1.69.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/AsyncIO.dll": {}
+        }
+      },
+      "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64/3.16.0": {
+        "runtimeTargets": {
+          "runtimes/osx-x64/native/libChakraCore.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
         }
       },
       "MailKit/3.0.0-preview1": {
@@ -478,6 +501,48 @@
       "Microsoft.AspNetCore.Http.Features/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "2.2.0"
+        }
+      },
+      "Microsoft.AspNetCore.WebSockets.Protocol/0.1.0": {
+        "dependencies": {
+          "System.Diagnostics.Contracts": "4.0.1",
+          "System.Globalization": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.WebSockets": "4.0.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Text.Encoding.Extensions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Tasks": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.WebSockets.Protocol.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.1.0.20622"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.WebSockets.Protocol.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.WebSockets.Server/0.1.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
+          "Microsoft.AspNetCore.WebSockets.Protocol": "0.1.0",
+          "Microsoft.Extensions.Options": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.WebSockets.Server.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.1.0.20622"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.AspNetCore.WebSockets.Server.dll": {}
         }
       },
       "Microsoft.AspNetCore.WebUtilities/2.2.0": {
@@ -631,6 +696,34 @@
         },
         "compile": {
           "lib/net50/MimeKit.dll": {}
+        }
+      },
+      "NaCl.Net/0.1.13": {
+        "runtime": {
+          "lib/netstandard2.1/NaCl.dll": {
+            "assemblyVersion": "0.1.13.0",
+            "fileVersion": "0.1.13.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/NaCl.dll": {}
+        }
+      },
+      "NetMQ/4.0.1.7-pre": {
+        "dependencies": {
+          "AsyncIO": "0.1.69",
+          "NaCl.Net": "0.1.13",
+          "System.ServiceModel.Primitives": "4.4.0",
+          "System.ValueTuple": "4.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/NetMQ.dll": {
+            "assemblyVersion": "4.0.1.7",
+            "fileVersion": "4.0.1.7"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/NetMQ.dll": {}
         }
       },
       "NETStandard.Library/1.6.1": {
@@ -883,6 +976,11 @@
           "System.Text.Encoding": "4.3.0"
         }
       },
+      "System.Diagnostics.Contracts/4.0.1": {
+        "dependencies": {
+          "System.Runtime": "4.3.0"
+        }
+      },
       "System.Diagnostics.Debug/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",
@@ -1119,6 +1217,22 @@
           "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
         }
       },
+      "System.Net.Http.WinHttpHandler/4.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Net.Http.WinHttpHandler.dll": {
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netstandard2.0/System.Net.Http.WinHttpHandler.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "4.0.2.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
       "System.Net.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",
@@ -1137,6 +1251,14 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.Net.WebSockets/4.0.0": {
+        "dependencies": {
+          "Microsoft.Win32.Primitives": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Threading.Tasks": "4.3.0"
+        }
+      },
       "System.ObjectModel/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -1144,6 +1266,28 @@
           "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0",
           "System.Threading": "4.3.0"
+        }
+      },
+      "System.Private.ServiceModel/4.4.0": {
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "5.0.0",
+          "System.Net.Http.WinHttpHandler": "4.4.0",
+          "System.Reflection.DispatchProxy": "4.4.0",
+          "System.Security.Principal.Windows": "4.5.0"
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard2.0/System.Private.ServiceModel.dll": {
+            "rid": "unix",
+            "assetType": "runtime",
+            "assemblyVersion": "4.1.2.0",
+            "fileVersion": "4.6.25525.6"
+          },
+          "runtimes/win7/lib/netstandard2.0/System.Private.ServiceModel.dll": {
+            "rid": "win7",
+            "assetType": "runtime",
+            "assemblyVersion": "4.1.2.0",
+            "fileVersion": "4.6.25525.6"
+          }
         }
       },
       "System.Reflection/4.3.0": {
@@ -1155,6 +1299,7 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Reflection.DispatchProxy/4.4.0": {},
       "System.Reflection.Emit/4.3.0": {
         "dependencies": {
           "System.IO": "4.3.0",
@@ -1408,6 +1553,20 @@
           "Microsoft.NETCore.Platforms": "5.0.0"
         }
       },
+      "System.ServiceModel.Primitives/4.4.0": {
+        "dependencies": {
+          "System.Private.ServiceModel": "4.4.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.ServiceModel.Primitives.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.6.25525.6"
+          }
+        },
+        "compile": {
+          "ref/netstandard2.0/System.ServiceModel.Primitives.dll": {}
+        }
+      },
       "System.Text.Encoding/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",
@@ -1461,6 +1620,7 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.ValueTuple/4.5.0": {},
       "System.Xml.ReaderWriter/4.3.0": {
         "dependencies": {
           "System.Collections": "4.3.0",
@@ -2398,7 +2558,7 @@
         },
         "compileOnly": true
       },
-      "System.Diagnostics.Contracts/5.0.0.0": {
+      "System.Diagnostics.Contracts.Reference/5.0.0.0": {
         "compile": {
           "System.Diagnostics.Contracts.dll": {}
         },
@@ -2728,7 +2888,7 @@
         },
         "compileOnly": true
       },
-      "System.Net.WebSockets/5.0.0.0": {
+      "System.Net.WebSockets.Reference/5.0.0.0": {
         "compile": {
           "System.Net.WebSockets.dll": {}
         },
@@ -2752,7 +2912,7 @@
         },
         "compileOnly": true
       },
-      "System.Reflection.DispatchProxy/5.0.0.0": {
+      "System.Reflection.DispatchProxy.Reference/5.0.0.0": {
         "compile": {
           "System.Reflection.DispatchProxy.dll": {}
         },
@@ -3118,7 +3278,7 @@
         },
         "compileOnly": true
       },
-      "System.ValueTuple/4.0.3.0": {
+      "System.ValueTuple.Reference/4.0.3.0": {
         "compile": {
           "System.ValueTuple.dll": {}
         },
@@ -3215,6 +3375,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AsyncIO/0.1.69": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xyXJLi+wjy6AtIyWXHXJkPS0gItqVT4lg5w++7bA5YEjugYKdrFMGxCo6KUJ1yYwjriLQJ1g35LDljZs3Q90XQ==",
+      "path": "asyncio/0.1.69",
+      "hashPath": "asyncio.0.1.69.nupkg.sha512"
+    },
+    "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64/3.16.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4zjm12nOw2jOPNYMzikFZecg5DwcCWGMHYXg6RkxsYyt6bsruRY16QOykzjOK8BT407673Mbz62ajstrOVvpZQ==",
+      "path": "javascriptengineswitcher.chakracore.native.osx-x64/3.16.0",
+      "hashPath": "javascriptengineswitcher.chakracore.native.osx-x64.3.16.0.nupkg.sha512"
     },
     "MailKit/3.0.0-preview1": {
       "type": "package",
@@ -3334,6 +3508,20 @@
       "sha512": "sha512-ziFz5zH8f33En4dX81LW84I6XrYXKf9jg6aM39cM+LffN9KJahViKZ61dGMSO2gd3e+qe5yBRwsesvyqlZaSMg==",
       "path": "microsoft.aspnetcore.http.features/2.2.0",
       "hashPath": "microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.WebSockets.Protocol/0.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0xtWJEnz0W6d4eBnLlG6dujOqsCz4qu5y/49HeFtizZPYp1keKXNxCew2r2Pn7M2qRYZ4jUiGPCQktp6mL6DAA==",
+      "path": "microsoft.aspnetcore.websockets.protocol/0.1.0",
+      "hashPath": "microsoft.aspnetcore.websockets.protocol.0.1.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.WebSockets.Server/0.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3+78/xYu9BQAqqoAypwCOxb9APW1ht5eOQEgJos7+2k+tdzsR+HHcjI//oI7hYYiGmBIR7pBYV4y/2pU9Ne1FA==",
+      "path": "microsoft.aspnetcore.websockets.server/0.1.0",
+      "hashPath": "microsoft.aspnetcore.websockets.server.0.1.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.WebUtilities/2.2.0": {
       "type": "package",
@@ -3481,6 +3669,20 @@
       "sha512": "sha512-SwFn7K6y6eEzLD19B0W64bCdtKrs/2PuLxdOXJTxcrchFCCtfo4PheIUkkqzaLhA4qgxMRuR2jAesJfM5+inMA==",
       "path": "mimekit/3.0.0-preview1",
       "hashPath": "mimekit.3.0.0-preview1.nupkg.sha512"
+    },
+    "NaCl.Net/0.1.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AVg1455RQnyTy6tiessudruZHvbl70QWRPyx3og2I1Fei17LDNc7Z3DRgqN2+PsySBui/1EDP4A7adhQXydi6g==",
+      "path": "nacl.net/0.1.13",
+      "hashPath": "nacl.net.0.1.13.nupkg.sha512"
+    },
+    "NetMQ/4.0.1.7-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BoW/ApgUfwb6YWR6njmOuxYkB8h+J6ZG0TKykIFCBCxNTRdZxlwkYF54jD99ZQx+8Lr59VDZpxnwrjSX7v1bIQ==",
+      "path": "netmq/4.0.1.7-pre",
+      "hashPath": "netmq.4.0.1.7-pre.nupkg.sha512"
     },
     "NETStandard.Library/1.6.1": {
       "type": "package",
@@ -3699,6 +3901,13 @@
       "path": "system.console/4.3.0",
       "hashPath": "system.console.4.3.0.nupkg.sha512"
     },
+    "System.Diagnostics.Contracts/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HvQQjy712vnlpPxaloZYkuE78Gn353L0SJLJVeLcNASeg9c4qla2a1Xq8I7B3jZoDzKPtHTkyVO7AZ5tpeQGuA==",
+      "path": "system.diagnostics.contracts/4.0.1",
+      "hashPath": "system.diagnostics.contracts.4.0.1.nupkg.sha512"
+    },
     "System.Diagnostics.Debug/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3832,6 +4041,13 @@
       "path": "system.net.http/4.3.0",
       "hashPath": "system.net.http.4.3.0.nupkg.sha512"
     },
+    "System.Net.Http.WinHttpHandler/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZmsFZIZ4PL2UfUlfj4KCzzAGGE2SF39ENIqtvfgu0bwMEAe3J3CqZr765E2W6eQQtNK08/8DpHcsA0sAKZdEtA==",
+      "path": "system.net.http.winhttphandler/4.4.0",
+      "hashPath": "system.net.http.winhttphandler.4.4.0.nupkg.sha512"
+    },
     "System.Net.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3846,6 +4062,13 @@
       "path": "system.net.sockets/4.3.0",
       "hashPath": "system.net.sockets.4.3.0.nupkg.sha512"
     },
+    "System.Net.WebSockets/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2KJo8hir6Edi9jnMDAMhiJoI691xRBmKcbNpwjrvpIMOCTYOtBpSsSEGBxBDV7PKbasJNaFp1+PZz1D7xS41Hg==",
+      "path": "system.net.websockets/4.0.0",
+      "hashPath": "system.net.websockets.4.0.0.nupkg.sha512"
+    },
     "System.ObjectModel/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3853,12 +4076,26 @@
       "path": "system.objectmodel/4.3.0",
       "hashPath": "system.objectmodel.4.3.0.nupkg.sha512"
     },
+    "System.Private.ServiceModel/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lED0s9Lfo2TdniGlFY2rdK1wygFJ7dPRaTHR2Z409nGWfFG1YMuAlrfMhSeYFJ5pbffAlOBxb8hvoYxP3LJ6mg==",
+      "path": "system.private.servicemodel/4.4.0",
+      "hashPath": "system.private.servicemodel.4.4.0.nupkg.sha512"
+    },
     "System.Reflection/4.3.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-KMiAFoW7MfJGa9nDFNcfu+FpEdiHpWgTcS2HdMpDvt9saK3y/G4GwprPyzqjFH9NTaGPQeWNHU+iDlDILj96aQ==",
       "path": "system.reflection/4.3.0",
       "hashPath": "system.reflection.4.3.0.nupkg.sha512"
+    },
+    "System.Reflection.DispatchProxy/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xK6JE0mpsBD+T0qu3V6dmVRa06PxAvIIM/zSjouqP7Sk6X+FQj+9XFRz9GmZk9aJGMU1LX6AgTZIlsYZ64QKsw==",
+      "path": "system.reflection.dispatchproxy/4.4.0",
+      "hashPath": "system.reflection.dispatchproxy.4.4.0.nupkg.sha512"
     },
     "System.Reflection.Emit/4.3.0": {
       "type": "package",
@@ -4056,6 +4293,13 @@
       "path": "system.security.principal.windows/4.5.0",
       "hashPath": "system.security.principal.windows.4.5.0.nupkg.sha512"
     },
+    "System.ServiceModel.Primitives/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6rATyMUeeOPVY7XzoneoyzGKVCc62gGl/A6SKrlY0dX0bnMprIrXZF1AXy9Y8ne49JU/2RGGeldFbATYONc/XQ==",
+      "path": "system.servicemodel.primitives/4.4.0",
+      "hashPath": "system.servicemodel.primitives.4.4.0.nupkg.sha512"
+    },
     "System.Text.Encoding/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -4118,6 +4362,13 @@
       "sha512": "sha512-Z6YfyYTCg7lOZjJzBjONJTFKGN9/NIYKSxhU5GRd+DTwHSZyvWp1xuI5aR+dLg+ayyC5Xv57KiY4oJ0tMO89fQ==",
       "path": "system.threading.timer/4.3.0",
       "hashPath": "system.threading.timer.4.3.0.nupkg.sha512"
+    },
+    "System.ValueTuple/4.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "path": "system.valuetuple/4.5.0",
+      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "System.Xml.ReaderWriter/4.3.0": {
       "type": "package",
@@ -4880,7 +5131,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Diagnostics.Contracts/5.0.0.0": {
+    "System.Diagnostics.Contracts.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5155,7 +5406,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Net.WebSockets/5.0.0.0": {
+    "System.Net.WebSockets.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5175,7 +5426,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Reflection.DispatchProxy/5.0.0.0": {
+    "System.Reflection.DispatchProxy.Reference/5.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""
@@ -5480,7 +5731,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.ValueTuple/4.0.3.0": {
+    "System.ValueTuple.Reference/4.0.3.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

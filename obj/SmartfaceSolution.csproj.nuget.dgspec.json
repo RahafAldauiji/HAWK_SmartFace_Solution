@@ -38,6 +38,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64": {
+              "target": "Package",
+              "version": "[3.16.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[3.0.0-preview1, )"
@@ -50,9 +54,17 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.AspNetCore.WebSockets.Server": {
+              "target": "Package",
+              "version": "[0.1.0, )"
+            },
             "Microsoft.Extensions.Logging.Abstractions": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "NetMQ": {
+              "target": "Package",
+              "version": "[4.0.1.7-pre, )"
             },
             "System.Drawing.Common": {
               "target": "Package",

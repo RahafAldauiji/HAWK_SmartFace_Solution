@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -106,22 +107,22 @@ namespace SmartfaceSolution.SubEntities
                                 json);
                             match = JsonSerializer.Deserialize<List<MatchFaces>>(resp);
                             // send message
-                            for (int j = 0; j < match.Count; j++)
-                            {
-                                for (int k = 0; k < match[j].matchResults.Length; k++)
-                                {
-                                    WatchlistMember watchlistMember =
-                                        await new SubWatchlistMember().getWatchlistMember(match[j].matchResults[k]
-                                            .watchlistMemberId);
-                                    //match[j].matchResults[k].watchlistMemberId;
-                                    string email = watchlistMember.note.Split(',')[0];
-                                    string phoneNumber = watchlistMember.note.Split(',')[1];
-                                    Message.Message message =
-                                        new Message.Message(1, watchlistMember.displayName, frameDateTime.ToString());
-                                    message.sendEmail(email);
-                                    message.sendSMS(phoneNumber);
-                                }
-                            }
+                            // for (int j = 0; j < match.Count; j++)
+                            // {
+                                // for (int k = 0; k < match[j].matchResults.Length; k++)
+                                // {
+                                //     WatchlistMember watchlistMember =
+                                //         await new SubWatchlistMember().getWatchlistMember(match[j].matchResults[k]
+                                //             .watchlistMemberId);
+                                //     //match[j].matchResults[k].watchlistMemberId;
+                                //     string email = watchlistMember.note.Split(',')[0];
+                                //     string phoneNumber = watchlistMember.note.Split(',')[1];
+                                //     // Message.Message message =
+                                //     //     new Message.Message(1, watchlistMember.displayName, frameDateTime.ToString());
+                                //     // message.sendEmail(email);
+                                //     //message.sendSMS(phoneNumber);
+                                // }
+                            //}
 
                             //
                             return match;
@@ -135,6 +136,15 @@ namespace SmartfaceSolution.SubEntities
             return match;
         }
 
+        public static void matchSocket()
+        {
+            string ip = "127.0.0.1";
+            int port = 80;
+            var server = new TcpListener(IPAddress.Parse(ip), port);
+            server.Start();
+            Console.WriteLine("Server has started on {0}:{1}, Waiting for a connection...", ip, port);
+            // Thread t = new Thread(SubMatchFaces.matchFaces);
+        }
         // public string convertImageToString(string url)
         // {
         //     System.Drawing.Image img = System.Drawing.Image.FromFile(url);

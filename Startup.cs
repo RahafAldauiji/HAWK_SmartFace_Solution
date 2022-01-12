@@ -1,3 +1,6 @@
+using System;
+using System.Net.WebSockets;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder; 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.Services;
 using SmartfaceSolution.Extensions;
+using SmartfaceSolution.MatchScop;
 using SmartfaceSolution.Middleware;
 
 namespace SmartfaceSolution
@@ -22,8 +26,11 @@ namespace SmartfaceSolution
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            
            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-            services.AddControllers();
+           services.AddScoped<IMatchService, MatchService>();
+           services.AddHostedService<BackBroundS>();
+           services.AddControllers();
             services.AddCors(options =>
             {
                
@@ -84,6 +91,15 @@ namespace SmartfaceSolution
             app.UseMiddleware<JwtMiddleware>();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            //
+            // var webSocketOptions = new WebSocketOptions() 
+            // {
+            //     KeepAliveInterval = TimeSpan.FromSeconds(120),
+            // };
+            
+            
+            //
+            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 

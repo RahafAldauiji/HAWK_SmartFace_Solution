@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.Services;
 using SmartfaceSolution.Extensions;
-using SmartfaceSolution.MatchScop;
 using SmartfaceSolution.Middleware;
 
 namespace SmartfaceSolution
@@ -29,7 +28,7 @@ namespace SmartfaceSolution
             
            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
            services.AddScoped<IMatchService, MatchService>();
-           services.AddHostedService<BackBroundS>();
+           services.AddHostedService<BackBroundService>();
            services.AddControllers();
             services.AddCors(options =>
             {

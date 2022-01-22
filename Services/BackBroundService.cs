@@ -3,15 +3,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SmartfaceSolution.MatchScop;
 
 namespace SmartfaceSolution.Services
 {
-    public class BackBroundS : BackgroundService
+    public class BackBroundService : BackgroundService
     {
-        private readonly ILogger<BackBroundS> _logger;
+        private readonly ILogger<BackBroundService> _logger;
         private readonly IMatchService _matchService;
-        public BackBroundS(IMatchService matchService,ILogger<BackBroundS> logger)
+        public BackBroundService(IMatchService matchService,ILogger<BackBroundService> logger)
         {
             _logger = logger;
             _matchService = matchService;
@@ -21,7 +20,7 @@ namespace SmartfaceSolution.Services
             while (!stoppingToken.IsCancellationRequested)
             {
               _logger.LogInformation("BackBround service running", DateTime.Now);
-                await Task.Delay(TimeSpan.FromMilliseconds(3000), stoppingToken);
+                await Task.Delay(TimeSpan.FromMilliseconds(1000), stoppingToken);
                 _matchService.matchFaces();
             }
            

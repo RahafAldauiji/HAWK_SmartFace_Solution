@@ -1,6 +1,6 @@
-﻿namespace SmartfaceSolution.Test
+﻿namespace SmartfaceSolution.Entities
 {
-    public class TestMember
+    public class MemberMatch
     {
         public string CropImage { get; set; }
         public SpoofCheck SpoofCheck{ get; set; }

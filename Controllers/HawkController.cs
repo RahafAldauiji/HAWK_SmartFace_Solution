@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SmartfaceSolution.Entities;
-using SmartfaceSolution.MatchScop;
 using SmartfaceSolution.SubEntities;
 using SmartfaceSolution.Models;
 using SmartfaceSolution.Services;
-using SmartfaceSolution.Test;
 
 namespace SmartfaceSolution.Controllers
 {

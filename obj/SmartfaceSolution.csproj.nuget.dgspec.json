@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rahaf\\OneDrive\\Documents\\Level 9\\Senior Project\\Smartface Project\\SmartfaceSolution\\SmartfaceSolution\\SmartfaceSolution.csproj": {}
+    "C:\\Users\\HP\\Documents\\Uni 10\\CPIT499\\Smartface\\SmartfaceSolution.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rahaf\\OneDrive\\Documents\\Level 9\\Senior Project\\Smartface Project\\SmartfaceSolution\\SmartfaceSolution\\SmartfaceSolution.csproj": {
+    "C:\\Users\\HP\\Documents\\Uni 10\\CPIT499\\Smartface\\SmartfaceSolution.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rahaf\\OneDrive\\Documents\\Level 9\\Senior Project\\Smartface Project\\SmartfaceSolution\\SmartfaceSolution\\SmartfaceSolution.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Documents\\Uni 10\\CPIT499\\Smartface\\SmartfaceSolution.csproj",
         "projectName": "SmartfaceSolution",
-        "projectPath": "C:\\Users\\rahaf\\OneDrive\\Documents\\Level 9\\Senior Project\\Smartface Project\\SmartfaceSolution\\SmartfaceSolution\\SmartfaceSolution.csproj",
-        "packagesPath": "C:\\Users\\rahaf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rahaf\\OneDrive\\Documents\\Level 9\\Senior Project\\Smartface Project\\SmartfaceSolution\\SmartfaceSolution\\obj\\",
+        "projectPath": "C:\\Users\\HP\\Documents\\Uni 10\\CPIT499\\Smartface\\SmartfaceSolution.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HP\\Documents\\Uni 10\\CPIT499\\Smartface\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\rahaf\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -93,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\rahaf\\.dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -69,10 +69,10 @@
 
         public string[] spoofDetectorResourceIds { get; set; }
         //
-        public VideoFaceDetectorConfig faceDetectorConfig{ get; set; }
+        // public VideoFaceDetectorConfig faceDetectorConfig{ get; set; }
         
-        public VideoPedestrianDetectorConfig pedestrianDetectorConfig{ get; set; }
+        //  public VideoPedestrianDetectorConfig pedestrianDetectorConfig{ get; set; }
         
-        public SpoofDetectorConfig spoofDetectorConfig { get; set; }
+        // public SpoofDetectorConfig spoofDetectorConfig { get; set; }
     }
 }

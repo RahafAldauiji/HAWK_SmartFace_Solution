@@ -261,7 +261,7 @@ namespace SmartfaceSolution.SubEntities
             string images = null;
             await Task.Run(async () =>
             {
-                string resp = await requestNoBody("/" + id.Trim() + "/Faces?Ascending=true&PageSize=3", "GET");
+                string resp = await requestNoBody("/" + id.Trim() + "/Faces?Ascending=true&PageSize=1", "GET");
                 faces = JsonSerializer.Deserialize<MemberFaces>(resp);
                 images = await retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
             });

@@ -12,20 +12,28 @@ namespace SmartfaceSolution.Services
 {
     public class MatchService : IMatchService
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="member"></param>
+        /// <param name="memberMatch"></param>
+        /// <param name="cam"></param>
         public void sendMessage(WatchlistMember member, MemberMatch memberMatch, Camera cam)
         {
             //Database Connection 
             string connetionString;
             string sqlCommand;
             SqlCommand cmd;
-            SqlDataReader dr;
+            SqlDataReader dr = null;
             SqlConnection cnn = null;
             bool m = false, c = false, t = false; // m=member, c=cam, t=time
             DateTime date =
-                (new DateTime(1970, 1, 1) + (TimeSpan.FromMilliseconds(memberMatch.FrameTimestampMicroseconds / 1000)))
+                (new DateTime(1970, 1, 1) + TimeSpan.FromMilliseconds(memberMatch.FrameTimestampMicroseconds / 1000))
                 .ToLocalTime();
+            Console.WriteLine("date= " + date);
             long frameDateTimeMilliseconds = new DateTimeOffset(date).ToUnixTimeMilliseconds();
-            int id = 0;
+            Console.WriteLine("frameDateTimeMilliseconds = " + frameDateTimeMilliseconds);
+            int id = int.Parse(member.note.Split(',')[2]);
             connetionString =
                 "Data Source=LAPTOP-O3E4PDUK\\SFEXPRESS;" + //change the server name
                 "Initial Catalog=HAWK;" +
@@ -35,46 +43,87 @@ namespace SmartfaceSolution.Services
             {
                 cnn = new SqlConnection(connetionString);
                 cnn.Open();
+                // The new section
+                sqlCommand = "SELECT * FROM [dbo].[Notification] WHERE MemberId = @memberId";
                 //Check if the member is in the Event Notification table 
-                sqlCommand = @"SELECT * FROM  EventNotifications WHERE [id] = (SELECT MAX(id) FROM EventNotifications)";
+                //sqlCommand = @"SELECT * FROM  Notification WHERE [id] = (SELECT MAX(id) FROM EventNotifications)";
                 cmd = new SqlCommand(sqlCommand, cnn);
+                cmd.Parameters.Add("@memberId", System.Data.SqlDbType.VarChar, -1).Value = member.id;
                 dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
                     while (dr.Read())
                     {
-                        id = dr.GetInt32(0);
-                        if (dr.GetString(1).Trim().Equals(member.id.Trim()))
+                        //id = (int) (dr["Id"]);
+                        if (((string) (dr["MemberID"])).Trim().Equals(member.id.Trim()))
                         {
+                            Console.WriteLine("Innnnnnnnnn");
                             m = true;
-                            if (dr.GetString(2).Trim().Equals(cam.name.Split("-")[1].Trim())) c = true;
-                            if (long.Parse(dr.GetString(4)) <= frameDateTimeMilliseconds &&
-                                long.Parse(dr.GetString(4)) + 180000 >= frameDateTimeMilliseconds)
+                            if (((int) (dr["CamPosition"])) == (Int32.Parse(cam.name.Split("-")[1]))) c = true;
+                            DateTime nDateTime = DateTime.Parse((string) dr["TimeStamp"]);
+                            long nDateTimeMilliseconds = new DateTimeOffset(nDateTime).ToUnixTimeMilliseconds();
+                            if (nDateTimeMilliseconds <= frameDateTimeMilliseconds &&
+                                nDateTimeMilliseconds + 180000 >= frameDateTimeMilliseconds)
                                 t = true; // 180000 Milliseconds = 3 min 
                         }
                     }
                 }
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
                 dr.Close();
+            }
+
+            try
+            {
                 //insert if the member not exists or different camera position or the different time
                 if (!m || !c || !t)
                 {
-                    sqlCommand = @"INSERT INTO EventNotifications VALUES (" + (id + 1) + ",'" + member.id + "','" +
-                                 cam.name.Split("-")[1].Trim() + "','" + date + "','" + frameDateTimeMilliseconds +
-                                 "','" + 1 + "')";
+                    Console.WriteLine("inside the if zeft");
+                    sqlCommand =
+                        "INSERT INTO [dbo].[Notification] ([Id], [MemberID] ,[CamPosition] ,[TimeStamp] ,[MessageStatus]) VALUES (@id ,@MemberID ,@CamPosition ,@TimeStamp ,@MessageStatus)";
                     cmd = new SqlCommand(sqlCommand, cnn);
-                    cmd.ExecuteReader();
+                    cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
+                    cmd.Parameters.Add("@MemberID", System.Data.SqlDbType.VarChar, -1).Value = member.id;
+                    cmd.Parameters.Add("@CamPosition", System.Data.SqlDbType.Int, 1).Value =
+                        Int32.Parse(cam.name.Split("-")[1]);
+                    cmd.Parameters.Add("@TimeStamp", System.Data.SqlDbType.VarChar, -1).Value = date;
+                    cmd.Parameters.Add("@MessageStatus", System.Data.SqlDbType.Int, 1).Value = 1;
+                    cmd.ExecuteNonQuery();
                     string email = member.note.Split(',')[0];
                     string phoneNumber = member.note.Split(',')[1];
-                    // sending the message
+                    // // sending the message
                     Message.Message message = new Message.Message(cam.name.Split("-")[1].Trim().Equals("in") ? 1 : 2,
                         member.displayName,
-                        DateTime.Now.ToLocalTime().ToString());
+                        date.ToUniversalTime().ToString());
                     message.sendEmail(email);
                     //message.sendSMS(phoneNumber);
-                }
 
-                Console.WriteLine("DB Connection Open!");
+                    // Attendance table 
+
+                    if (Int32.Parse(cam.name.Split("-")[1]) == 1)
+                    {
+                        sqlCommand =
+                            "INSERT INTO [dbo].[Attendance] ([id], [EnterTimeStamp]  ) VALUES (@id ,@EnterTimeStamp)";
+                        cmd = new SqlCommand(sqlCommand, cnn);
+                        cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
+                        cmd.Parameters.Add("@EnterTimeStamp", System.Data.SqlDbType.VarChar, -1).Value = date;
+                    }
+                    else
+                    {
+                        sqlCommand =
+                            " UPDATE [dbo].[Attendance] SET [ExitTimeStamp] = @ExitTimeStamp WHERE [id]=@id AND [ExitTimeStamp] IS NULL";
+                        cmd = new SqlCommand(sqlCommand, cnn);
+                        cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
+                        cmd.Parameters.Add("@ExitTimeStamp", System.Data.SqlDbType.VarChar, -1).Value = date;
+                    }
+
+                    cmd.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {

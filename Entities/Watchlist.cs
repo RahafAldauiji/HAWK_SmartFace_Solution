@@ -1,5 +1,9 @@
 ﻿namespace SmartfaceSolution.Entities
 {
+    /// <summary>
+    /// Entity <c>Watchlist</c> is one of the main classes in our system, it will provide all the attribute that needed in Watchlist entity
+    /// The Watchlist information is stored in the database and will be fetched as json 
+    /// </summary>
     public class Watchlist
     {
       

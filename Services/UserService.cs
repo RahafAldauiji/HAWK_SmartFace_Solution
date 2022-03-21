@@ -12,66 +12,64 @@ using SmartfaceSolution.Models;
 
 namespace SmartfaceSolution.Services
 {
+    /// <summary>
+    /// <c>IUserService</c> it is an interface class that specify the user service
+    /// and contain the methods that will be used to Authenticate the user and retrieves the user id
+    /// </summary>
     public interface IUserService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
+
         User GetById(int id);
     }
 
+    /// <summary>
+    /// <c>UserService</c> is a concrete class that implement IUserService interface 
+    /// </summary>
     public class UserService : IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>
         {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "Admin", Password = "Admin" }
+            new User {Id = 1, FirstName = "Test", LastName = "User", Username = "Admin", Password = "Admin"}
         };
 
-        private readonly AppSettings _appSettings;
+        private readonly JwtConfig _jwtConfig;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<JwtConfig> jwtConfig)
         {
-            _appSettings = appSettings.Value;
+            _jwtConfig = jwtConfig.Value;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
             var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
-            // return null if user not found
-            if (user == null) return null;
-
-            // authentication successful so generate jwt token
-            var token = generateJwtToken(user);
-
-            return new AuthenticateResponse(user, token);
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return _users;
+            // return null if user not found else generate jwt token and return Authenticate Response
+            return user == null ? null : new AuthenticateResponse(user, generateJwtToken(user));
+            
         }
 
         public User GetById(int id)
         {
             return _users.FirstOrDefault(x => x.Id == id);
         }
-
-        // helper methods
+        
 
         private string generateJwtToken(User user)
         {
-            // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            // JwtSecurityTokenHandler is used to generate the token using the secret key that stored in appsettings.json
+            var handler = new JwtSecurityTokenHandler();var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+            var descriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Subject = new ClaimsIdentity(new[] {new Claim("id", user.Id.ToString())}),
+                // The token is valid for just 1 day
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = handler.CreateToken(descriptor);
+            return handler.WriteToken(token);
         }
     }
 }

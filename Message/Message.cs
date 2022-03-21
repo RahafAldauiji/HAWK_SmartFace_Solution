@@ -1,25 +1,38 @@
 ﻿using System;
+using System.Diagnostics;
 using MailKit.Net.Smtp;
 using MimeKit;
 using System.IO;
 using System.Net;
 using System.Text;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace SmartfaceSolution.Message
 {
+    /// <summary>
+    /// Class <c>Message</c> have two method that sends the detection notification message to the member
+    /// </summary>
     public class Message
     {
-        private static string messageText;   
-        public Message(int cameraPosition,string name, string timestamp)
+        private static string messageText;
+
+        public Message(int cameraPosition, string name, string timestamp)
         {
-            messageText = "Dear " + name + ",\nYou have checked-" + (cameraPosition == 1 ? "in" : "out") + " today at " + timestamp + "\nThanks.";
+            messageText = "Dear " + name + ",\nYou have checked-" + (cameraPosition == 1 ? "in" : "out") +
+                          " today at " + timestamp + "\nThanks."; // message that will be sent 
         }
-        public  void sendEmail(string memberEmail)
+
+        /// <summary>
+        /// Method <c>sendEmail</c> will send the message using the email
+        /// We are using the MailKit library to create the SMTP client
+        /// </summary>
+        /// <param name="memberEmail">the member email</param>
+        public void sendEmail(string memberEmail)
         {
             MimeMessage message = new MimeMessage();
             message.From.Add(new MailboxAddress("HAWK", "ersthethreemusketeers@gmail.com"));
             message.To.Add(
-                MailboxAddress.Parse(memberEmail)); // Change the email to the watchlistMember email
+                MailboxAddress.Parse(memberEmail));
             message.Subject = "Attendance";
             // plain is simple text message 
             message.Body = new TextPart("plain")
@@ -42,7 +55,6 @@ namespace SmartfaceSolution.Message
                 client.Connect("smtp.gmail.com", 465, true);
                 client.Authenticate(email, password);
                 client.Send(message);
-                Console.WriteLine("Email Sent ;)");
             }
             finally
             {
@@ -50,38 +62,41 @@ namespace SmartfaceSolution.Message
                 client.Dispose();
             }
         }
+        /// <summary>
+        /// Method <c>sendSMS</c> will send a message using the REST API of BulkSMS 
+        /// </summary>
+        /// <param name="phoneNumber"></param>
 
         public void sendSMS(string phoneNumber)
         {
-            string myURI = "https://api.bulksms.com/v1/messages";
-            string myUsername = "rahaf_id";
-            string myPassword = "R6620551r";
+            string url = "https://api.bulksms.com/v1/messages";// the URL thar use for the SMS service 
+            // user account information
+            string username = "rahaf_id";
+            string password = "R6620551r";
 
-            // the details of the message we want to send
-            string myData = "{to: \""+phoneNumber+"\", body:\""+messageText+"\"}";
-
-            var request = WebRequest.Create(myURI);
-            request.Credentials = new NetworkCredential(myUsername, myPassword);
+            // the details of the message we want to send as JSON format 
+            string data = "{to: \"" + phoneNumber + "\", body:\"" + messageText + "\"}";
+            var request = WebRequest.Create(url);// create the web requests
+            request.Credentials = new NetworkCredential(username, password);
             request.PreAuthenticate = true;
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            var encoding = new UnicodeEncoding();
-            var encodedData = encoding.GetBytes(myData);
+            request.Method = "POST"; // HTTP post method 
+            request.ContentType = "application/json";// determine the JSON type
+            var encoding = new UnicodeEncoding();// encode the message using the Unicode encoding
+            var encodedData = encoding.GetBytes(data);
             var stream = request.GetRequestStream();
             try
             {
-                stream.Write(encodedData, 0, encodedData.Length);
+                stream.Write(encodedData, 0, encodedData.Length);// execute the request and write the streams
             }
             finally
             {
                 stream.Flush();
                 stream.Close();
             }
-
             var response = request.GetResponse();
-            // read the response and print it to the console
+            // read the response of the request 
             var reader = new StreamReader(response.GetResponseStream());
-            Console.WriteLine(reader.ReadToEnd());
+            Debug.WriteLine(reader);
         }
     }
 }

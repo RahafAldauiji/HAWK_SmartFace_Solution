@@ -66,8 +66,16 @@
 
         /// <summary>
         /// Property <c>faceSaveStrategy</c> represents the face save strategy.
-        /// it have six strategies
-        /// [ All, FirstFace, BestFace, FirstFace, BestFace, MatchedOnly ]
+        /// <list type="item">
+        /// <listheader>
+        ///<term>Strategies</term>
+        ///<description>Four strategies for saving the face</description>
+        /// </listheader>
+        /// <item><term>All</term></item>
+        /// <item><term>FirstFace</term></item>
+        /// <item><term>BestFace</term></item>
+        /// <item><term>MatchedOnly</term></item>
+        /// </list>
         /// </summary>
         public string faceSaveStrategy { get; set; }
 
@@ -82,7 +90,10 @@
         /// the frame image data should be saved from the camera.
         /// </summary>
         public bool saveFrameImageData { get; set; }
-
+        /// <summary>
+        /// Property <c>imageQuality</c> represents 
+        /// the quality of the image in pernetage  
+        /// </summary>
         public int imageQuality { get; set; }
 
         public bool mpeG1PreviewEnabled { get; set; }
@@ -92,7 +103,10 @@
         public int mpeG1VideoBitrate { get; set; }
 
         public int previewMaxDimension { get; set; }
-
+        /// <summary>
+        /// Property <c>serviceName</c> represents 
+        /// the service name that will run on it   
+        /// </summary>
         public string serviceName { get; set; }
 
         public string[] spoofDetectorResourceIds { get; set; }

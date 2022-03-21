@@ -6,11 +6,14 @@ using Microsoft.Extensions.Logging;
 
 namespace SmartfaceSolution.Services
 {
-    public class BackBroundService : BackgroundService
+    /// <summary>
+    /// <c>BackgroundMatchService</c> is a background service that are running as long as is running the IHostedService
+    /// </summary>
+    public class BackgroundMatchService : BackgroundService
     {
-        private readonly ILogger<BackBroundService> _logger;
+        private readonly ILogger<BackgroundMatchService> _logger;
         private readonly IMatchService _matchService;
-        public BackBroundService(IMatchService matchService,ILogger<BackBroundService> logger)
+        public BackgroundMatchService(IMatchService matchService,ILogger<BackgroundMatchService> logger)
         {
             _logger = logger;
             _matchService = matchService;

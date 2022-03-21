@@ -1,5 +1,8 @@
 ﻿namespace SmartfaceSolution.Entities
 {
+    /// <summary>
+    /// Entity <c>MemberMatch</c> provide all the attribute that needed in Member Match
+    /// </summary>
     public class MemberMatch
     {
         public string CropImage { get; set; }

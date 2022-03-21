@@ -6,18 +6,21 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SmartfaceSolution.Entities;
+using SmartfaceSolution.Helpers;
 using SmartfaceSolution.SubEntities;
 using SmartfaceSolution.Models;
 using SmartfaceSolution.Services;
 
 namespace SmartfaceSolution.Controllers
 {
+    /// <summary>
+    /// <c>HawkController</c> is Controller defines the endpoint our system
+    /// It will handles all the routes for the API
+    /// </summary>
     [Produces("application/json")]
     [Route("HAWK")]
     [ApiController]
     [EnableCors("AnotherPolicy")]
-
-
     public class HawkController : Controller
     {
         private IUserService _userService;
@@ -27,64 +30,24 @@ namespace SmartfaceSolution.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Authenticate the user 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Bad Request if the user is unauthorized else return a json that contain JWT token.</returns>
         [AllowAnonymous]
         [HttpPost]
         [Route("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest user)
         {
-            var response = _userService.Authenticate(model);
-            if (response == null)
-            {
-                return BadRequest(new {message = "Username or password is incorrect"});
-            }
-
-            return Json(response);
+            var response = _userService.Authenticate(user);
+            return response == null ? throw new AppException("Invalid User") : Json(response);
         }
-        // [HttpGet]
-        // [Microsoft.AspNetCore.Mvc.Route("ws")]
-        // public async Task Get()
-        // {
-        //     if (HttpContext.WebSockets.IsWebSocketRequest)
-        //     {
-        //         using WebSocket webSocket = await
-        //             HttpContext.WebSockets.AcceptWebSocketAsync();
-        //         Console.WriteLine("Server is running");
-        //        // await Echo(webSocket);
-        //     }
-        //     else
-        //     {
-        //         HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
-        //     }
-        // }
-        // private async Task Echo(WebSocket webSocket)
-        // {
-        //     var buffer = new byte[1024 * 4];
-        //     var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-        //     Console.WriteLine(LogLevel.Information+ "Message received from Client");
-        //
-        //     while (!result.CloseStatus.HasValue)
-        //     {
-        //         var serverMsg = Encoding.UTF8.GetBytes($"Server: Hello. You said: {Encoding.UTF8.GetString(buffer)}");
-        //         await webSocket.SendAsync(new ArraySegment<byte>(serverMsg, 0, serverMsg.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
-        //         Console.WriteLine(LogLevel.Information+"Message sent to Client");
-        //
-        //         result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-        //         Console.WriteLine(LogLevel.Information+"Message received from Client");
-        //         
-        //     }
-        //     await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        //     Console.WriteLine(LogLevel.Information + "WebSocket connection closed");
-        // }
-        // [HttpGet]
-        // [Microsoft.AspNetCore.Mvc.Route("Exception")]
-        // public async Task<IActionResult> Exception()
-        // {
-        //     throw new Exception("Exception while fetching data");
-        //     return Ok();
-        // }
-        /////////////////////////////////
-        ///
-        
+
+        /// <summary>
+        /// Camera region have all the Camera operation
+        /// </summary>
+
         #region Camera
 
         [Authorize]
@@ -92,8 +55,7 @@ namespace SmartfaceSolution.Controllers
         [Route("Camera/getCamera")]
         public async Task<IActionResult> getCamera(string id)
         {
-            Camera camera = await new SubCamera().getCamera(id);
-            return Json(camera);
+            return Json(await new SubCamera().getCamera(id));
         }
 
         [Authorize]
@@ -101,22 +63,19 @@ namespace SmartfaceSolution.Controllers
         [Route("Camera/getAllCameras")]
         public async Task<IActionResult> getAllCameras()
         {
-            List<Camera> cameras = await new SubCamera().getAllCameras();
-            return Json(cameras);
+            return Json(await new SubCamera().getAllCameras());
         }
 
         [Authorize]
         [HttpPost]
         [Route("Camera/create")]
-        public async Task<IActionResult> createCamera([FromBody]Camera cam)
+        public async Task<IActionResult> createCamera([FromBody] Camera cam)
         {
-            
-            Camera camera = await new SubCamera().createCamera(rtsp: cam.source, cameraName: cam.name);
-            return Json(camera);
+            return Json(await new SubCamera().createCamera(rtsp: cam.source, cameraName: cam.name));
         }
 
         [Authorize]
-        [HttpPost] 
+        [HttpPost]
         [Route("Camera/update")]
         public async Task<IActionResult> updateCamera(string camera)
         {
@@ -124,14 +83,13 @@ namespace SmartfaceSolution.Controllers
             Camera updatedCamera = await new SubCamera().updateCamera(cam);
             return Json(updatedCamera);
         }
+
         [Authorize]
         [HttpDelete]
         [Route("Camera/delete")]
         public async Task<IActionResult> deleteCamera(string id)
         {
-            
-            string camera = await new SubCamera().deleteCamera(id);
-            return Json(camera);
+            return Json(await new SubCamera().deleteCamera(id));
         }
 
         [Authorize]
@@ -140,11 +98,16 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> getMatch()
         {
             // TestMember matchs =await new MatchService().matchFaces();
-            List<MatchFaces> matchs = await new SubMatchFaces().matchFaces();
-            return Json(matchs);
+            MemberMatch match = await new SubMatchFaces().matchFaces();
+            Console.WriteLine(match.Id);
+            return Json(match);
         }
 
         #endregion
+
+        /// <summary>
+        /// Watchlist region have all the Watchlist operation
+        /// </summary>
 
         #region Watchlist
 
@@ -154,9 +117,8 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> createWatchlist(string watchlistDisplayName,
             string watchlistFullName, int watchlistThreshold)
         {
-            Watchlist watchlist = await new SubWatchlist().createWatchList(watchlistDisplayName, watchlistFullName,
-                watchlistThreshold);
-            return Json(watchlist);
+            return Json(await new SubWatchlist().createWatchList(watchlistDisplayName, watchlistFullName,
+                watchlistThreshold));
         }
 
         [Authorize]
@@ -164,26 +126,25 @@ namespace SmartfaceSolution.Controllers
         [Route("Watchlist/getMembers")]
         public async Task<IActionResult> getWatchlistMembers(string id)
         {
-            Members watchlistMembers = await new SubWatchlist().retrievesWatchlistMembers(id);
-            return Json(watchlistMembers);
+            return Json(await new SubWatchlist().retrievesWatchlistMembers(id));
         }
+
         [Authorize]
         [HttpGet]
         [Route("Watchlist/getAllWatchlist")]
         public async Task<IActionResult> getAllWatchlist()
         {
-            List<Watchlist> watchlistMembers = await new SubWatchlist().retrievesAllWatchlist();
-            return Json(watchlistMembers);
+            return Json(await new SubWatchlist().retrievesAllWatchlist());
         }
+
         [Authorize]
         [HttpPut]
         [Route("Watchlist/upadte")]
         public async Task<IActionResult> updateWatchlist(string watchlistId, string watchlistDisplayName,
             string watchlistFullName, int watchlistThreshold)
         {
-            Watchlist updatedwatchlist = await new SubWatchlist().updateWatchList(watchlistId, watchlistDisplayName,
-                watchlistFullName, watchlistThreshold);
-            return Json(updatedwatchlist);
+            return Json(await new SubWatchlist().updateWatchList(watchlistId, watchlistDisplayName,
+                watchlistFullName, watchlistThreshold));
         }
 
         [Authorize]
@@ -191,11 +152,14 @@ namespace SmartfaceSolution.Controllers
         [Route("Watchlist/delete")]
         public async Task<IActionResult> deleteWatchlist(string watchlistId)
         {
-            string deletedwatchlist = await new SubWatchlist().deleteWatchList(watchlistId);
-            return Json(deletedwatchlist);
+            return Json(await new SubWatchlist().deleteWatchList(watchlistId));
         }
 
         #endregion
+
+        /// <summary>
+        /// WatchlistMember region have all the WatchlistMember operation
+        /// </summary>
 
         #region WatchlistMember
 
@@ -204,8 +168,7 @@ namespace SmartfaceSolution.Controllers
         [Route("WatchlistMember/getMember")]
         public async Task<IActionResult> getWatchlistMember(string id)
         {
-            WatchlistMember watchlistMember = await new SubWatchlistMember().getWatchlistMember(id);
-            return Json(watchlistMember);
+            return Json(await new SubWatchlistMember().getWatchlistMember(id));
         }
 
         [Authorize]
@@ -214,44 +177,38 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> updateWatchlistMember(string id, string displayName, string fullName,
             string note)
         {
-            // id = "916255be-0ca7-43e9-ab7e-727c665bbd7a";
-            // displayName = "t";
-            // fullName = "e";
-            // note = "dfd";
-            WatchlistMember updatedwatchlistMember = await new SubWatchlistMember().updateWatchListMember(id,
-                displayName, fullName, note);
-            return Json(updatedwatchlistMember);
+            return Json(await new SubWatchlistMember().updateWatchListMember(id,
+                displayName, fullName, note));
         }
 
-        [Authorize]
-        [HttpPost]
-        [Route("WatchlistMember/link")]
-        public async Task<IActionResult> linkWatchlistMember(string watchlistMember,
-            string watchlistId)
-        {
-            string linkedwatchlistMember =
-                await new SubWatchlistMember().linkWatchListMember(watchlistId, watchlistMember);
-            return Json(linkedwatchlistMember);
-        }
+        // [Authorize]
+        // [HttpPost]
+        // [Route("WatchlistMember/link")]
+        // public async Task<IActionResult> linkWatchlistMember(string watchlistMember,
+        //     string watchlistId)
+        // {
+        //     string linkedwatchlistMember =
+        //         await new SubWatchlistMember().linkWatchListMember(watchlistId, watchlistMember);
+        //     return Json(linkedwatchlistMember);
+        // }
 
-        [Authorize]
-        [HttpPost]
-        [Route("WatchlistMember/unlink")]
-        public async Task<IActionResult> unlinkWatchlistMember(string watchlistMember,
-            string watchlistId)
-        {
-            string linkedwatchlistMember =
-                await new SubWatchlistMember().unlinkWatchListMember(watchlistId, watchlistMember);
-            return Json(linkedwatchlistMember);
-        }
+        // [Authorize]
+        // [HttpPost]
+        // [Route("WatchlistMember/unlink")]
+        // public async Task<IActionResult> unlinkWatchlistMember(string watchlistMember,
+        //     string watchlistId)
+        // {
+        //     string linkedwatchlistMember =
+        //         await new SubWatchlistMember().unlinkWatchListMember(watchlistId, watchlistMember);
+        //     return Json(linkedwatchlistMember);
+        // }
 
         [Authorize]
         [HttpDelete]
         [Route("WatchlistMember/delete")]
         public async Task<IActionResult> deleteWatchlistMember(string watchlistMemberId)
         {
-            string deletedwatchlistMember = await new SubWatchlistMember().deleteWatchListMember(watchlistMemberId);
-            return Json(deletedwatchlistMember);
+            return Json(await new SubWatchlistMember().deleteWatchListMember(watchlistMemberId));
         }
 
         [Authorize]
@@ -270,7 +227,7 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> getMemberFace(string id)
         {
             string img = await new SubWatchlistMember().getMemberFace(id);
-            return Json(img);
+            return Json(await new SubWatchlistMember().getMemberFace(id));
         }
 
         [Authorize]
@@ -279,18 +236,9 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> getWatchlistMemberFaces(string id)
         {
             List<string> faces = await new SubWatchlistMember().getFaces(id);
-            return Json(faces);
+            return Json(await new SubWatchlistMember().getFaces(id));
         }
 
-        // [HttpPost]
-        // [Route("WatchlistMember/register")]
-        // public IActionResult registerWatchlistMember(string imgUrl, string id,
-        //     string watchlistId)
-        // {
-        //     string registeredWatchlistMember =
-        //         new SubWatchlistMember().register(id, watchlistId, imgUrl);
-        //     return Json(registeredWatchlistMember);
-        // }
         [Authorize]
         [HttpPost]
         [Route("WatchlistMember/CreateAndResgister")]
@@ -301,30 +249,27 @@ namespace SmartfaceSolution.Controllers
             WatchlistMember watchlistMember =
                 await new SubWatchlistMember().createWatchListMember(displayName,
                     fullName, note);
-            string registeredWatchlistMember =
-                await new SubWatchlistMember().registerNewMember(watchlistMember.id, watchlistId, imgUrl);
-            return Json(registeredWatchlistMember);
+            return Json(await new SubWatchlistMember().registerNewMember(watchlistMember.id, watchlistId, imgUrl));
         }
 
-        //cc9c8016-3489-49f1-8e2d-842c7dae3431 :S
-        //90ca71c3-2247-47a2-a78d-6a97ac5a1540 :E
-        [Authorize]
-        [HttpPost]
-        [Route("WatchlistMember/addFace")]
-        public async Task<IActionResult> addFace(string watchlistMemberId, string imgUrl)
-        {
-            Face face = await new SubWatchlistMember().addNewFace(watchlistMemberId, imgUrl);
-            return Json(face);
-        }
 
-        [Authorize]
-        [HttpPost]
-        [Route("WatchlistMember/removeFace")]
-        public async Task<IActionResult> removeFace(string id, string faceId)
-        {
-            string removedFace = await new SubWatchlistMember().removeFace(id, faceId);
-            return Json(removedFace);
-        }
+        // [Authorize]
+        // [HttpPost]
+        // [Route("WatchlistMember/addFace")]
+        // public async Task<IActionResult> addFace(string watchlistMemberId, string imgUrl)
+        // {
+        //     Face face = await new SubWatchlistMember().addNewFace(watchlistMemberId, imgUrl);
+        //     return Json(face);
+        // }
+
+        // [Authorize]
+        // [HttpPost]
+        // [Route("WatchlistMember/removeFace")]
+        // public async Task<IActionResult> removeFace(string id, string faceId)
+        // {
+        //     string removedFace = await new SubWatchlistMember().removeFace(id, faceId);
+        //     return Json(removedFace);
+        // }
 
         #endregion
     }

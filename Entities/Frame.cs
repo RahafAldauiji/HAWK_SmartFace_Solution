@@ -1,16 +1,11 @@
 ﻿namespace SmartfaceSolution.Entities
 {
+    /// <summary>
+    /// Entity <c>Frame</c> is one of the main classes in our system, it will provide all the attribute that needed in frame entity
+    /// The Frame information is stored in the database and will be fetched as json 
+    /// </summary>
     public class Frame
     {
-        // private string state;
-        // private string imageDataId;
-        // private string receivedAt;
-        // private int positionInMs;
-        // private string id;
-        // private string createdAt;
-        // private string updatedAt;
-
-
         public string state { get; set; }
 
         public string imageDataId { get; set; }
@@ -24,7 +19,5 @@
         public string createdAt { get; set; }
 
         public string updatedAt { get; set; }
-
-      
     }
 }

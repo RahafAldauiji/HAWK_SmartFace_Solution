@@ -20,6 +20,7 @@
     <div class="row tm-mt-big">
         <div class="col-12 mx-auto tm-login-col">
             <div class="bg-white tm-block">
+               
                 <div class="row">
                     <div class="col-12 text-center">
                         <img src="https://drive.google.com/uc?export=view&id=1kkZJ8XDbzRaSASbTxIuh6ghQ2fEZ-3XN"
@@ -27,6 +28,7 @@
                         <h2 class="tm-block-title mt-3">Login</h2>
                     </div>
                 </div>
+                
                 <div class="row mt-2">
                     <div class="col-12">
 
@@ -43,7 +45,7 @@
                                        required>
                             </div>
                             <div class="input-group mt-3">
-                                <button onclick="login()" type="submit" class="btn btn-primary d-inline-block mx-auto">
+                                <button type="submit" class="btn btn-primary d-inline-block mx-auto" onclick="Registration()">
                                     Registration
                                 </button>
                                 <button type="submit" class="btn btn-primary d-inline-block mx-auto" onclick="login()">
@@ -85,11 +87,11 @@
         ))
        
     }
-
-    function RegistrationPage() {
-        window.open("editMember.html", "_self");
-    }
 </script>
+<script> 
+    function Registration() {
+    window.open("registrationPage.html", "_self");
+}</script>
 </body>
 
 </html>

@@ -39,6 +39,7 @@ namespace SmartfaceSolution
                             .AllowAnyMethod();
                     });
             });
+            services.Configure<ServerConfig>(Configuration.GetSection("ConnectionStrings")); // inject the JwtConfig 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // inject the JwtConfig 
             services.AddScoped<IUserService, UserService>();
         }

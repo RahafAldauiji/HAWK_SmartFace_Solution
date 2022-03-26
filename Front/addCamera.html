@@ -73,29 +73,33 @@
         <div class="row tm-content-row tm-mt-big">
             <div class="col-xl-12 col-lg-12 tm-md-12 tm-sm-12 tm-col">
                 <h2 class="tm-block-title d-inline-block" style="text-decoration: underline">New Camera</h2>
-               
+
                 <div class=" white-block bg-white tm-block h-100">
                     <div class="Camera-form">
-                    <form >
-                    <div class="input-group mb-4 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Name</div>
-                            <label class="sr-only" for="inlineFormInputGroupUsername1"></label>
-                        </div>
-                        
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername1" placeholder="Enter The Camera Name" >
-                    </div>
+                        <form>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Name</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername1"></label>
+                                </div>
 
-                    <div class="input-group mb-4 mr-sm-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">Source</div>
-                            <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
-                        </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername1"
+                                       placeholder="Enter The Camera Name">
+                            </div>
 
-                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Enter The Camera Name">
-                    </div>
-                        <button type="button" class="btn btn-action btn-sm px-2" onclick="addCam()" style="float: right" >Save</button>
-                    </form>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Source</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
+                                </div>
+
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                                       placeholder="Enter The Camera Name">
+                            </div>
+                            <button type="button" class="btn btn-action btn-sm px-2" onclick="addCam()"
+                                    style="float: right">Save
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -104,21 +108,7 @@
 
     </div>
 </div>
-<script>
-    function addCam(){
-        let name = document.getElementById("inlineFormInputGroupUsername1").value;
-        let source=document.getElementById("inlineFormInputGroupUsername2").value;
-        let data = {source: source, name: name};
-        fetch("https://localhost:5001/HAWK/Camera/create",{
-            method: 'POST',
-            headers: {
-                'Authorization': sessionStorage.getItem('userT'), 
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res=>window.open("Cameras.html","_self"));
-    }
-</script>
+<script src="js-files/AddCamera.js"></script>
 </body>
 
 </html>

@@ -29,4 +29,9 @@
         public string updatedAt { get; set; }
 
     }
+
+    public class AllWatchlist
+    {
+        public Watchlist[] items { get; set; }
+    }
 }

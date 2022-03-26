@@ -30,6 +30,7 @@ namespace SmartfaceSolution.SubEntities
             {
                 string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
                               "\",\"threshold\":" + threshold + "}";
+
                 string resp = await new HttpResquest().requestWithBody("Watchlists", "POST", json);
                 watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             });
@@ -56,6 +57,7 @@ namespace SmartfaceSolution.SubEntities
             });
             return watchlist;
         }
+
         /// <summary>
         /// Method <c>deleteWatchList</c> delete a specific watchlist from the system 
         /// </summary>
@@ -64,9 +66,13 @@ namespace SmartfaceSolution.SubEntities
         public async Task<string> deleteWatchList(String id)
         {
             string resp = null;
-            await Task.Run(async () => { resp = await new HttpResquest().requestWithBody("Watchlists/" + id, "DELETE", ""); });
+            await Task.Run(async () =>
+            {
+                resp = await new HttpResquest().requestWithBody("Watchlists/" + id, "DELETE", "");
+            });
             return resp;
         }
+
         /// <summary>
         /// Method <c>retrievesWatchlistMembers</c> will retrieves all the WatchlistMembers 
         /// </summary>
@@ -77,24 +83,41 @@ namespace SmartfaceSolution.SubEntities
             Members watchlistMembers = null;
             await Task.Run(async () =>
             {
-                string resp = await new HttpResquest().requestNoBody("Watchlists/"+watchlistId + "/WatchlistMembers", "GET");
+                string resp =
+                    await new HttpResquest().requestNoBody("Watchlists/" + watchlistId + "/WatchlistMembers", "GET");
                 watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
             });
             return watchlistMembers;
         }
+
         /// <summary>
         /// Method <c>retrievesAllWatchlist</c> will retrieves all the watchlist from the system
         /// </summary>
         /// <returns>list of watchlist</returns>
-        public async Task<List<Watchlist>> retrievesAllWatchlist()
+        public async Task<AllWatchlist> retrievesAllWatchlist()
         {
-            List<Watchlist> watchlists = null;
+            AllWatchlist watchlists = null;
             await Task.Run(async () =>
             {
                 string resp = await new HttpResquest().requestNoBody("Watchlists", "GET");
-                watchlists = JsonSerializer.Deserialize<List<Watchlist>>(resp);
+                watchlists = JsonSerializer.Deserialize<AllWatchlist>(resp);
             });
             return watchlists;
+        }
+        /// <summary>
+        /// Method <c>getWatchlist</c> retrieves a specific watchlist from the system 
+        /// </summary>
+        /// <param name="id">the watchlist id</param>
+        /// <returns>the watchlist</returns>
+        public async Task<Watchlist> getWatchlist(string id)
+        {
+            Watchlist watchlist = null;
+            await Task.Run(async () =>
+            {
+                string resp = await new HttpResquest().requestNoBody("Watchlists/" + id, "GET");
+                watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
+            });
+            return watchlist;
         }
     }
 }

@@ -123,62 +123,8 @@
 
     </div>
 </div>
-<script>
-    let cameraId=sessionStorage.getItem('cameraId');
-    let userT=sessionStorage.getItem('userT');
-    var camera;
-    var res = fetch("https://localhost:5001/HAWK/Camera/getCamera?id="+cameraId,{
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-            'Authorization': sessionStorage.getItem('userT'),
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(resultHits => resultHits.json())
-        .then(resultHits => {
-                camera = resultHits;
-                document.getElementById("inlineFormInputGroupUsername1").value=resultHits.id;
-                document.getElementById("inlineFormInputGroupUsername2").value=resultHits.name;
-                document.getElementById("inlineFormInputGroupUsername3").value=resultHits.enabled;
-                document.getElementById("inlineFormInputGroupUsername4").value=resultHits.source;
-                // resultHits.map(obj => {
-                //     selectedCamID=obj.id;
-                //     splitHits += "<tr> <th scope=\"row\"> <input id=\"" +obj.id+
-                //         "\" name='camera' type=\"radio\"></th>";
-                //     //splitHits += "<tr>";
-                //     splitHits += "<td className=\"tm-product-name\">";
-                //     splitHits += obj.name + "</td> <br>";
-                //     splitHits += "<td className=\"text-center\">";
-                //     splitHits += obj.enabled + "</td>";
-                //     splitHits+="<td> " +
-                //         "<button  onclick=\"EditPage()\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\">" +
-                //         "<i class=\"fas fa-edit fa-lg \" ></i></button>" +
-                //         "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">" +
-                //         "<i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" +obj.id+"')\"></i></button>" +
-                //         "</td>";
-                //     //splitHits += "</tr>";
-                //
-                // });
-                // document.getElementById("cameraList").innerHTML = splitHits;
-
-            }
-        );
-        function updateCam(){
-            camera.id=document.getElementById("inlineFormInputGroupUsername1").value;
-            camera.name=document.getElementById("inlineFormInputGroupUsername2").value;
-            camera.enabled=document.getElementById("inlineFormInputGroupUsername3").value;
-            camera.source=document.getElementById("inlineFormInputGroupUsername4").value;
-            let cam =  JSON.stringify(camera);
-            fetch("https://localhost:5001/HAWK/Camera/update?camera="+cam,{
-                method: 'POST',
-                headers: {
-                    'Authorization': sessionStorage.getItem('userT'),
-                    'Content-Type': 'application/json',
-                },
-                body: cam
-            }).then(res=>window.open("Cameras.html", "_self"));
-        }
+<script src="js-files/EditCamera.js">
+   
 </script>
 </body>
 </html>

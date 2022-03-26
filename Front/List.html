@@ -94,9 +94,11 @@
             <div class="col-4" id="membersInfo" style="display: none">
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title d-inline-block" style="color: #333333">Membebr Information</h2>
+                    <button  onclick="EditPage()" type="button" class=" btn btn-sh btn-sm "  style="float: right">
+                    <i class="fas fa-edit fa-lg " ></i></button>
                     <table class="table table-striped mt-3">
                         <tbody id="memberBody">
-
+                        
                         </tbody>
                     </table>
                 </div>
@@ -106,106 +108,7 @@
     </div>
 </div>
 
-<script>
-    let res;
-    var jresult;
-    var splitHits = "";
-    res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers", {
-        method: 'GET',
-        headers: {
-            'Authorization': sessionStorage.getItem('userT'),
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(resultHits => resultHits.json())
-        .then(resultHits => {
-                jresult = JSON.stringify(resultHits);
-                resultHits.map(obj => {
-                    splitHits += "<tr onclick=\"memberData('" + obj.id + "')\">";
-                    //
-                    fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + obj.id, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': sessionStorage.getItem('userT'),
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                        .then(resultHits1 => resultHits1.json())
-                        .then(resultHits1 => {
-                            splitHits += "<td>";
-                            splitHits += "<img src=\'data:image/(png|jpg|jpeg);base64," +
-                                resultHits1.toString() + "'width='60px'height='60px' onclick= \"memberData('" + obj.id + "')\">";
-                            splitHits += "</td>";
-                            splitHits += " <th scope=\"row\"> <input  id=\"" + obj.id + "\" name='member' type=\"hidden\" onclick=\"memberData('" + obj.id + "')\">" +
-                                "</th>";
-                            splitHits += "<td className=\"tm-product-name\">";
-                            splitHits += obj.fullName + "</td> <br>";
-                            splitHits += "<td className=\"text-center\">";
-                            splitHits += obj.id + "</td>";
-                            splitHits += "</tr>";
-                            
-                            document.getElementById("membersList").innerHTML = splitHits;
-                        });
-                    //  window.alert(obj.fullName);
-
-                });
-
-            }
-        );
-
-    function memberData(id) {
-       // var radioValue = document.getElementById(id).checked;
-        document.getElementById("membersInfo").style.display = "block";
-       //  if (radioValue === true) {
-       //      document.getElementById("membersInfo").style.display = "block";
-       //  } else {
-       //      document.getElementById("membersInfo").style.display = "none";
-       //  }
-        var member = "";
-        var jresult = "";
-        fetch("https://localhost:5001/HAWK/WatchlistMember/getMember?id=" + id, {
-            method: 'GET',
-            headers: {
-                'Authorization': sessionStorage.getItem('userT'),
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(resultHits => resultHits.json())
-            .then(resultHits => {
-                    jresult = JSON.stringify(resultHits);
-                    member += "<tr><td><i class=\"fas fa-user-circle \"> Full Name: ";
-                    member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
-                    member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
-                    member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
-                    var counter = 0;
-                    fetch("https://localhost:5001/HAWK/WatchlistMember/getFaces?id=" + id, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': sessionStorage.getItem('userT'),
-                            'Content-Type': 'application/json'
-                        },
-                    })
-                        .then(resultHits1 => resultHits1.json())
-                        .then(resultHits1 => {
-                            jresult = JSON.stringify(resultHits1);
-                            resultHits1.map(obj => {
-                                member += "<img src=\'data:image/(png|jpg|jpeg);base64," +
-                                    obj.toString() + "'width='90px'height='90px'>";
-                                counter++;
-                                if (counter === 3) {
-                                    member += "<br>&emsp;&nbsp;";
-                                    counter = 0;
-                                }
-                            });
-                            member += "</i></td></tr>";
-                            document.getElementById("memberBody").innerHTML = member;
-
-                        });
-                }
-            );
-
-    }
-</script>
+<script src="js-files/MemberList.js"> </script>
 </body>
 
 </html>

@@ -36,7 +36,7 @@ namespace SmartfaceSolution.Services
             string connetionString, sqlCommand;
             SqlCommand cmd;
             SqlDataReader dr = null;
-            SqlConnection cnn = null;
+            SqlConnection cnn ;
             bool m = false, c = false, t = false; // m=member, c=cam, t=time
             DateTime date =
                 (new DateTime(1970, 1, 1) + TimeSpan.FromMilliseconds(memberMatch.FrameTimestampMicroseconds / 1000))

@@ -6,6 +6,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using SmartfaceSolution.Entities;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.Models;
@@ -18,7 +22,7 @@ namespace SmartfaceSolution.Services
     /// </summary>
     public interface IUserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
+        Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
 
         User GetById(int id);
     }
@@ -28,38 +32,101 @@ namespace SmartfaceSolution.Services
     /// </summary>
     public class UserService : IUserService
     {
+        private readonly ServerConfig _serverName;
+
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User {Id = 1, FirstName = "Test", LastName = "User", Username = "Admin", Password = "Admin"}
-        };
+
 
         private readonly JwtConfig _jwtConfig;
+        private User _user;
 
-        public UserService(IOptions<JwtConfig> jwtConfig)
+        public UserService(IOptions<JwtConfig> jwtConfig, IOptions<ServerConfig> serverConfig)
         {
             _jwtConfig = jwtConfig.Value;
+            _serverName = serverConfig.Value;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+
+        public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            SqlConnection cnn = null;
+            string sqlCommand;
+            SqlCommand cmd;
+            SqlDataReader dr = null;
+            try
+            {
+                cnn = new SqlConnection(_serverName.DefaultConnection);
+                cnn.Open();
+                sqlCommand =
+                    "SELECT * FROM [dbo].[Employees] WHERE UserName = @UserName AND Password=@Password"; // sql select command to be executed
+                cmd = new SqlCommand(sqlCommand, cnn);
+                cmd.Parameters.Add("@UserName", System.Data.SqlDbType.VarChar, -1).Value = model.Username;
+                cmd.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, -1).Value = model.Password;
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        _user = new User
+                        {
+                            Id = (int) (dr["Id"]),
+                            Username = (string) dr["UserName"],
+                            Password = (string) dr["Password"]
+                        };
+                    }
+                }
+            }
+            finally
+            {
+                cnn.Close();
+            }
 
             // return null if user not found else generate jwt token and return Authenticate Response
-            return user == null ? null : new AuthenticateResponse(user, generateJwtToken(user));
-            
+            return _user == null ? null : new AuthenticateResponse(_user, generateJwtToken(_user));
         }
 
         public User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            SqlConnection cnn = null;
+            string sqlCommand;
+            SqlCommand cmd;
+            SqlDataReader dr = null;
+            try
+            {
+                cnn = new SqlConnection(_serverName.DefaultConnection);
+                cnn.Open();
+                sqlCommand =
+                    "SELECT * FROM [dbo].[Employees] WHERE Id = @id"; // sql select command to be executed
+                cmd = new SqlCommand(sqlCommand, cnn);
+                cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
+                dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        return new User
+                        {
+                            Id = (int) (dr["Id"]),
+                            Username = (string) dr["UserName"],
+                            Password = (string) dr["Password"]
+                        };
+                    }
+                }
+            }
+            finally
+            {
+                cnn.Close();
+            }
+
+            return null;
         }
-        
+
 
         private string generateJwtToken(User user)
         {
             // JwtSecurityTokenHandler is used to generate the token using the secret key that stored in appsettings.json
-            var handler = new JwtSecurityTokenHandler();var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
+            var handler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_jwtConfig.Secret);
             var descriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {new Claim("id", user.Id.ToString())}),

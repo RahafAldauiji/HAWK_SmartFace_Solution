@@ -90,6 +90,7 @@
         /// the frame image data should be saved from the camera.
         /// </summary>
         public bool saveFrameImageData { get; set; }
+
         /// <summary>
         /// Property <c>imageQuality</c> represents 
         /// the quality of the image in pernetage  
@@ -103,6 +104,9 @@
         public int mpeG1VideoBitrate { get; set; }
 
         public int previewMaxDimension { get; set; }
+
+        public FaceDetectorConfig faceDetectorConfig { get; set; }
+
         /// <summary>
         /// Property <c>serviceName</c> represents 
         /// the service name that will run on it   
@@ -110,5 +114,13 @@
         public string serviceName { get; set; }
 
         public string[] spoofDetectorResourceIds { get; set; }
+    }
+
+    public class FaceDetectorConfig
+    {
+        public int minFaceSize { get; set; }
+        public int maxFaceSize { get; set; }
+        public int maxFaces { get; set; }
+        public int confidenceThreshold { get; set; }
     }
 }

@@ -58,18 +58,6 @@ namespace SmartfaceSolution.SubEntities
             return watchlistMember;
         }
 
-        public async Task<string> linkWatchListMember(string watchlistId, string watchlistMembersIds)
-        {
-            string resp = null;
-            await Task.Run(async () =>
-            {
-                string json = "{\"watchlistId\":\"" + watchlistId + "\",\"watchlistMembersIds\":[\"" +
-                              watchlistMembersIds + "\"]}";
-                resp = await new HttpResquest().requestWithBody("WatchlistMembers/LinkToWatchlist", "POST", json);
-            });
-            return resp;
-        }
-
         /// <summary>
         /// Method <c>updateWatchListMember</c> update update a specific updateWatchListMember from the system
         /// </summary>
@@ -106,34 +94,8 @@ namespace SmartfaceSolution.SubEntities
             });
             return resp;
         }
-
-
-        public async Task<string> unlinkWatchListMember(string watchlistId, string watchlistMembersIds)
-        {
-            string resp = null;
-            await Task.Run(async () =>
-            {
-                string json = "{\"watchlistId\":\"" + watchlistId + "\",\"watchlistMembersIds\":[\"" +
-                              watchlistMembersIds + "\"]}";
-                resp = await new HttpResquest().requestWithBody("WatchlistMembers/UnlinkFromWatchlist", "POST", json);
-            });
-            return resp;
-        }
-
         
-        public async Task<Face> addNewFace(string id, string imgUrl)
-        {
-            Face face = null;
-            await Task.Run(async () =>
-            {
-                string imageData = convertImageToBase64String(imgUrl);
-                string json = "{" + "\"imageData\":" + "{" + "\"data\":\"" + imageData + "\"" + "}" + "}";
-                string resp =
-                    await new HttpResquest().requestWithBody("WatchlistMembers/" + id + "/AddNewFace", "POST", json);
-                face = JsonSerializer.Deserialize<Face>(resp);
-            });
-            return face;
-        }
+        
 
         /// <summary>
         /// Method <c>registerNewMember</c> register a new member in a specific watchlist
@@ -157,16 +119,6 @@ namespace SmartfaceSolution.SubEntities
             return resp;
         }
 
-        public async Task<string> removeFace(string id, string faceId)
-        {
-            string resp = null;
-            await Task.Run(async () =>
-            {
-                string json = "{" + "\"faceId\":\"" + faceId + "\"" + "}";
-                resp = await new HttpResquest().requestWithBody("WatchlistMembers/" + id + "/RemoveFace", "POST", json);
-            });
-            return resp;
-        }
         /// <summary>
         /// Method <c>getWatchlistMember</c> retrieves a specific watchlistMember from the system 
         /// </summary>

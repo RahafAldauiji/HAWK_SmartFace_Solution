@@ -34,6 +34,12 @@ res = fetch("https://localhost:5001/HAWK/WatchlistMember/GetAllWatchlistMembers"
                         splitHits += "<td className=\"text-center\">";
                         splitHits += obj.id + "</td>";
                         splitHits += "</tr>";
+                        splitHits += "<td> " +
+                            "<button  onclick=\"EditPage('" + obj.id + "')\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\">" +
+                            "<i class=\"fas fa-edit fa-lg \" ></i></button>" +
+                            "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">" +
+                            "<i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" + obj.id + "')\"></i></button>" +
+                            "</td>";
 
                         document.getElementById("membersList").innerHTML = splitHits;
                     });

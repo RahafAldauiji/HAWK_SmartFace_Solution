@@ -33,6 +33,7 @@ namespace SmartfaceSolution.Middleware
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                Console.WriteLine(ex.Message);
                 var response = context.Response;
                 response.ContentType = "application/json";
                 switch(ex)

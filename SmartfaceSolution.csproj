@@ -5,13 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64" Version="3.16.0" />
       <PackageReference Include="MailKit" Version="3.0.0-preview1" />
       <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.WebSockets.Server" Version="0.1.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
       <PackageReference Include="NetMQ" Version="4.0.1.7-pre" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
       <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
     </ItemGroup>
@@ -19,6 +20,10 @@
     <ItemGroup>
       <Content Include="Front\.vscode\settings.json" />
       <Content Include="Front\.vscode\tasks.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Front\html-files" />
     </ItemGroup>
 
 </Project>

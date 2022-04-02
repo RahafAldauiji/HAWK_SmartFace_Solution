@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using NetMQ;
 using NetMQ.Sockets;
 using SmartfaceSolution.Entities;
+using SmartfaceSolution.Helpers;
 using SmartfaceSolution.SubEntities;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -18,8 +20,11 @@ namespace SmartfaceSolution.Services
 
     public class MatchService : IMatchService
     {
-        private string serverName = "Data Source=LAPTOP-O3E4PDUK\\SFEXPRESS;";
-
+        private readonly ServerConfig _serverName;
+        public MatchService(IOptions<ServerConfig> serverConfig)
+        {
+            _serverName = serverConfig.Value;
+        }
         /// <summary>
         /// Method <c>sendNotification</c> will check the Notification table and store the timestamp of the detection 
         /// the method will check the member, camera position, and the time stamp
@@ -47,12 +52,7 @@ namespace SmartfaceSolution.Services
             try
             {
                 //open the connection with the database
-                connetionString =
-                    serverName + //change the server name
-                    "Initial Catalog=HAWK;" +
-                    "User id=smartface;" +
-                    "Password=smartface;";
-                cnn = new SqlConnection(connetionString);
+                cnn = new SqlConnection(_serverName.DefaultConnection);
                 cnn.Open();
                 sqlCommand =
                     "SELECT * FROM [dbo].[Notification] WHERE MemberId = @memberId"; // sql select command to be executed
@@ -113,11 +113,14 @@ namespace SmartfaceSolution.Services
                     // insert the member in the Attendance table if the camera position is enter camera
                     // otherwise update the record in the the Attendance table if the camera position is exit 
                     sqlCommand = Int32.Parse(cam.name.Split("-")[1]) == 1
-                        ? "INSERT INTO [dbo].[Attendance] ([id], [EnterTimeStamp]  ) VALUES (@id ,@TimeStamp)"
-                        : " UPDATE [dbo].[Attendance] SET [ExitTimeStamp] = @TimeStamp WHERE [id]=@id AND [ExitTimeStamp] IS NULL";
+                        ? "INSERT INTO [dbo].[Attendance] ([id], [EnterTime],[EnterDate]  ) VALUES (@id ,@time,@date )"
+                        : " UPDATE [dbo].[Attendance] SET [ExitTime] = @time, [ExitDate]=@date  WHERE [id]=@id AND [ExitDate]= @date AND [ExitTime] IS NULL";
                     cmd = new SqlCommand(sqlCommand, cnn);
                     cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
-                    cmd.Parameters.Add("@TimeStamp", System.Data.SqlDbType.VarChar, -1).Value = date;
+                    cmd.Parameters.Add("@date", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("MM/dd/yyyy");
+                    cmd.Parameters.Add("@time", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("HH:mm:ss");
+
+                    
                 }
 
                 cmd.ExecuteNonQuery();

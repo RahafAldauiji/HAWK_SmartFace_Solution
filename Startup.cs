@@ -26,8 +26,7 @@ namespace SmartfaceSolution
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IMatchService, MatchService>();
-            services.AddHostedService<BackgroundMatchService>();
+            
             services.AddControllers();
             services.AddCors(options =>
             {
@@ -42,6 +41,8 @@ namespace SmartfaceSolution
             services.Configure<ServerConfig>(Configuration.GetSection("ConnectionStrings")); // inject the JwtConfig 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // inject the JwtConfig 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMatchService, MatchService>();
+            services.AddHostedService<BackgroundMatchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

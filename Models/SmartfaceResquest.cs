@@ -1,38 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using SmartfaceSolution.Helpers;
 
-namespace SmartfaceSolution.SubEntities
+namespace SmartfaceSolution.Models
 {
     /// <summary> 
     /// Entity <c>HttpResquest</c> will send the request to the smartFace platform and get the response
     /// </summary>
-    public class HttpResquest
+    public class SmartfaceResquest
     {
-        /// <summary>
-        /// Method <c>response</c> will get the response from the http request 
-        /// </summary>
-        /// <param name="httpWebRequest">the Http Web Request</param>
-        /// <returns>the response</returns>
-        public string response(HttpWebRequest httpWebRequest)
-        {
-            var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-            string result = "";
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                try
-                {
-                    result = streamReader.ReadToEnd();
-                }
-                finally
-                {
-                    streamReader.Close();
-                }
-            }
-
-            return result;
-        }
-
+        private string serverName = "http://localhost:8098/api/v1/";
         /// <summary>
         /// Method <c>requestNoBody</c> will send the http web request with no body request 
         /// </summary>
@@ -45,10 +24,14 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/" + reqUrl);
+                    (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = methodType;
-                res = response(httpWebRequest);
+                var response = (HttpWebResponse) httpWebRequest.GetResponse();
+                res = response.StatusCode == (HttpStatusCode) 400
+                    ? throw new AppException("Wrong Information Format")
+                    : new StreamReader((response).GetResponseStream())
+                        .ReadToEnd();
             });
             return res;
         }
@@ -66,7 +49,7 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create("http://localhost:8098/api/v1/" + reqUrl);
+                    (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = methodType;
 
@@ -83,8 +66,12 @@ namespace SmartfaceSolution.SubEntities
                     }
                 }
 
-
-                res = response(httpWebRequest);
+                var response = (HttpWebResponse) httpWebRequest.GetResponse();
+                res = response.StatusCode == (HttpStatusCode) 400
+                    ? throw new AppException("Wrong Information Format")
+                    : new StreamReader((response).GetResponseStream())
+                        .ReadToEnd();
+                Console.WriteLine(res);
             });
             return res;
         }

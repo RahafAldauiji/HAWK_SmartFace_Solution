@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
+using SmartfaceSolution.Models;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SmartfaceSolution.Entities;
@@ -23,7 +22,7 @@ namespace SmartfaceSolution.SubEntities
             Camera camera = null;
             await Task.Run(async () =>
             {
-                string result = await new HttpResquest().requestNoBody("Cameras/"+id, "GET");
+                string result = await new SmartfaceResquest().requestNoBody("Cameras/"+id, "GET");
                 camera = JsonSerializer.Deserialize<Camera>(result);
             });
             return camera;
@@ -38,7 +37,7 @@ namespace SmartfaceSolution.SubEntities
             List<Camera> cameras = null;
             await Task.Run(async () =>
             {
-                string result = await new HttpResquest().requestNoBody("Cameras/", "GET");
+                string result = await new SmartfaceResquest().requestNoBody("Cameras/", "GET");
                 cameras = JsonSerializer.Deserialize<List<Camera>>(result);
             });
             return cameras;
@@ -57,7 +56,7 @@ namespace SmartfaceSolution.SubEntities
             {
                 string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
                               true + "\"}";
-                string result = await new HttpResquest().requestWithBody("Cameras/", "POST", json);
+                string result = await new SmartfaceResquest().requestWithBody("Cameras/", "POST", json);
                 camera = JsonSerializer.Deserialize<Camera>(result);
             });
             return camera;
@@ -72,7 +71,7 @@ namespace SmartfaceSolution.SubEntities
         {
             Camera camera = null;
             string jsonCam = JsonSerializer.Serialize(cam);
-            string result = await new HttpResquest().requestWithBody("Cameras/", "PUT", jsonCam);
+            string result = await new SmartfaceResquest().requestWithBody("Cameras/", "PUT", jsonCam);
             camera = JsonSerializer.Deserialize<Camera>(result);
 
             return camera;
@@ -88,7 +87,7 @@ namespace SmartfaceSolution.SubEntities
             string camera = "";
             await Task.Run(async () =>
             {
-                string result = await new HttpResquest().requestNoBody("Cameras/"+id, "DELETE");
+                string result = await new SmartfaceResquest().requestNoBody("Cameras/"+id, "DELETE");
                 camera = result;
             });
             return camera;

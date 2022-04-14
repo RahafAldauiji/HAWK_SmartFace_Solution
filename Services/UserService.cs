@@ -57,8 +57,7 @@ namespace SmartfaceSolution.Services
             {
                 cnn = new SqlConnection(_serverName.DefaultConnection);
                 cnn.Open();
-                sqlCommand =
-                    "SELECT * FROM [dbo].[Employees] WHERE UserName = @UserName AND Password=@Password"; // sql select command to be executed
+                sqlCommand = "SELECT * FROM [dbo].[Employees] WHERE UserName = @UserName AND Password=@Password"; // sql select command to be executed
                 cmd = new SqlCommand(sqlCommand, cnn);
                 cmd.Parameters.Add("@UserName", System.Data.SqlDbType.VarChar, -1).Value = model.Username;
                 cmd.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, -1).Value = model.Password;
@@ -80,7 +79,6 @@ namespace SmartfaceSolution.Services
             {
                 cnn.Close();
             }
-
             // return null if user not found else generate jwt token and return Authenticate Response
             return _user == null ? null : new AuthenticateResponse(_user, generateJwtToken(_user));
         }

@@ -11,9 +11,7 @@ namespace SmartfaceSolution.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-
         public string Role { get; set; }
-
         [JsonIgnore] // prevent the attribute to be serialized and returned in the response
         public string Password { get; set; }
     }

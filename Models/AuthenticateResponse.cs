@@ -13,7 +13,6 @@ namespace SmartfaceSolution.Models
             Username = user.Username;
             Token = token;
         }
-
         public int Id { get; set; }
         public string Username { get; set; }
         public string Token { get; set; }

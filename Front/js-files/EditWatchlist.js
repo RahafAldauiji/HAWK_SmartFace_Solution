@@ -1,6 +1,6 @@
 ﻿let watchlistId = sessionStorage.getItem('WatchlistId');
 var list
-var res = fetch("https://localhost:5001/HAWK/Watchlist/getWatchlist?id=" + watchlistId, {
+var res = fetch("https://localhost:5001/Smartface/Watchlist/getWatchlist?id=" + watchlistId, {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -23,7 +23,7 @@ function updateWatchlist() {
     list.fullName = document.getElementById("inlineFormInputGroupUsername3").value;
     list.threshold = document.getElementById("inlineFormInputGroupUsername4").value;
     let watchlist = JSON.stringify(list);
-    fetch("https://localhost:5001/HAWK/Watchlist/upadte?watchlist="+watchlist, {
+    fetch("https://localhost:5001/Smartface/Watchlist/upadte?watchlist="+watchlist, {
         method: 'POST',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),

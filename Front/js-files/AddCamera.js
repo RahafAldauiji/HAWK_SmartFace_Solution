@@ -1,8 +1,8 @@
 ﻿function addCam(){
-    let name = document.getElementById("inlineFormInputGroupUsername1").value;
+    let name = document.getElementById("inlineFormInputGroupUsername1").value+"-"+document.getElementById("inputGroupSelect01").value;
     let source=document.getElementById("inlineFormInputGroupUsername2").value;
     let data = {source: source, name: name};
-    fetch("https://localhost:5001/HAWK/Camera/create",{
+    fetch("https://localhost:5001/Smartface/Camera/create",{
         method: 'POST',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),

@@ -3,7 +3,7 @@
     let fullName = document.getElementById("inlineFormInputGroupUsername2").value;
     let threshold = document.getElementById("inlineFormInputGroupUsername3").value;
     let data = {displayName: displayName, fullName: fullName, threshold: parseInt(threshold)};
-    fetch("https://localhost:5001/HAWK/Watchlist/create", {
+    fetch("https://localhost:5001/Smartface/Watchlist/create", {
         method: 'POST',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),

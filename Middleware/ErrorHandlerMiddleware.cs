@@ -32,8 +32,8 @@ namespace SmartfaceSolution.Middleware
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 _logger.LogError(ex.Message);
-                Console.WriteLine(ex.Message);
                 var response = context.Response;
                 response.ContentType = "application/json";
                 switch(ex)
@@ -52,7 +52,7 @@ namespace SmartfaceSolution.Middleware
                         break;
                 }
 
-                var result = JsonSerializer.Serialize(new { message = ex?.Message });
+                var result = JsonSerializer.Serialize(new { message = ex.Message });
                 await response.WriteAsync(result);
             }
         }

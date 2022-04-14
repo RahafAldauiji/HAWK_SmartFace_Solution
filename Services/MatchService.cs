@@ -38,7 +38,7 @@ namespace SmartfaceSolution.Services
         public void sendNotification(WatchlistMember member, MemberMatch memberMatch, Camera cam)
         {
             //Database Connection 
-            string connetionString, sqlCommand;
+            string sqlCommand;
             SqlCommand cmd;
             SqlDataReader dr = null;
             SqlConnection cnn ;
@@ -107,7 +107,7 @@ namespace SmartfaceSolution.Services
                         member.displayName,
                         date.ToUniversalTime().ToString());
                     message.sendEmail(email); // sending the message using email 
-                    //message.sendSMS(phoneNumber); // sending the message using SMS 
+                   // message.sendSMS(phoneNumber); // sending the message using SMS 
 
                     // Attendance table 
                     // insert the member in the Attendance table if the camera position is enter camera
@@ -140,7 +140,6 @@ namespace SmartfaceSolution.Services
         /// <returns>MemberMatch</returns>
         public async Task<MemberMatch> matchFaces()
         {
-    
             MemberMatch memberMatch = null;
             try
 

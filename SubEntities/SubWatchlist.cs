@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
+using SmartfaceSolution.Models;
 using SmartfaceSolution.Entities;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,8 +11,7 @@ namespace SmartfaceSolution.SubEntities
     /// </summary>
     public class SubWatchlist
     {
-        private string imgUrl = "C://SmartFaceImages//";
-
+        
         /// <summary>
         /// Method <c>createWatchList</c> create a new watchlist in the system
         /// </summary>
@@ -25,13 +21,14 @@ namespace SmartfaceSolution.SubEntities
         /// <returns>the new watchlist</returns>
         public async Task<Watchlist> createWatchList(string displayName, string fullName, int threshold)
         {
-            Watchlist watchlist = null;
+            Watchlist watchlist = new Watchlist()
+            {
+                displayName = displayName, threshold = threshold, fullName = fullName
+            };
             await Task.Run(async () =>
             {
-                string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
-                              "\",\"threshold\":" + threshold + "}";
-
-                string resp = await new HttpResquest().requestWithBody("Watchlists", "POST", json);
+                
+                string resp = await new SmartfaceResquest().requestWithBody("Watchlists", "POST", JsonSerializer.Serialize(watchlist));
                 watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             });
             return watchlist;
@@ -47,12 +44,13 @@ namespace SmartfaceSolution.SubEntities
         /// <returns></returns>
         public async Task<Watchlist> updateWatchList(string id, string displayName, string fullName, int threshold)
         {
-            Watchlist watchlist = null;
+            Watchlist watchlist = new Watchlist()
+            {
+                displayName = displayName, id = id, fullName = fullName, threshold = threshold
+            };
             await Task.Run(async () =>
             {
-                string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName + "\",\"fullName\":\"" +
-                              fullName + "\",\"threshold\":" + threshold + "}";
-                string resp = await new HttpResquest().requestWithBody("Watchlists", "PUT", json);
+                string resp = await new SmartfaceResquest().requestWithBody("Watchlists", "PUT", JsonSerializer.Serialize(watchlist));
                 watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             });
             return watchlist;
@@ -68,7 +66,7 @@ namespace SmartfaceSolution.SubEntities
             string resp = null;
             await Task.Run(async () =>
             {
-                resp = await new HttpResquest().requestWithBody("Watchlists/" + id, "DELETE", "");
+                resp = await new SmartfaceResquest().requestWithBody("Watchlists/" + id, "DELETE", "");
             });
             return resp;
         }
@@ -84,7 +82,7 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string resp =
-                    await new HttpResquest().requestNoBody("Watchlists/" + watchlistId + "/WatchlistMembers", "GET");
+                    await new SmartfaceResquest().requestNoBody("Watchlists/" + watchlistId + "/WatchlistMembers", "GET");
                 watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
             });
             return watchlistMembers;
@@ -99,7 +97,7 @@ namespace SmartfaceSolution.SubEntities
             AllWatchlist watchlists = null;
             await Task.Run(async () =>
             {
-                string resp = await new HttpResquest().requestNoBody("Watchlists", "GET");
+                string resp = await new SmartfaceResquest().requestNoBody("Watchlists", "GET");
                 watchlists = JsonSerializer.Deserialize<AllWatchlist>(resp);
             });
             return watchlists;
@@ -114,7 +112,7 @@ namespace SmartfaceSolution.SubEntities
             Watchlist watchlist = null;
             await Task.Run(async () =>
             {
-                string resp = await new HttpResquest().requestNoBody("Watchlists/" + id, "GET");
+                string resp = await new SmartfaceResquest().requestNoBody("Watchlists/" + id, "GET");
                 watchlist = JsonSerializer.Deserialize<Watchlist>(resp);
             });
             return watchlist;

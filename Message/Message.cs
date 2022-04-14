@@ -43,8 +43,7 @@ namespace SmartfaceSolution.Message
             // Email
             string email = "ersthethreemusketeers@gmail.com";
             string password = "ers181817";
-
-
+            
             //Create SMTP client
             SmtpClient client = new SmtpClient();
 

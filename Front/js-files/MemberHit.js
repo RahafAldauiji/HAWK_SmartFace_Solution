@@ -4,7 +4,7 @@
     var splitHits = "";
     var image;
     console.log("In")
-    res = fetch("https://localhost:5001/HAWK/Camera/Match", {
+    res = fetch("https://localhost:5001/Smartface/Camera/Match", {
         method: 'GET',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),
@@ -16,7 +16,7 @@
                 if (resultHits != null) {
                     jresult = JSON.stringify(resultHits);
                     console.log(jresult)
-                    fetch("https://localhost:5001/HAWK/WatchlistMember/getMemberFace?id=" + resultHits.watchlistMemberId, {
+                    fetch("https://localhost:5001/Smartface/WatchlistMember/getMemberFace?id=" + resultHits.watchlistMemberId, {
                         method: 'GET',
                         headers: {
                             'Authorization': sessionStorage.getItem('userT'),

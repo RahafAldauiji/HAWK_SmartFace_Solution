@@ -1,4 +1,4 @@
-﻿fetch("https://localhost:5001/HAWK/Watchlist/getAllWatchlist", {
+﻿fetch("https://localhost:5001/Smartface/Watchlist/getAllWatchlist", {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -36,7 +36,7 @@ function EditPage(id) {
 
 function deleteWatchlist(id) {
     //alert(id)
-    fetch("https://localhost:5001/HAWK/Watchlist/delete?id=" + id, {
+    fetch("https://localhost:5001/Smartface/Watchlist/delete?id=" + id, {
         method: 'DELETE',
         withCredentials: true,
         headers: {

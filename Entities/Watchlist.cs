@@ -6,16 +6,7 @@
     /// </summary>
     public class Watchlist
     {
-      
-        // private string displayName;
-        // private string fullName;
-        // private int threshold;
-        // private string id;
-        // private string createdAt;
-        // private string updatedAt;
-        // private WatchlistMember[] watchlistMembers;
-
-  
+        
         public string displayName { get; set; }
 
         public string fullName { get; set; }

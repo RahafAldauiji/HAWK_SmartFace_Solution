@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SmartfaceSolution.Models;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using SmartfaceSolution.Entities;
 
@@ -17,23 +16,21 @@ namespace SmartfaceSolution.SubEntities
     /// </summary>
     public class SubWatchlistMember
     {
-        private string imgUrl = "C://SmartFaceImages//";
-
+        
         /// <summary>
         /// Method <c>convertImageToBase64String</c> will encoding the image into Base64 String
         /// </summary>
         /// <param name="name">name of the image in the SmartFaceImages folder</param>
         /// <returns>Base64 String</returns>
-        public string convertImageToBase64String(string name)
+        public string convertImageToBase64String(string imgUrl)
         {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl + name);
+            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl);
             byte[] arrBytes;
             using (var ms = new MemoryStream())
             {
                 img.Save(ms, img.RawFormat);
                 arrBytes = ms.ToArray();
             }
-
             return Convert.ToBase64String(arrBytes);
         }
 
@@ -46,13 +43,14 @@ namespace SmartfaceSolution.SubEntities
         /// <returns>the new watchlistMember</returns>
         public async Task<WatchlistMember> createWatchListMember(string displayName, string fullName, string note)
         {
-            WatchlistMember watchlistMember = null;
+            WatchlistMember watchlistMember = new WatchlistMember()
+            {
+                displayName=displayName , fullName = fullName, note = note
+            };
+           
             await Task.Run(async () =>
             {
-                string json = "{\"displayName\":\"" + displayName + "\",\"fullName\":\"" + fullName +
-                              "\",\"note\":\"" +
-                              note + "\"}";
-                string result = await new HttpResquest().requestWithBody("WatchlistMembers", "POST", json);
+                string result = await new SmartfaceResquest().requestWithBody("WatchlistMembers", "POST", JsonSerializer.Serialize(watchlistMember));
                 watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
             });
             return watchlistMember;
@@ -69,12 +67,13 @@ namespace SmartfaceSolution.SubEntities
         public async Task<WatchlistMember> updateWatchListMember(string id, string displayName, string fullName,
             string note)
         {
-            WatchlistMember watchlistMember = null;
+            WatchlistMember watchlistMember = new WatchlistMember()
+            {
+                id=id, displayName = displayName, fullName = fullName, note = note
+            };
             await Task.Run(async () =>
             {
-                string json = "{ \"id\":\"" + id + "\",\"displayName\":\"" + displayName +
-                              "\",\"fullName\":\"" + fullName + "\",\"note\":\"" + note + "\"}";
-                string result = await new HttpResquest().requestWithBody("WatchlistMembers", "PUT", json);
+                string result = await new SmartfaceResquest().requestWithBody("WatchlistMembers", "PUT", JsonSerializer.Serialize(watchlistMember));
                 watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
             });
             return watchlistMember;
@@ -90,8 +89,9 @@ namespace SmartfaceSolution.SubEntities
             string resp = null;
             await Task.Run(async () =>
             {
-                resp = await new HttpResquest().requestNoBody("WatchlistMembers/" + id, "DELETE");
+                resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "DELETE");
             });
+            Console.WriteLine(resp);
             return resp;
         }
         
@@ -110,12 +110,13 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string imageData = convertImageToBase64String(imgUrl);
-                string json = "{" +
+                string data = "{" +
                               "\"id\":\"" + id + "\",\"images\": [" + "{" + "\"data\":\"" + imageData + "\"" + "}" +
                               "],"
                               + "\"watchlistIds\":[" + "\"" + watchlistId + "\"" + "]" + "}";
-                resp = await new HttpResquest().requestWithBody("WatchlistMembers/Register", "POST", json);
+                resp = await new SmartfaceResquest().requestWithBody("WatchlistMembers/Register", "POST", data);
             });
+            Console.WriteLine(resp);
             return resp;
         }
 
@@ -129,7 +130,7 @@ namespace SmartfaceSolution.SubEntities
             WatchlistMember watchlistMember = null;
             await Task.Run(async () =>
             {
-                string resp = await new HttpResquest().requestNoBody("WatchlistMembers/" + id, "GET");
+                string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "GET");
                 //Console.WriteLine(resp);
                 watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(resp);
                 // Console.WriteLine(watchlistMember.id);
@@ -148,7 +149,7 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string resp =
-                    await new HttpResquest().requestNoBody("WatchlistMembers/" + id.Trim() + "/Faces?PageSize=50",
+                    await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id.Trim() + "/Faces?PageSize=500",
                         "GET");
                 //Console.WriteLine(resp);
                 faces = JsonSerializer.Deserialize<MemberFaces>(resp);
@@ -172,7 +173,7 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string resp =
-                    await new HttpResquest().requestNoBody(
+                    await new SmartfaceResquest().requestNoBody(
                         "WatchlistMembers/" + id.Trim() + "/Faces?Ascending=true&PageSize=1", "GET");
                 faces = JsonSerializer.Deserialize<MemberFaces>(resp);
                 images = await retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
@@ -189,7 +190,7 @@ namespace SmartfaceSolution.SubEntities
             Members watchlistMembers = null;
             await Task.Run(async () =>
             {
-                string resp = await new HttpResquest().requestNoBody("WatchlistMembers", "GET");
+                string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers?PageSize=100", "GET");
                 //Console.WriteLine(resp);
                 watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
             });
@@ -215,12 +216,13 @@ namespace SmartfaceSolution.SubEntities
                             var resizeImage = (Image) (new Bitmap(yourImage, new Size(120, 120)));
                             resizeImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                             image = Convert.ToBase64String(data);
-                            //Console.WriteLine(image);
                         }
                     }
                 }
             });
             return image;
         }
+
+       
     }
 }

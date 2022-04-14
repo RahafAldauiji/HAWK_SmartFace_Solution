@@ -19,7 +19,7 @@ namespace SmartfaceSolution.Controllers
     /// </summary>
     [ApiController]
     [Produces("application/json")]
-    [Route("HAWK")]
+    [Route("Smartface")]
     [EnableCors("AnotherPolicy")]
     public class HawkController : Controller
     {
@@ -128,7 +128,7 @@ namespace SmartfaceSolution.Controllers
         [Route("Watchlist/getMembers")]
         public async Task<IActionResult> getWatchlistMembers(string id)
         {
-            return Json(await new SubWatchlist().retrievesWatchlistMembers(id));
+            return Json((await new SubWatchlist().retrievesWatchlistMembers(id)).items);
         }
 
         [Authorize]
@@ -188,6 +188,7 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> updateWatchlistMember(string member)
         {
             WatchlistMember watchlistMember = JsonConvert.DeserializeObject<WatchlistMember>(member);
+            
             return Json(await new SubWatchlistMember().updateWatchListMember(watchlistMember.id,
                 watchlistMember.displayName, watchlistMember.fullName, watchlistMember.note));
         }
@@ -196,7 +197,7 @@ namespace SmartfaceSolution.Controllers
         [HttpDelete]
         [Route("WatchlistMember/delete")]
         public async Task<IActionResult> deleteWatchlistMember(string watchlistMemberId)
-        {
+        { 
             return Json(await new SubWatchlistMember().deleteWatchListMember(watchlistMemberId));
         }
 
@@ -214,7 +215,6 @@ namespace SmartfaceSolution.Controllers
         [Route("WatchlistMember/getMemberFace")]
         public async Task<IActionResult> getMemberFace(string id)
         {
-            string img = await new SubWatchlistMember().getMemberFace(id);
             return Json(await new SubWatchlistMember().getMemberFace(id));
         }
 
@@ -223,7 +223,6 @@ namespace SmartfaceSolution.Controllers
         [Route("WatchlistMember/getFaces")]
         public async Task<IActionResult> getWatchlistMemberFaces(string id)
         {
-            List<string> faces = await new SubWatchlistMember().getFaces(id);
             return Json(await new SubWatchlistMember().getFaces(id));
         }
 
@@ -239,7 +238,7 @@ namespace SmartfaceSolution.Controllers
                     fullName, note);
             return Json(await new SubWatchlistMember().registerNewMember(watchlistMember.id, watchlistId, imgUrl));
         }
-
+       
         #endregion
     }
 }

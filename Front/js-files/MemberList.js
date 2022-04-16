@@ -131,7 +131,6 @@ function EditPage() {
 
 function deleteCam() {
     let memberId = sessionStorage.getItem('memberId');
-    alert(memberId)
     fetch("https://localhost:5001/Smartface/WatchlistMember/delete?watchlistMemberId=" + memberId, {
         method: 'DELETE',
         withCredentials: true,

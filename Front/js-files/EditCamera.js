@@ -13,7 +13,7 @@ var res = fetch("https://localhost:5001/Smartface/Camera/getCamera?id=" + camera
     .then(result => {
             camera = result;
             document.getElementById("inlineFormInputGroupUsername1").value = result.id;
-            document.getElementById("inlineFormInputGroupUsername2").value = result.name;
+            document.getElementById("inlineFormInputGroupUsername2").value = result.name.split('-')[0];
             document.getElementById("inlineFormInputGroupUsername3").value = result.enabled;
             document.getElementById("inlineFormInputGroupUsername4").value = result.source;
             document.getElementById("inputGroupSelect01").value = result.name.split('-')[1];
@@ -22,7 +22,7 @@ var res = fetch("https://localhost:5001/Smartface/Camera/getCamera?id=" + camera
 
 function updateCam() {
     camera.id = document.getElementById("inlineFormInputGroupUsername1").value ;
-    camera.name = document.getElementById("inlineFormInputGroupUsername2").value+ "-" + document.getElementById("inputGroupSelect01").value;
+    camera.name = document.getElementById("inlineFormInputGroupUsername2").value.split('-')[0]+ "-" + document.getElementById("inputGroupSelect01").value;
     camera.enabled = document.getElementById("inlineFormInputGroupUsername3").value;
     camera.source = document.getElementById("inlineFormInputGroupUsername4").value;
     let cam = JSON.stringify(camera);

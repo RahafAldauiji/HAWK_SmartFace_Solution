@@ -36,7 +36,6 @@ namespace SmartfaceSolution.SubEntities
                 subscriber.Subscribe("matchResults.match");
                 var topic = subscriber.ReceiveFrameString(); // matchResults
                 var matchHit = subscriber.ReceiveFrameString(); // This notification contains watchlist member
-                Console.WriteLine(matchHit);
                 memberMatch = JsonSerializer.Deserialize<MemberMatch>(matchHit);
                 if (memberMatch.Type.Equals("Match")) return memberMatch;
             }

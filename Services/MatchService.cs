@@ -1,7 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.SqlClient;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using NetMQ;
@@ -9,7 +8,6 @@ using NetMQ.Sockets;
 using SmartfaceSolution.Entities;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.SubEntities;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SmartfaceSolution.Services
 {
@@ -21,10 +19,12 @@ namespace SmartfaceSolution.Services
     public class MatchService : IMatchService
     {
         private readonly ServerConfig _serverName;
+
         public MatchService(IOptions<ServerConfig> serverConfig)
         {
             _serverName = serverConfig.Value;
         }
+
         /// <summary>
         /// Method <c>sendNotification</c> will check the Notification table and store the timestamp of the detection 
         /// the method will check the member, camera position, and the time stamp
@@ -41,12 +41,12 @@ namespace SmartfaceSolution.Services
             string sqlCommand;
             SqlCommand cmd;
             SqlDataReader dr = null;
-            SqlConnection cnn ;
+            SqlConnection cnn;
             bool m = false, c = false, t = false; // m=member, c=cam, t=time
             DateTime date =
                 (new DateTime(1970, 1, 1) + TimeSpan.FromMilliseconds(memberMatch.FrameTimestampMicroseconds / 1000))
                 .ToLocalTime(); // the match timestamp converted from the Microseconds to local Datetime format 
-            long frameDateTimeMilliseconds =
+            long frameDateTimeSseconds =
                 new DateTimeOffset(date).ToUnixTimeSeconds(); // get the seconds of the frame
             int id = int.Parse(member.note.Split(',')[2]); // get the user id from the note in the WatchlistMember
             try
@@ -70,10 +70,12 @@ namespace SmartfaceSolution.Services
                                 new DateTimeOffset(DateTime.Parse((string) dr["TimeStamp"]))
                                     .ToUnixTimeSeconds(); // get the seconds from the notification table 
                             m = true; // if the member has been detected before 
-                            c = (int) (dr["CamPosition"]) == Int32.Parse(cam.name.Split("-")[1]);// check if the cameras in the notification table and the match member positions are same
+                            c = (int) (dr["CamPosition"]) ==
+                                Int32.Parse(cam.name.Split("-")[1]
+                                    .Trim()); // check if the cameras in the notification table and the match member positions are same
                             // check if the seconds od the detected member are same or in the range of 5 min with notification table
-                            t = notificationDateTimeSeconds <= frameDateTimeMilliseconds &&
-                                notificationDateTimeSeconds + 300 >= frameDateTimeMilliseconds; // 300 seconds = 5 min 
+                            t = notificationDateTimeSeconds <= frameDateTimeSseconds &&
+                                notificationDateTimeSeconds + 600 >= frameDateTimeSseconds; // 600 seconds = 10 min 
                         }
                     }
                 }
@@ -87,7 +89,7 @@ namespace SmartfaceSolution.Services
             {
                 // Notification table
                 //insert the member in the notification table if the member not exists or different camera position or the different time
-                if (!m || !c || !t && date.Year!=1970)
+                if ((!m || !c || !t) && date.Year != 1970)
                 {
                     // SQL insert command to be executed
                     sqlCommand =
@@ -103,27 +105,36 @@ namespace SmartfaceSolution.Services
                     string email = member.note.Split(',')[0];
                     string phoneNumber = member.note.Split(',')[1];
                     // // sending the detection notification message
-                    Message.Message message = new Message.Message(cam.name.Split("-")[1].Trim().Equals("in") ? 1 : 2,
+                    Message.Message message = new Message.Message(cam.name.Split("-")[1].Trim().Equals("1") ? 1 : 2,
                         member.displayName,
                         date.ToUniversalTime().ToString());
                     message.sendEmail(email); // sending the message using email 
-                   // message.sendSMS(phoneNumber); // sending the message using SMS 
+                    // message.sendSMS(phoneNumber); // sending the message using SMS 
 
                     // Attendance table 
                     // insert the member in the Attendance table if the camera position is enter camera
                     // otherwise update the record in the the Attendance table if the camera position is exit 
                     sqlCommand = Int32.Parse(cam.name.Split("-")[1]) == 1
                         ? "INSERT INTO [dbo].[Attendance] ([id], [EnterTime],[EnterDate]  ) VALUES (@id ,@time,@date )"
-                        : " UPDATE [dbo].[Attendance] SET [ExitTime] = @time, [ExitDate]=@date  WHERE [id]=@id AND [ExitDate]= @date AND [ExitTime] IS NULL";
+                        : " UPDATE [dbo].[Attendance] SET [ExitTime] = @time, [ExitDate]=@date  WHERE [id]=@id AND [EnterDate]= @date AND [ExitTime] IS NULL";
                     cmd = new SqlCommand(sqlCommand, cnn);
                     cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
                     cmd.Parameters.Add("@date", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("MM/dd/yyyy");
                     cmd.Parameters.Add("@time", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("HH:mm:ss");
-
-                    
+                    int row = cmd.ExecuteNonQuery();
+                    if (row == 0 && Int32.Parse(cam.name.Split("-")[1]) == 2)
+                    {
+                        sqlCommand =
+                            " INSERT INTO [dbo].[Attendance] ([id], [ExitTime],[ExitDate] ) VALUES (@id ,@time,@date )";
+                        cmd = new SqlCommand(sqlCommand, cnn);
+                        cmd.Parameters.Add("@id", System.Data.SqlDbType.Int, 4).Value = id;
+                        cmd.Parameters.Add("@date", System.Data.SqlDbType.VarChar, -1).Value =
+                            date.ToString("MM/dd/yyyy");
+                        cmd.Parameters.Add("@time", System.Data.SqlDbType.VarChar, -1).Value =
+                            date.ToString("HH:mm:ss");
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-
-                cmd.ExecuteNonQuery();
             }
             finally
 

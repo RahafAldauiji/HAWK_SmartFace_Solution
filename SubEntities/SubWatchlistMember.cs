@@ -91,7 +91,6 @@ namespace SmartfaceSolution.SubEntities
             {
                 resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "DELETE");
             });
-            Console.WriteLine(resp);
             return resp;
         }
         
@@ -116,7 +115,6 @@ namespace SmartfaceSolution.SubEntities
                               + "\"watchlistIds\":[" + "\"" + watchlistId + "\"" + "]" + "}";
                 resp = await new SmartfaceResquest().requestWithBody("WatchlistMembers/Register", "POST", data);
             });
-            Console.WriteLine(resp);
             return resp;
         }
 
@@ -131,9 +129,9 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "GET");
-                //Console.WriteLine(resp);
+                
                 watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(resp);
-                // Console.WriteLine(watchlistMember.id);
+                
             });
             return watchlistMember;
         }
@@ -151,9 +149,8 @@ namespace SmartfaceSolution.SubEntities
                 string resp =
                     await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id.Trim() + "/Faces?PageSize=500",
                         "GET");
-                //Console.WriteLine(resp);
+                
                 faces = JsonSerializer.Deserialize<MemberFaces>(resp);
-                //Console.WriteLine(faces.items[0].age);
                 for (int i = 0; i < faces.items.Count; i++)
                 {
                     images.Add(await retrievesImage(faces.items[i].imageDataId));
@@ -191,7 +188,7 @@ namespace SmartfaceSolution.SubEntities
             await Task.Run(async () =>
             {
                 string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers?PageSize=100", "GET");
-                //Console.WriteLine(resp);
+                
                 watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
             });
             return watchlistMembers;

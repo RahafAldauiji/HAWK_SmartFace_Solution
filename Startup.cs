@@ -38,10 +38,11 @@ namespace SmartfaceSolution
                             .AllowAnyMethod();
                     });
             });
-            services.Configure<ServerConfig>(Configuration.GetSection("ConnectionStrings")); // inject the JwtConfig 
+            services.Configure<ServerConfig>(Configuration.GetSection("ConnectionStrings")); // inject the ConnectionStrings 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // inject the JwtConfig 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMatchService, MatchService>();
+            services.AddScoped<ISearchDB, SearchDB>();
             services.AddHostedService<BackgroundMatchService>();
         }
 
@@ -51,7 +52,6 @@ namespace SmartfaceSolution
            
             app.UseRouting();
             app.UseCors(); 
-            //app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.UseAuthentication();

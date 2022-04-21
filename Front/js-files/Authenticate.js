@@ -1,6 +1,6 @@
-﻿function login() {
-    var username = document.getElementById("username").value.trim();
-    var password = document.getElementById("password").value.trim();
+﻿
+    var username ="Admin"
+    var password = "Admin"
     let data = {username: username, password: password};
     let r = fetch("https://localhost:5001/Smartface/authenticate", {
         method: 'POST',
@@ -13,16 +13,9 @@
                 if (res !== null) {
                     var bearer = 'Bearer ' + res.token;
                     sessionStorage.setItem("userT", bearer);
-                    window.open("HomePage.html", "_self");
-                } else {
-                    alert("Wrong username or password");
-                }
+                } 
 
             }
         )
 
-}
 
-function Registration() {
-    window.open("registrationPage.html", "_self");
-}

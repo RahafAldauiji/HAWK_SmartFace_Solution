@@ -4,7 +4,7 @@
     var splitHits = "";
     var image;
     console.log("In")
-    res = fetch("https://localhost:5001/Smartface/Camera/Match", {
+    res = fetch("https://localhost:5001/Smartface/Match", {
         method: 'GET',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),

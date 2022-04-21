@@ -35,14 +35,14 @@ namespace SmartfaceSolution.Services
         /// <param name="member">The watchlistMember information that matched</param>
         /// <param name="memberMatch">The information of the match Results </param>
         /// <param name="cam">The information of the camera</param>
-        public void sendNotification(WatchlistMember member, MemberMatch memberMatch, Camera cam)
+        private void sendNotification(WatchlistMember member, MemberMatch memberMatch, Camera cam)
         {
             //Database Connection 
             string sqlCommand;
             SqlCommand cmd;
             SqlDataReader dr = null;
             SqlConnection cnn;
-            bool m = false, c = false, t = false; // m=member, c=cam, t=time
+            bool memberExist = false, camPosition = false, timeStampExist = false; 
             DateTime date =
                 (new DateTime(1970, 1, 1) + TimeSpan.FromMilliseconds(memberMatch.FrameTimestampMicroseconds / 1000))
                 .ToLocalTime(); // the match timestamp converted from the Microseconds to local Datetime format 
@@ -69,13 +69,13 @@ namespace SmartfaceSolution.Services
                             long notificationDateTimeSeconds =
                                 new DateTimeOffset(DateTime.Parse((string) dr["TimeStamp"]))
                                     .ToUnixTimeSeconds(); // get the seconds from the notification table 
-                            m = true; // if the member has been detected before 
-                            c = (int) (dr["CamPosition"]) ==
-                                Int32.Parse(cam.name.Split("-")[1]
-                                    .Trim()); // check if the cameras in the notification table and the match member positions are same
+                            memberExist = true; // if the member has been detected before 
+                            camPosition = (int) (dr["CamPosition"]) ==
+                                          Int32.Parse(cam.name.Split("-")[1]
+                                              .Trim()); // check if the cameras in the notification table and the match member positions are same
                             // check if the seconds od the detected member are same or in the range of 5 min with notification table
-                            t = notificationDateTimeSeconds <= frameDateTimeSseconds &&
-                                notificationDateTimeSeconds + 600 >= frameDateTimeSseconds; // 600 seconds = 10 min 
+                            timeStampExist = notificationDateTimeSeconds <= frameDateTimeSseconds &&
+                                             notificationDateTimeSeconds + 600 >= frameDateTimeSseconds; // 600 seconds = 10 min 
                         }
                     }
                 }
@@ -89,7 +89,7 @@ namespace SmartfaceSolution.Services
             {
                 // Notification table
                 //insert the member in the notification table if the member not exists or different camera position or the different time
-                if ((!m || !c || !t) && date.Year != 1970)
+                if ((!memberExist || !camPosition || !timeStampExist) && date.Year != 1970)
                 {
                     // SQL insert command to be executed
                     sqlCommand =

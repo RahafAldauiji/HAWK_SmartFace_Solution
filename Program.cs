@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SmartfaceSolution.Entities;
+using SmartfaceSolution.Helpers;
 using SmartfaceSolution.SubEntities;
 using SmartfaceSolution.Message;
 namespace SmartfaceSolution
 {
     public class Program
     {
+       
         public static void Main(string[] args)
         {
             //Console.WriteLine(new SubMatchFaces().matchFaces().ToString());

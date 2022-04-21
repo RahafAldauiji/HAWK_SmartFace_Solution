@@ -77,7 +77,7 @@ function displayUsers(url) {
 }
 
 function memberData(id) {
-    sessionStorage.setItem('memberId', id);
+    
     document.getElementById("membersInfo").style.display = "block";
     var member = "";
     var jresult = "";
@@ -96,6 +96,7 @@ function memberData(id) {
                 member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                 member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
                 member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
+            sessionStorage.setItem('memberId', resultHits.note.split(',')[2]);
                 var counter = 0;
                 fetch("https://localhost:5001/Smartface/WatchlistMember/getFaces?id=" + id, {
                     method: 'GET',
@@ -131,7 +132,7 @@ function EditPage() {
 
 function deleteCam() {
     let memberId = sessionStorage.getItem('memberId');
-    fetch("https://localhost:5001/Smartface/WatchlistMember/delete?watchlistMemberId=" + memberId, {
+    fetch("https://localhost:5001/Smartface/WatchlistMember/delete?id=" + memberId, {
         method: 'DELETE',
         withCredentials: true,
         headers: {

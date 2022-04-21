@@ -24,10 +24,12 @@ namespace SmartfaceSolution.Controllers
     public class HawkController : Controller
     {
         private IUserService _user;
+        private readonly ISearchDB _searchDb;
 
-        public HawkController(IUserService user)
+        public HawkController(IUserService user,ISearchDB searchDb)
         {
             _user = user;
+            _searchDb = searchDb;
         }
 
 
@@ -99,7 +101,7 @@ namespace SmartfaceSolution.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("Camera/Match")]
+        [Route("Match")]
         public async Task<IActionResult> getMatch()
         {
             MemberMatch match = await new SubMatchFaces().matchFaces();
@@ -196,8 +198,10 @@ namespace SmartfaceSolution.Controllers
         [Authorize]
         [HttpDelete]
         [Route("WatchlistMember/delete")]
-        public async Task<IActionResult> deleteWatchlistMember(string watchlistMemberId)
-        { 
+        public async Task<IActionResult> deleteWatchlistMember(int id)
+        {
+            string watchlistMemberId=_searchDb.getMemberId(id).Trim();
+            Console.WriteLine("============================"+watchlistMemberId);
             return Json(await new SubWatchlistMember().deleteWatchListMember(watchlistMemberId));
         }
 
@@ -233,9 +237,11 @@ namespace SmartfaceSolution.Controllers
             string watchlistId,
             string imgUrl)
         {
+            
             WatchlistMember watchlistMember =
                 await new SubWatchlistMember().createWatchListMember(displayName,
                     fullName, note);
+            _searchDb.setMemberId(int.Parse(note.Split(',')[2]),watchlistMember.id);
             return Json(await new SubWatchlistMember().registerNewMember(watchlistMember.id, watchlistId, imgUrl));
         }
        

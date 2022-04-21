@@ -36,7 +36,7 @@ namespace SmartfaceSolution.SubEntities
         {
             List<Camera> cameras = null;
             await Task.Run(async () =>
-            {
+            { 
                 string result = await new SmartfaceResquest().requestNoBody("Cameras/", "GET");
                 cameras = JsonSerializer.Deserialize<List<Camera>>(result);
             });

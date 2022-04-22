@@ -1,4 +1,4 @@
-﻿var resultW = "<option selected >All Members</option>";
+﻿var resultW = "<option value='-1' >All Members</option>";
 var watchlistArray = [];
 var fetchUrl = "https://localhost:5001/Smartface/WatchlistMember/GetAllWatchlistMembers";
 displayUsers(fetchUrl)
@@ -77,7 +77,7 @@ function displayUsers(url) {
 }
 
 function memberData(id) {
-    
+
     document.getElementById("membersInfo").style.display = "block";
     var member = "";
     var jresult = "";
@@ -96,7 +96,7 @@ function memberData(id) {
                 member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                 member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
                 member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
-            sessionStorage.setItem('memberId', resultHits.note.split(',')[2]);
+                sessionStorage.setItem('memberId', resultHits.note.split(',')[2]);
                 var counter = 0;
                 fetch("https://localhost:5001/Smartface/WatchlistMember/getFaces?id=" + id, {
                     method: 'GET',
@@ -144,11 +144,15 @@ function deleteCam() {
 }
 
 function filter() {
+
     var e = document.getElementById("inputGroupSelect01");
     var value = e.value;
-    displayUsers("https://localhost:5001/Smartface/Watchlist/getMembers?id=" + watchlistArray[value].id)
-   
+    if (value === '-1') reset();
+    else
+        displayUsers("https://localhost:5001/Smartface/Watchlist/getMembers?id=" + watchlistArray[value].id)
+
 }
-function reset(){
-   location.reload();
+
+function reset() {
+    location.reload();
 }

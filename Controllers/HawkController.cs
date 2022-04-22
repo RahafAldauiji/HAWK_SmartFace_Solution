@@ -159,7 +159,20 @@ namespace SmartfaceSolution.Controllers
             return Json(await new SubWatchlist().getWatchlist(id));
         }
 
-
+        [Authorize]
+        [HttpGet]
+        [Route("Watchlist/getWatchlistByName")]
+        public async Task<IActionResult> getWatchlistByName(string name)
+        {
+            AllWatchlist watchlist = await new SubWatchlist().retrievesAllWatchlist();
+            int i; 
+            for (i = 0; i < watchlist.items.Length; i++)
+            {
+                if (watchlist.items[i].fullName.Trim().Equals(name.Trim())) break;
+            }
+            Console.WriteLine(watchlist.items[i].id+"   "+watchlist.items[i].fullName);
+            return Json(watchlist.items[i]);
+        }
         [Authorize]
         [HttpDelete]
         [Route("Watchlist/delete")]

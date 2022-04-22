@@ -11,6 +11,7 @@ var res = fetch("https://localhost:5001/Smartface/Watchlist/getWatchlist?id=" + 
     .then(result => result.json())
     .then(result => {
             list = result;
+        document.getElementById("inlineFormInputGroupUsername1").value = result.fullName;
             document.getElementById("inlineFormInputGroupUsername2").value = result.id;
             document.getElementById("inlineFormInputGroupUsername3").value = result.displayName;
             document.getElementById("inlineFormInputGroupUsername4").value = result.threshold;
@@ -20,7 +21,7 @@ var res = fetch("https://localhost:5001/Smartface/Watchlist/getWatchlist?id=" + 
 function updateWatchlist() {
     list.id = document.getElementById("inlineFormInputGroupUsername2").value;
     list.displayName = document.getElementById("inlineFormInputGroupUsername3").value;
-    list.fullName = document.getElementById("inlineFormInputGroupUsername3").value;
+    list.fullName = document.getElementById("inlineFormInputGroupUsername1").value;
     list.threshold = document.getElementById("inlineFormInputGroupUsername4").value;
     let watchlist = JSON.stringify(list);
     fetch("https://localhost:5001/Smartface/Watchlist/upadte?watchlist="+watchlist, {

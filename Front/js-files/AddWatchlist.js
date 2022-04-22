@@ -1,6 +1,6 @@
 ﻿function addWatchlist() {
     let displayName = document.getElementById("inlineFormInputGroupUsername2").value;
-    let fullName = document.getElementById("inlineFormInputGroupUsername2").value;
+    let fullName = document.getElementById("inlineFormInputGroupUsername1").value;
     let threshold = document.getElementById("inlineFormInputGroupUsername3").value;
     let data = {displayName: displayName, fullName: fullName, threshold: parseInt(threshold)};
     fetch("https://localhost:5001/Smartface/Watchlist/create", {

@@ -1,7 +1,7 @@
 ﻿let cameraId = sessionStorage.getItem('cameraId');
 let userT = sessionStorage.getItem('userT');
 var camera;
-var res = fetch("https://localhost:5001/Smartface/Camera/getCamera?id=" + cameraId, {
+var res = fetch("https://localhost:44313/Smartface/Camera/getCamera?id=" + cameraId, {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -26,7 +26,7 @@ function updateCam() {
     camera.enabled = document.getElementById("inlineFormInputGroupUsername5").value;
     camera.source = document.getElementById("inlineFormInputGroupUsername6").value;
     let cam = JSON.stringify(camera);
-    fetch("https://localhost:5001/Smartface/Camera/update?camera=" + cam, {
+    fetch("https://localhost:44313/Smartface/Camera/update?camera=" + cam, {
         method: 'POST',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),

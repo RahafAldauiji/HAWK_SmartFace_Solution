@@ -1,9 +1,9 @@
 ﻿var resultW = "<option value='-1' >All Members</option>";
 var watchlistArray = [];
-var fetchUrl = "https://localhost:5001/Smartface/WatchlistMember/GetAllWatchlistMembers";
+var fetchUrl = "https://localhost:44313/Smartface/WatchlistMember/GetAllWatchlistMembers";
 displayUsers(fetchUrl)
 
-fetch("https://localhost:5001/Smartface/Watchlist/getAllWatchlist", {
+fetch("https://localhost:44313/Smartface/Watchlist/getAllWatchlist", {
     method: 'GET',
     headers: {
         'Authorization': sessionStorage.getItem('userT'),
@@ -38,7 +38,7 @@ function displayUsers(url) {
                 resultHits.map(obj => {
                     splitHits += "<tr>";
                     
-                    fetch("https://localhost:5001/Smartface/WatchlistMember/getMemberFace?id=" + obj.id, {
+                    fetch("https://localhost:44313/Smartface/WatchlistMember/getMemberFace?id=" + obj.id, {
                         method: 'GET',
                         headers: {
                             'Authorization': sessionStorage.getItem('userT'),
@@ -77,7 +77,7 @@ function memberData(id) {
     document.getElementById("membersInfo").style.display = "block";
     var member = "";
     var jresult = "";
-    fetch("https://localhost:5001/Smartface/WatchlistMember/getMember?id=" + id, {
+    fetch("https://localhost:44313/Smartface/WatchlistMember/getMember?id=" + id, {
         method: 'GET',
         headers: {
             'Authorization': sessionStorage.getItem('userT'),
@@ -93,7 +93,7 @@ function memberData(id) {
                 member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
                 member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
                 var counter = 0;
-                fetch("https://localhost:5001/Smartface/WatchlistMember/getFaces?id=" + id, {
+                fetch("https://localhost:44313/Smartface/WatchlistMember/getFaces?id=" + id, {
                     method: 'GET',
                     headers: {
                         'Authorization': sessionStorage.getItem('userT'),
@@ -129,7 +129,7 @@ function EditPage(id) {
 function deleteCam(note) {
     id=note.split(',')[2];
     alert(id)
-    fetch("https://localhost:5001/Smartface/WatchlistMember/delete?id=" + id, {
+    fetch("https://localhost:44313/Smartface/WatchlistMember/delete?id=" + id, {
         method: 'DELETE',
         withCredentials: true,
         headers: {
@@ -146,7 +146,7 @@ function filter() {
     var value = e.value;
     if (value === '-1') reset();
     else
-        displayUsers("https://localhost:5001/Smartface/Watchlist/getMembers?id=" + watchlistArray[value].id)
+        displayUsers("https://localhost:44313/Smartface/Watchlist/getMembers?id=" + watchlistArray[value].id)
 
 }
 

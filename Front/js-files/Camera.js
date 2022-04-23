@@ -1,4 +1,4 @@
-fetch("https://localhost:5001/Smartface/Camera/getAllCameras", {
+fetch("https://localhost:44313/Smartface/Camera/getAllCameras", {
     method: 'GET',
     withCredentials: true,
     headers: {
@@ -47,7 +47,7 @@ function EditPage(id) {
 
 function deleteCam(id) {
     //alert(id)
-    fetch("https://localhost:5001/Smartface/Camera/delete?id=" + id, {
+    fetch("https://localhost:44313/Smartface/Camera/delete?id=" + id, {
         method: 'DELETE',
         withCredentials: true,
         headers: {

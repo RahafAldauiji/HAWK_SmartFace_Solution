@@ -41,7 +41,7 @@ namespace SmartfaceSolution
             services.Configure<ServerConfig>(Configuration.GetSection("ConnectionStrings")); // inject the ConnectionStrings 
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // inject the JwtConfig 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IMatchService, MatchService>();
+            services.AddTransient<IMatchService, MatchService>();
             services.AddScoped<ISearchDB, SearchDB>();
             services.AddHostedService<BackgroundMatchService>();
         }

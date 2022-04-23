@@ -36,8 +36,8 @@ function displayUsers(url) {
         .then(resultHits => {
                 jresult = JSON.stringify(resultHits);
                 resultHits.map(obj => {
-                    splitHits += "<tr onclick=\"memberData('" + obj.id + "')\">";
-                    //
+                    splitHits += "<tr>";
+                    
                     fetch("https://localhost:5001/Smartface/WatchlistMember/getMemberFace?id=" + obj.id, {
                         method: 'GET',
                         headers: {
@@ -51,23 +51,19 @@ function displayUsers(url) {
                             splitHits += "<img src=\'data:image/(png|jpg|jpeg);base64," +
                                 resultHits1.toString() + "'width='60px'height='60px' onclick= \"memberData('" + obj.id + "')\">";
                             splitHits += "</td>";
-                            splitHits += " <th scope=\"row\"> <input  id=\"" + obj.id + "\" name='member' type=\"hidden\" onclick=\"memberData('" + obj.id + "')\">" +
-                                "</th>";
                             splitHits += "<td className=\"tm-product-name\">";
-                            splitHits += obj.fullName + "</td> <br>";
+                            splitHits += obj.fullName + "</td>";
                             splitHits += "<td className=\"text-center\">";
                             splitHits += obj.id + "</td>";
-
+                            splitHits+="<td><button onclick=\"EditPage('" + obj.id + "')\" type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">\n" +
+                                "<i class=\"fas fa-edit fa-lg \"></i></button></td>";
+                            splitHits+="<td><button onclick=\"deleteCam('" + obj.note + "')\" type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">\n" +
+                                "<i class=\"far fa-trash-alt fa-lg  \"></i></button></td>"
                             splitHits += "</tr>";
-                            // splitHits += "<td> " +
-                            //     // "<button  onclick=\"EditPage('" + obj.id + "')\" type=\"button\" class=\" btn btn-sh btn-sm \"  style=\"float: right\">" +
-                            //     // "<i class=\"fas fa-edit fa-lg \" ></i></button>" +
-                            //     // "<button type=\"button\" class=\" btn btn-sh btn-sm \" style=\"float: right\">" +
-                            //     // "<i class=\"far fa-trash-alt fa-lg \" onclick=\"deleteCam('" + obj.id + "')\"></i></button>" +
-                            //     "</td>";
 
                             document.getElementById("membersList").innerHTML = splitHits;
                         });
+                    
                     //  window.alert(obj.fullName);
 
                 });
@@ -96,7 +92,6 @@ function memberData(id) {
                 member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                 member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
                 member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
-                sessionStorage.setItem('memberId', resultHits.note.split(',')[2]);
                 var counter = 0;
                 fetch("https://localhost:5001/Smartface/WatchlistMember/getFaces?id=" + id, {
                     method: 'GET',
@@ -126,13 +121,15 @@ function memberData(id) {
 
 }
 
-function EditPage() {
+function EditPage(id) {
+    sessionStorage.setItem('memberId', id);
     window.open("editMember.html", "_self");
 }
 
-function deleteCam() {
-    let memberId = sessionStorage.getItem('memberId');
-    fetch("https://localhost:5001/Smartface/WatchlistMember/delete?id=" + memberId, {
+function deleteCam(note) {
+    id=note.split(',')[2];
+    alert(id)
+    fetch("https://localhost:5001/Smartface/WatchlistMember/delete?id=" + id, {
         method: 'DELETE',
         withCredentials: true,
         headers: {

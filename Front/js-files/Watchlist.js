@@ -26,12 +26,14 @@
     });
 
 function AddPage() {
-    window.open("addWatchlist.html", "_self");
+   // window.open("addWatchlist.html", "_self");
+    document.getElementById('AddWatchlist').style.display='block';
 }
 
 function EditPage(id) {
     sessionStorage.setItem('WatchlistId', id);
-    window.open("editWatchlist.html", "_self");
+    //window.open("editWatchlist.html", "_self");
+    document.getElementById('EditWatchlist').style.display='block';
 }
 
 function deleteWatchlist(id) {

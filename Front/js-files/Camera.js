@@ -12,7 +12,6 @@ fetch("https://localhost:5001/Smartface/Camera/getAllCameras", {
                
                 result.map(obj => {
                     split += "<tr> ";
-                    //splitHits += "<tr>";
                     split += "<td className=\"tm-product-name\">";
                     split += obj.name.split('-')[0] + "</td> <br>";
                     split += "<td className=\"text-center\">";
@@ -35,12 +34,15 @@ fetch("https://localhost:5001/Smartface/Camera/getAllCameras", {
         ));
 
 function AddPage() {
-    window.open("addCamera.html", "_self");
+  //  window.open("addCamera.html", "_self");
+    document.getElementById('AddCamera').style.display='block';
 }
 
 function EditPage(id) {
     sessionStorage.setItem('cameraId', id);
-    window.open("editCamera.html", "_self");
+  //  window.open("editCamera.html", "_self");
+    document.getElementById('EditCamera').style.display='block';
+
 }
 
 function deleteCam(id) {

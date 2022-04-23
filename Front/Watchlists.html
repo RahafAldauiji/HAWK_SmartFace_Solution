@@ -73,9 +73,108 @@
         <div class="row tm-content-row tm-mt-big">
             <div class="col-12">
                 <h2 class="tm-block-title d-inline-block" style="text-decoration: underline">All Watchlists</h2>
-                <button type="button" class="btn btn-sm px-3" style="float: right" onclick="AddPage()">
+               
+                <!----------------------------------AddWatchlist------------------------------------------->
+                <button type="button" class="btn btn-sm px-3" style="float: right" onclick="AddPage()" >
                     <i class="fas fa-plus"></i>
                 </button>
+                <div id="AddWatchlist" class="modal">
+                    <span onclick="document.getElementById('AddWatchlist').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <div class=" white-block bg-white tm-block">
+                        <div class="Camera-form">
+                     <form>
+                        <div class="input-group mb-4 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Name</div>
+                                <label class="sr-only" for="inlineFormInputGroupUsername1"></label>
+                            </div>
+
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername1"
+                                   placeholder="">
+                        </div>
+
+                      
+
+
+                        <div class="input-group mb-4 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Threshold</div>
+                                <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
+                            </div>
+
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                                   placeholder="">
+                        </div>
+
+                         <div class="input-group mb-4 mr-sm-2">
+                             <div class="input-group-prepend">
+                                 <div class="input-group-text">Watchlist Number</div>
+                                 <label class="sr-only" for="inlineFormInputGroupUsername6"></label>
+                             </div>
+                             <input type="text" class="form-control" id="inlineFormInputGroupUsername6"
+                                    placeholder="">
+                         </div>
+
+                        <button type="button" class="btn btn-action btn-sm px-2" onclick="addWatchlist()"
+                                style="float: right">Save
+                        </button>
+                    </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!----------------------------------EndAddWatchlist------------------------------------------->
+                
+                <!---------------------------------EditWatchlist----------------------------------------------->
+                
+                <div id="EditWatchlist" class="modal">
+                    <span onclick="document.getElementById('EditWatchlist').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                <div class=" white-block bg-white tm-block h-100">
+                    <div class="Camera-form">
+                        <form>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">ID</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername3"></label>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername3"
+                                       placeholder="">
+                            </div>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">NAME</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername4"></label>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername4"
+                                       placeholder="">
+                            </div>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Watchlist Number</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername7"></label>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername7"
+                                       placeholder="">
+                            </div>
+                            <div class="input-group mb-4 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Threshhold</div>
+                                    <label class="sr-only" for="inlineFormInputGroupUsername5"></label>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername5"
+                                       placeholder="">
+                            </div>
+                            <button type="button" class="btn btn-action btn-sm px-2" onclick="updateWatchlist()"
+                                    style="float: right">Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+
+                <!---------------------------------EndEditWatchlist----------------------------------------------->
+
                 <div class="bg-white tm-block h-100">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped tm-table-striped-even mt-3">
@@ -87,23 +186,7 @@
                             </tr>
                             </thead>
                             <tbody id="WatchList">
-                            <!--                            <td>WatchList 1 </td>-->
-                            <!--                            <td> 50</td>-->
-                            <!--                            <td>-->
-                            <!--                                <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>-->
-                            <!--                                <button  onclick="EditPage()" type="button" class=" btn btn-sh btn-sm "  style="float: right"><i class="fas fa-edit fa-lg " ></i></button>-->
-                            <!--                            </td>-->
-                            <!--                            <tr>-->
-                            <!--                                <td>WatchList 2 </td>-->
-                            <!--                                <td> 50 </td>-->
-                            <!--                                <td>-->
-                            <!--                                    <button type="button" class=" btn btn-sh btn-sm " style="float: right"><i class="far fa-trash-alt fa-lg "></i></button>-->
-                            <!--                                    <button  onclick="EditPage()" type="button" class=" btn btn-sh btn-sm "  style="float: right"><i class="fas fa-edit fa-lg " ></i></button>-->
-                            <!--                                </td> -->
-                            <!--                                -->
-                            <!--                            </tr>-->
-                            <!--                            -->
-
+                            
                             </tbody>
                         </table>
                     </div>
@@ -119,5 +202,8 @@
 </body>
 
 <script src="js-files/Watchlist.js"></script>
+<script src="js-files/AddWatchlist.js"></script>
+<script src="js-files/EditWatchlist.js"></script>
+
 
 </html>

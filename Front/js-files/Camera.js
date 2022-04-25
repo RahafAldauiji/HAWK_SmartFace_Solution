@@ -1,3 +1,4 @@
+var camera;
 fetch("https://localhost:5001/Smartface/Camera/getAllCameras", {
     method: 'GET',
     withCredentials: true,
@@ -53,7 +54,6 @@ function addCam(){
 
 function EditPage(id) {
     document.getElementById('EditCamera').style.display='block';
-    var camera;
     var res = fetch("https://localhost:5001/Smartface/Camera/getCamera?id=" + id, {
         method: 'GET',
         withCredentials: true,
@@ -72,8 +72,7 @@ function EditPage(id) {
                 document.getElementById("inputGroupSelect01").value = result.name.split('-')[1];
             }
         );
-
-
+    
 }
 function updateCam() {
     camera.id = document.getElementById("inlineFormInputGroupUsername3").value ;

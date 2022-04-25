@@ -91,9 +91,9 @@ function memberData(id) {
                 member += "<tr><td><i class=\"fas fa-user-circle \"> Full Name: ";
                 member += resultHits.fullName + "<br> &emsp;&nbsp;Display Name: ";
                 member += resultHits.displayName + "<br> &emsp;&nbsp;Note: ";
-                member += resultHits.note + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
+                member += resultHits.note.split(',')[0] + "<br> &emsp;&nbsp;Images: <br><br>&emsp;&nbsp";
                 var counter = 0;
-                fetch("https://localhost:44313/Smartface/WatchlistMember/getFaces?id=" + id, {
+                fetch("https://localhost:5001/Smartface/WatchlistMember/getFaces?id=" + id, {
                     method: 'GET',
                     headers: {
                         'Authorization': sessionStorage.getItem('userT'),

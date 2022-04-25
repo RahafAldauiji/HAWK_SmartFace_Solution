@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -12,12 +13,15 @@ using SmartfaceSolution.Entities;
 using SmartfaceSolution.Helpers;
 using SmartfaceSolution.SubEntities;
 using SmartfaceSolution.Message;
+using SmartfaceSolution.Models;
+
 namespace SmartfaceSolution
 {
+    
     public class Program
     {
        
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             //Console.WriteLine(new SubMatchFaces().matchFaces().ToString());
             // new SubWatchlist().search();
@@ -25,7 +29,9 @@ namespace SmartfaceSolution
            // Message.Message m = new Message.Message(2, "Rahaf", "17/12/2021");
            // m.sendEmail("rahafaldauiji12@gmail.com");
            // SubEntities.SubMatchFaces.matchSocket();
-            CreateHostBuilder(args).Build().Run(); 
+           //Console.WriteLine(await new SubWatchlistMember().retrievesImage("31578ad1-81c8-44a1-8e42-2e080771908c".Trim()));
+           
+           CreateHostBuilder(args).Build().Run(); 
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

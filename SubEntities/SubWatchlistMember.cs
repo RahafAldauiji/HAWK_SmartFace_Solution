@@ -210,8 +210,8 @@ namespace SmartfaceSolution.SubEntities
                     {
                         using (var yourImage = Image.FromStream(mem))
                         {
-                            var resizeImage = (Image) (new Bitmap(yourImage, new Size(120, 120)));
-                            resizeImage.Save("C://SmartFaceImages//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+                            var resizeImage = (Image) (new Bitmap(yourImage));
+                            resizeImage.Save("C://SmartFaceImages//Testing//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                             image = Convert.ToBase64String(data);
                         }
                     }

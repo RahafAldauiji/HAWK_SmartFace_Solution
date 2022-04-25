@@ -13,6 +13,7 @@
     })
         .then(resultHits => resultHits.json())
         .then(resultHits => {
+            console.log(resultHits)
                 if (resultHits != null) {
                     jresult = JSON.stringify(resultHits);
                     console.log(jresult)
@@ -35,8 +36,8 @@
                             splitHits += "Match Score: " + resultHits.score + "</i></td></tr>";
                             document.getElementById("tableMembers").innerHTML = splitHits;
                         });
-
                 }
+                
             }
         );
 }

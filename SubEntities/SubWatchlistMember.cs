@@ -28,7 +28,7 @@ namespace SmartfaceSolution.SubEntities
             byte[] arrBytes;
             using (var ms = new MemoryStream())
             {
-                img.Save(ms, img.RawFormat);
+                //img.Save(ms, img.RawFormat);
                 arrBytes = ms.ToArray();
             }
             return Convert.ToBase64String(arrBytes);
@@ -208,7 +208,7 @@ namespace SmartfaceSolution.SubEntities
                         using (var yourImage = Image.FromStream(mem))
                         {
                             var resizeImage = (Image) (new Bitmap(yourImage));
-                            resizeImage.Save("C://SmartFaceImages//Testing//" + imgId + ".Jpeg", ImageFormat.Jpeg);
+                            //resizeImage.Save("C://SmartFaceImages//Testing//" + imgId + ".Jpeg", ImageFormat.Jpeg);
                             image = Convert.ToBase64String(data);
                         }
                     }

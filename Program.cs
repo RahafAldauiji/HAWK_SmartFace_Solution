@@ -30,7 +30,6 @@ namespace SmartfaceSolution
            // m.sendEmail("rahafaldauiji12@gmail.com");
            // SubEntities.SubMatchFaces.matchSocket();
            //Console.WriteLine(await new SubWatchlistMember().retrievesImage("31578ad1-81c8-44a1-8e42-2e080771908c".Trim()));
-           
            CreateHostBuilder(args).Build().Run(); 
         }
 

@@ -42,7 +42,7 @@ namespace SmartfaceSolution
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // inject the JwtConfig 
             services.AddScoped<IUserService, UserService>();
             services.AddTransient<IMatchService, MatchService>();
-            services.AddScoped<ISearchDB, SearchDB>();
+            services.AddScoped<IDBConnection, DBConnection>();
             services.AddHostedService<BackgroundMatchService>();
         }
 

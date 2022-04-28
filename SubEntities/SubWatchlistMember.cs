@@ -94,8 +94,6 @@ namespace SmartfaceSolution.SubEntities
             return resp;
         }
         
-        
-
         /// <summary>
         /// Method <c>registerNewMember</c> register a new member in a specific watchlist
         /// </summary>
@@ -103,12 +101,11 @@ namespace SmartfaceSolution.SubEntities
         /// <param name="watchlistId">the watchlist id</param>
         /// <param name="imgUrl"></param>
         /// <returns>the registration response</returns>
-        public async Task<string> registerNewMember(string id, string watchlistId, string imgUrl)
+        public async Task<string> registerNewMember(string id, string watchlistId, string imageData)
         {
             string resp = null;
             await Task.Run(async () =>
             {
-                string imageData = convertImageToBase64String(imgUrl);
                 string data = "{" +
                               "\"id\":\"" + id + "\",\"images\": [" + "{" + "\"data\":\"" + imageData + "\"" + "}" +
                               "],"
@@ -166,16 +163,16 @@ namespace SmartfaceSolution.SubEntities
         public async Task<string> getMemberFace(string id)
         {
             MemberFaces faces;
-            string images = null;
+            string image = null;
             await Task.Run(async () =>
             {
                 string resp =
                     await new SmartfaceResquest().requestNoBody(
                         "WatchlistMembers/" + id.Trim() + "/Faces?Ascending=true&PageSize=1", "GET");
                 faces = JsonSerializer.Deserialize<MemberFaces>(resp);
-                images = await retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
+                image = await retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
             });
-            return images;
+            return image;
         }
 
         /// <summary>

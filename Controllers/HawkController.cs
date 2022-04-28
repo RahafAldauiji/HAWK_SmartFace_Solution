@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -24,12 +25,12 @@ namespace SmartfaceSolution.Controllers
     public class HawkController : Controller
     {
         private IUserService _user;
-        private readonly ISearchDB _searchDb;
+        private readonly IDBConnection _dbConnection;
 
-        public HawkController(IUserService user,ISearchDB searchDb)
+        public HawkController(IUserService user,IDBConnection dbConnection)
         {
             _user = user;
-            _searchDb = searchDb;
+            _dbConnection = dbConnection;
         }
 
 
@@ -54,7 +55,7 @@ namespace SmartfaceSolution.Controllers
         /// <summary>
         /// Camera region have all the Camera operation
         /// </summary>
-
+        
         #region Camera
 
         [Authorize]
@@ -170,7 +171,6 @@ namespace SmartfaceSolution.Controllers
             {
                 if (watchlist.items[i].fullName.Trim().Equals(name.Trim())) break;
             }
-            Console.WriteLine(watchlist.items[i].id+"   "+watchlist.items[i].fullName);
             return Json(watchlist.items[i]);
         }
         [Authorize]
@@ -203,7 +203,7 @@ namespace SmartfaceSolution.Controllers
         public async Task<IActionResult> updateWatchlistMember(string member)
         {
             WatchlistMember watchlistMember = JsonConvert.DeserializeObject<WatchlistMember>(member);
-            
+            watchlistMember.id=_dbConnection.getMemberId(int.Parse(watchlistMember.note.Split(',')[2])).Trim();
             return Json(await new SubWatchlistMember().updateWatchListMember(watchlistMember.id,
                 watchlistMember.displayName, watchlistMember.fullName, watchlistMember.note));
         }
@@ -213,8 +213,8 @@ namespace SmartfaceSolution.Controllers
         [Route("WatchlistMember/delete")]
         public async Task<IActionResult> deleteWatchlistMember(int id)
         {
-            string watchlistMemberId=_searchDb.getMemberId(id).Trim();
-            Console.WriteLine("============================"+watchlistMemberId);
+            string watchlistMemberId=_dbConnection.getMemberId(id).Trim();
+            _dbConnection.deleteMemberById(id);
             return Json(await new SubWatchlistMember().deleteWatchListMember(watchlistMemberId));
         }
 
@@ -246,16 +246,14 @@ namespace SmartfaceSolution.Controllers
         [Authorize]
         [HttpPost]
         [Route("WatchlistMember/CreateAndResgister")]
-        public async Task<IActionResult> createWatchlistMember(string displayName, string fullName, string note,
-            string watchlistId,
-            string imgUrl)
+        public async Task<IActionResult> createWatchlistMember([FromBody] MemberRegistration memberRegistration)
         {
-            
             WatchlistMember watchlistMember =
-                await new SubWatchlistMember().createWatchListMember(displayName,
-                    fullName, note);
-            _searchDb.setMemberId(int.Parse(note.Split(',')[2]),watchlistMember.id);
-            return Json(await new SubWatchlistMember().registerNewMember(watchlistMember.id, watchlistId, imgUrl));
+                await new SubWatchlistMember().createWatchListMember(memberRegistration.watchlistMember.displayName,
+                    memberRegistration.watchlistMember.fullName, memberRegistration.watchlistMember.note);
+            _dbConnection.setMemberId(int.Parse(memberRegistration.watchlistMember.note.Split(',')[2]),watchlistMember.id);
+            Console.WriteLine(memberRegistration.img);
+            return Json(await new SubWatchlistMember().registerNewMember(watchlistMember.id, memberRegistration.watchlistId, memberRegistration.img));
         }
        
         #endregion

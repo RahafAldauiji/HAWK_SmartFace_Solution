@@ -68,7 +68,6 @@ function displayUsers(url) {
             }
         );
 }
-
 function memberData(id) {
 
     document.getElementById("membersInfo").style.display = "block";

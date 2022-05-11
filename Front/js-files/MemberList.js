@@ -37,7 +37,7 @@ function displayUsers(url) {
                 jresult = JSON.stringify(resultHits);
                 resultHits.map(obj => {
                     splitHits += "<tr>";
-                    
+
                     fetch("https://localhost:5001/Smartface/WatchlistMember/getMemberFace?id=" + obj.id, {
                         method: 'GET',
                         headers: {
@@ -63,15 +63,11 @@ function displayUsers(url) {
 
                             document.getElementById("membersList").innerHTML = splitHits;
                         });
-                    
-                    //  window.alert(obj.fullName);
-
                 });
 
             }
         );
 }
-
 function memberData(id) {
 
     document.getElementById("membersInfo").style.display = "block";
@@ -122,10 +118,40 @@ function memberData(id) {
 }
 
 function EditPage(id) {
-    sessionStorage.setItem('memberId', id);
-    window.open("editMember.html", "_self");
+    document.getElementById('EditMember').style.display = 'block';
+    var res = fetch("https://localhost:5001/Smartface/WatchlistMember/getMember?id=" + id, {
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+            'Authorization': sessionStorage.getItem('userT'),
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(result => result.json())
+        .then(result => {
+                member = result;
+                document.getElementById("inlineFormInputGroupUsername1").value = result.id;
+                document.getElementById("inlineFormInputGroupUsername2").value = result.displayName;
+                document.getElementById("inlineFormInputGroupUsername3").value = result.fullName;
+                document.getElementById("inlineFormInputGroupUsername4").value = result.note.split(',')[0];
+            }
+        );
 }
-
+function updateMember() {
+    member.id = document.getElementById("inlineFormInputGroupUsername1").value;
+    member.displayName = document.getElementById("inlineFormInputGroupUsername2").value;
+    member.fullName = document.getElementById("inlineFormInputGroupUsername3").value;
+    member.note = document.getElementById("inlineFormInputGroupUsername4").value+", "+","+member.note.split(',')[2];
+    let watchlistMember = JSON.stringify(member);
+    fetch("https://localhost:5001/Smartface/WatchlistMember/update?member=" + watchlistMember, {
+        method: 'POST',
+        headers: {
+            'Authorization': sessionStorage.getItem('userT'),
+            'Content-Type': 'application/json',
+        },
+        body: watchlistMember
+    }).then(res => window.open("List.html", "_self"));
+}
 function deleteCam(note) {
     id=note.split(',')[2];
     alert(id)

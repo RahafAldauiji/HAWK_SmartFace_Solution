@@ -77,30 +77,25 @@
                         <table class="table table-hover table-striped tm-table-striped-even mt-3">
                             <thead class="tm-bg-gray">
                             <tr>
-                                <th scope="col">&nbsp;Watchlist</th>
-                                <th>
-                                   
-                                    <select class="custom-select" id="inputGroupSelect01" >
-                                        
-                                    </select>
-                                
+                                <th scope="col" colspan="4">Watchlist
+                                    <select class="custom-select" id="inputGroupSelect01" ></select>
                                 </th>
-                                <th>
+                                <th colspan="">
                                     <div>
                                         <button onclick="filter()" type="button" class=" btn btn-sh btn-sm " style="float: right">
-                                           Search</button>
+                                            Search</button>
                                     </div>
                                 </th>
                             </tr>
                             <tr class="tm-bg-gray">
-                                <th scope="col" colspan="2">Image</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">ID</th>
-                                
+                                <th scope="col" >Image</th>
+                                <th scope="col" >Name</th>
+                                <th scope="col" >ID</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="membersList">
-
                             </tbody>
                         </table>
                     </div>
@@ -110,7 +105,7 @@
             <div class="col-4" id="membersInfo" style="display: none">
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title d-inline-block" style="color: #333333">Membebr Information</h2>
-                    
+
                     <table class="table table-striped mt-3">
                         <tbody id="memberBody">
 
@@ -118,6 +113,61 @@
                     </table>
                 </div>
             </div>
+            <!-------------------------------------EditMember -------------------------------------------->
+            <div id="EditMember" class="modal">
+                <span onclick="document.getElementById('EditMember').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <div class=" white-block bg-white tm-block h-100">
+                    <div class="Camera-form">
+                <form>
+                    <div class="input-group mb-4 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">ID</div>
+                            <label class="sr-only" for="inlineFormInputGroupUsername1"></label>
+                        </div>
+
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername1"
+                               placeholder="">
+                    </div>
+
+                    <div class="input-group mb-4 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">DISPLAY NAME</div>
+                            <label class="sr-only" for="inlineFormInputGroupUsername2"></label>
+                        </div>
+
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                               placeholder="">
+                    </div>
+
+                    <div class="input-group mb-4 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">FULL NAME</div>
+                            <label class="sr-only" for="inlineFormInputGroupUsername3"></label>
+                        </div>
+
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername3"
+                               placeholder="">
+                    </div>
+
+                    <div class="input-group mb-4 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">EMAIL</div>
+                            <label class="sr-only" for="inlineFormInputGroupUsername4"></label>
+                        </div>
+
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername4"
+                               placeholder="">
+                    </div>
+
+                    <button type="button" class="btn btn-action btn-sm px-2" onclick="updateMember()"
+                            style="float: right">Save
+                    </button>
+                </form>
+            </div>
+                </div>
+            </div>
+
+            <!-------------------------------------EditMember ------------------------------------------->
         </div>
 
     </div>

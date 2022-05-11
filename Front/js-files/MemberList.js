@@ -119,7 +119,7 @@ function memberData(id) {
 
 function EditPage(id) {
     document.getElementById('EditMember').style.display = 'block';
-    var res = fetch("https://localhost:5001/Smartface/WatchlistMember/getMember?id=" + memberId, {
+    var res = fetch("https://localhost:5001/Smartface/WatchlistMember/getMember?id=" + id, {
         method: 'GET',
         withCredentials: true,
         headers: {
@@ -134,7 +134,6 @@ function EditPage(id) {
                 document.getElementById("inlineFormInputGroupUsername2").value = result.displayName;
                 document.getElementById("inlineFormInputGroupUsername3").value = result.fullName;
                 document.getElementById("inlineFormInputGroupUsername4").value = result.note.split(',')[0];
-                document.getElementById("inlineFormInputGroupUsername5").value = result.note;
             }
         );
 }
@@ -142,7 +141,7 @@ function updateMember() {
     member.id = document.getElementById("inlineFormInputGroupUsername1").value;
     member.displayName = document.getElementById("inlineFormInputGroupUsername2").value;
     member.fullName = document.getElementById("inlineFormInputGroupUsername3").value;
-    member.note = document.getElementById("inlineFormInputGroupUsername4").value+","+document.getElementById("inlineFormInputGroupUsername5").value+","+member.note.split(',')[2];
+    member.note = document.getElementById("inlineFormInputGroupUsername4").value+", "+","+member.note.split(',')[2];
     let watchlistMember = JSON.stringify(member);
     fetch("https://localhost:5001/Smartface/WatchlistMember/update?member=" + watchlistMember, {
         method: 'POST',

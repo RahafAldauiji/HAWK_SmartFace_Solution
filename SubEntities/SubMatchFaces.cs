@@ -26,7 +26,7 @@ namespace SmartfaceSolution.SubEntities
         /// The ZeroMQ open a socket on TCP port 2406 for the communication 
         /// </summary>
         ///<returns>The WatchlistMember member</returns>
-        public async Task<MemberMatch> matchFaces()
+        public MemberMatch matchFaces()
         {
             MemberMatch memberMatch;
             using (var subscriber = new SubscriberSocket())

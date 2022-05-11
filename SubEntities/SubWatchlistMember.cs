@@ -18,41 +18,21 @@ namespace SmartfaceSolution.SubEntities
     {
         
         /// <summary>
-        /// Method <c>convertImageToBase64String</c> will encoding the image into Base64 String
-        /// </summary>
-        /// <param name="name">name of the image in the SmartFaceImages folder</param>
-        /// <returns>Base64 String</returns>
-        public string convertImageToBase64String(string imgUrl)
-        {
-            System.Drawing.Image img = System.Drawing.Image.FromFile(imgUrl);
-            byte[] arrBytes;
-            using (var ms = new MemoryStream())
-            {
-                //img.Save(ms, img.RawFormat);
-                arrBytes = ms.ToArray();
-            }
-            return Convert.ToBase64String(arrBytes);
-        }
-
-        /// <summary>
         /// Method <c>createWatchListMember</c> create a new watchlistMember in the system
         /// </summary>
         /// <param name="displayName">the display name of the watchlistMember</param>
         /// <param name="fullName">the full name of the watchlistMember</param>
         /// <param name="note">the note that that contain watchlistmember email, phoneNumber, and id </param>
         /// <returns>the new watchlistMember</returns>
-        public async Task<WatchlistMember> createWatchListMember(string displayName, string fullName, string note)
+        public WatchlistMember createWatchListMember(string displayName, string fullName, string note)
         {
             WatchlistMember watchlistMember = new WatchlistMember()
             {
-                displayName=displayName , fullName = fullName, note = note
+                displayName = displayName, fullName = fullName, note = note
             };
-           
-            await Task.Run(async () =>
-            {
-                string result = await new SmartfaceResquest().requestWithBody("WatchlistMembers", "POST", JsonSerializer.Serialize(watchlistMember));
-                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
-            });
+            string result = new SmartfaceResquest().requestWithBody("WatchlistMembers", "POST",
+                JsonSerializer.Serialize(watchlistMember));
+            watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
             return watchlistMember;
         }
 
@@ -64,18 +44,18 @@ namespace SmartfaceSolution.SubEntities
         /// <param name="fullName">the new full name of the watchlistMember</param>
         /// <param name="note">the new note</param>
         /// <returns>the updated watchlistMember</returns>
-        public async Task<WatchlistMember> updateWatchListMember(string id, string displayName, string fullName,
+        public WatchlistMember updateWatchListMember(string id, string displayName, string fullName,
             string note)
         {
             WatchlistMember watchlistMember = new WatchlistMember()
             {
-                id=id, displayName = displayName, fullName = fullName, note = note
+                id = id, displayName = displayName, fullName = fullName, note = note
             };
-            await Task.Run(async () =>
-            {
-                string result = await new SmartfaceResquest().requestWithBody("WatchlistMembers", "PUT", JsonSerializer.Serialize(watchlistMember));
-                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
-            });
+
+            string result = new SmartfaceResquest().requestWithBody("WatchlistMembers", "PUT",
+                JsonSerializer.Serialize(watchlistMember));
+            watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(result);
+
             return watchlistMember;
         }
 
@@ -84,16 +64,11 @@ namespace SmartfaceSolution.SubEntities
         /// </summary>
         /// <param name="id">the watchlistMemebr id</param>
         /// <returns>the response of the deleting</returns>
-        public async Task<string> deleteWatchListMember(String id)
+        public string deleteWatchListMember(String id)
         {
-            string resp = null;
-            await Task.Run(async () =>
-            {
-                resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "DELETE");
-            });
-            return resp;
+            return new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "DELETE");
         }
-        
+
         /// <summary>
         /// Method <c>registerNewMember</c> register a new member in a specific watchlist
         /// </summary>
@@ -101,17 +76,13 @@ namespace SmartfaceSolution.SubEntities
         /// <param name="watchlistId">the watchlist id</param>
         /// <param name="imgUrl"></param>
         /// <returns>the registration response</returns>
-        public async Task<string> registerNewMember(string id, string watchlistId, string imageData)
+        public string registerNewMember(string id, string watchlistId, string imageData)
         {
-            string resp = null;
-            await Task.Run(async () =>
-            {
-                string data = "{" +
-                              "\"id\":\"" + id + "\",\"images\": [" + "{" + "\"data\":\"" + imageData + "\"" + "}" +
-                              "],"
-                              + "\"watchlistIds\":[" + "\"" + watchlistId + "\"" + "]" + "}";
-                resp = await new SmartfaceResquest().requestWithBody("WatchlistMembers/Register", "POST", data);
-            });
+            string data = "{" +
+                          "\"id\":\"" + id + "\",\"images\": [" + "{" + "\"data\":\"" + imageData + "\"" + "}" +
+                          "],"
+                          + "\"watchlistIds\":[" + "\"" + watchlistId + "\"" + "]" + "}";
+            string resp = new SmartfaceResquest().requestWithBody("WatchlistMembers/Register", "POST", data);
             return resp;
         }
 
@@ -120,58 +91,44 @@ namespace SmartfaceSolution.SubEntities
         /// </summary>
         /// <param name="id">the watchlistMember id</param>
         /// <returns>the watchlistMember</returns>
-        public async Task<WatchlistMember> getWatchlistMember(string id)
+        public WatchlistMember getWatchlistMember(string id)
         {
-            WatchlistMember watchlistMember = null;
-            await Task.Run(async () =>
-            {
-                string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "GET");
-                
-                watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(resp);
-                
-            });
+            string resp = new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id, "GET");
+            WatchlistMember watchlistMember = JsonSerializer.Deserialize<WatchlistMember>(resp);
             return watchlistMember;
         }
+
         /// <summary>
         /// Method <c>getFaces</c> retrieves all the faces that in the system for a specific watchlistMember
         /// </summary>
         /// <param name="id">the watchlistMember id</param>
         /// <returns>the MemberFaces</returns>
-        public async Task<List<string>> getFaces(string id)
+        public List<string> getFaces(string id)
         {
-            MemberFaces faces = null;
             List<string> images = new List<string>();
-            await Task.Run(async () =>
+            string resp =
+                new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id.Trim() + "/Faces?PageSize=500",
+                    "GET");
+            MemberFaces faces = JsonSerializer.Deserialize<MemberFaces>(resp);
+            for (int i = 0; i < faces.items.Count; i++)
             {
-                string resp =
-                    await new SmartfaceResquest().requestNoBody("WatchlistMembers/" + id.Trim() + "/Faces?PageSize=500",
-                        "GET");
-                
-                faces = JsonSerializer.Deserialize<MemberFaces>(resp);
-                for (int i = 0; i < faces.items.Count; i++)
-                {
-                    images.Add(await retrievesImage(faces.items[i].imageDataId));
-                }
-            });
+                images.Add(retrievesImage(faces.items[i].imageDataId));
+            }
             return images;
         }
+
         /// <summary>
         /// Method <c>getMemberFace</c> retrieves the first added face of the watchlistMember
         /// </summary>
         /// <param name="id">the watchlistMember id</param>
         /// <returns>the MemberFaces</returns>
-        public async Task<string> getMemberFace(string id)
+        public string getMemberFace(string id)
         {
-            MemberFaces faces;
-            string image = null;
-            await Task.Run(async () =>
-            {
-                string resp =
-                    await new SmartfaceResquest().requestNoBody(
-                        "WatchlistMembers/" + id.Trim() + "/Faces?Ascending=true&PageSize=1", "GET");
-                faces = JsonSerializer.Deserialize<MemberFaces>(resp);
-                image = await retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
-            });
+            string resp =
+                new SmartfaceResquest().requestNoBody(
+                    "WatchlistMembers/" + id.Trim() + "/Faces?Ascending=true&PageSize=1", "GET");
+            MemberFaces faces = JsonSerializer.Deserialize<MemberFaces>(resp);
+            string image = retrievesImage(faces.items[faces.items.Count - 1].imageDataId);
             return image;
         }
 
@@ -179,44 +136,29 @@ namespace SmartfaceSolution.SubEntities
         /// Method <c>retrievesAllWatchlistMembers</c> retrieves all the watchlistMembers in the system 
         /// </summary>
         /// <returns>the Members</returns>
-        public async Task<Members> retrievesAllWatchlistMembers()
+        public Members retrievesAllWatchlistMembers()
         {
-            Members watchlistMembers = null;
-            await Task.Run(async () =>
-            {
-                string resp = await new SmartfaceResquest().requestNoBody("WatchlistMembers?PageSize=100", "GET");
-                
-                watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
-            });
+            string resp = new SmartfaceResquest().requestNoBody("WatchlistMembers?PageSize=500", "GET");
+
+            Members watchlistMembers = JsonSerializer.Deserialize<Members>(resp);
+
             return watchlistMembers;
         }
+
         /// <summary>
         /// Method <c>retrievesImage</c> retrieves the face images from the system 
         /// </summary>
         /// <param name="imgId">the image id</param>
         /// <returns>the image</returns>
-        public async Task<string> retrievesImage(string imgId)
+        public string retrievesImage(string imgId)
         {
             string image = "";
-            await Task.Run(() =>
+            using (WebClient webClient = new WebClient())
             {
-                using (WebClient webClient = new WebClient())
-                {
-                    byte[] data = webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
-                    using (MemoryStream mem = new MemoryStream(data))
-                    {
-                        using (var yourImage = Image.FromStream(mem))
-                        {
-                            var resizeImage = (Image) (new Bitmap(yourImage));
-                            //resizeImage.Save("C://SmartFaceImages//Testing//" + imgId + ".Jpeg", ImageFormat.Jpeg);
-                            image = Convert.ToBase64String(data);
-                        }
-                    }
-                }
-            });
+                byte[] data = webClient.DownloadData("http://localhost:8098/api/v1/Images/" + imgId);
+                image = Convert.ToBase64String(data);
+            }
             return image;
         }
-
-       
     }
 }

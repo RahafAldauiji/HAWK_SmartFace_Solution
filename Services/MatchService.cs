@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -13,7 +14,7 @@ namespace SmartfaceSolution.Services
 {
     public interface IMatchService
     {
-        public Task<MemberMatch> matchFaces();
+        public MemberMatch matchFaces();
     }
 
     public class MatchService : IMatchService
@@ -63,19 +64,19 @@ namespace SmartfaceSolution.Services
                 {
                     while (dr.Read())
                     {
-                        //Check if the member has been detected and stored in the Notification table in the range of 5 min
-                        if (((string) (dr["MemberID"])).Trim().Equals(member.id.Trim()))
+                        long notificationDateTimeSeconds =
+                            new DateTimeOffset(DateTime.Parse((string) dr["TimeStamp"]))
+                                .ToUnixTimeSeconds(); // get the seconds from the notification table
+                        //Check if the member has been detected and stored in the Notification table in the range of 10 min
+                        if (((string) (dr["MemberID"])).Trim().Equals(member.id.Trim())&& notificationDateTimeSeconds <= frameDateTimeSseconds &&
+                            notificationDateTimeSeconds + 600 >= frameDateTimeSseconds) // 600 seconds = 10 min 
                         {
-                            long notificationDateTimeSeconds =
-                                new DateTimeOffset(DateTime.Parse((string) dr["TimeStamp"]))
-                                    .ToUnixTimeSeconds(); // get the seconds from the notification table 
                             memberExist = true; // if the member has been detected before 
                             camPosition = (int) (dr["CamPosition"]) ==
                                           Int32.Parse(cam.name.Split("-")[1]
                                               .Trim()); // check if the cameras in the notification table and the match member positions are same
-                            // check if the seconds od the detected member are same or in the range of 5 min with notification table
-                            timeStampExist = notificationDateTimeSeconds <= frameDateTimeSseconds &&
-                                             notificationDateTimeSeconds + 600 >= frameDateTimeSseconds; // 600 seconds = 10 min 
+                            // check if the seconds od the detected member are same or in the range of 10 min with notification table
+                            timeStampExist = true;
                         }
                     }
                 }
@@ -103,13 +104,11 @@ namespace SmartfaceSolution.Services
                     cmd.Parameters.Add("@MessageStatus", System.Data.SqlDbType.Int, 1).Value = 1;
                     cmd.ExecuteNonQuery();
                     string email = member.note.Split(',')[0];
-                    string phoneNumber = member.note.Split(',')[1];
                     // // sending the detection notification message
                     Message.Message message = new Message.Message(cam.name.Split("-")[1].Trim().Equals("1") ? 1 : 2,
                         member.displayName,
-                        date.ToUniversalTime().ToString());
+                        date.ToString());
                     message.sendEmail(email); // sending the message using email 
-                    // message.sendSMS(phoneNumber); // sending the message using SMS 
 
                     // Attendance table 
                     // insert the member in the Attendance table if the camera position is enter camera
@@ -149,7 +148,7 @@ namespace SmartfaceSolution.Services
         /// The ZeroMQ open a socket on TCP port 2406 for the communication 
         /// </summary>
         /// <returns>MemberMatch</returns>
-        public async Task<MemberMatch> matchFaces()
+        public MemberMatch matchFaces()
         {
             MemberMatch memberMatch = null;
             try
@@ -164,13 +163,13 @@ namespace SmartfaceSolution.Services
                     var matchHit = subscriber.ReceiveFrameString(); // This notification contains watchlist member
                     memberMatch = JsonSerializer.Deserialize<MemberMatch>(matchHit);
                     Camera cam =
-                        await new SubCamera().getCamera(memberMatch.StreamId); // get the camera from the stream id
+                         new SubCamera().getCamera(memberMatch.StreamId); // get the camera from the stream id
                     if (memberMatch.Type.Equals("Match"))
                     {
                         if (memberMatch.WatchlistMemberId != null)
                         {
                             WatchlistMember watchlistMember =
-                                await new SubWatchlistMember().getWatchlistMember(memberMatch.WatchlistMemberId);
+                                 new SubWatchlistMember().getWatchlistMember(memberMatch.WatchlistMemberId);
                             sendNotification(watchlistMember, memberMatch, cam);
                         }
                     }

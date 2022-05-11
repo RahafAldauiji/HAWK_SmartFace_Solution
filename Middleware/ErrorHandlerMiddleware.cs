@@ -38,6 +38,9 @@ namespace SmartfaceSolution.Middleware
                 response.ContentType = "application/json";
                 switch(ex)
                 {
+                    case UnauthorizedAccessException e:
+                        response.StatusCode = (int) HttpStatusCode.Unauthorized;
+                        break;
                     case AppException e:
                         // custom error, error code 400
                         response.StatusCode = (int)HttpStatusCode.BadRequest;

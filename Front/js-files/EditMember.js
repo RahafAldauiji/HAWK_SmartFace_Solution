@@ -23,7 +23,7 @@ function updateMember() {
     member.id = document.getElementById("inlineFormInputGroupUsername1").value;
     member.displayName = document.getElementById("inlineFormInputGroupUsername2").value;
     member.fullName = document.getElementById("inlineFormInputGroupUsername3").value;
-    member.note = document.getElementById("inlineFormInputGroupUsername4").value+","+document.getElementById("inlineFormInputGroupUsername5").value+","+member.note.split(',')[2];
+    member.note = document.getElementById("inlineFormInputGroupUsername5").value;
     let watchlistMember = JSON.stringify(member);
     fetch("https://localhost:5001/Smartface/WatchlistMember/update?member=" + watchlistMember, {
         method: 'POST',

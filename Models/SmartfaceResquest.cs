@@ -12,27 +12,24 @@ namespace SmartfaceSolution.Models
     public class SmartfaceResquest
     {
         private string serverName = "http://localhost:8098/api/v1/";
+
         /// <summary>
         /// Method <c>requestNoBody</c> will send the http web request with no body request 
         /// </summary>
         /// <param name="reqUrl">the request url</param>
         /// <param name="methodType">the method type</param>
         /// <returns>the response of the request</returns>
-        public async Task<string> requestNoBody(string reqUrl, string methodType)
+        public string requestNoBody(string reqUrl, string methodType)
         {
-            string res = null;
-            await Task.Run(async () =>
-            {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-                var response = (HttpWebResponse) httpWebRequest.GetResponse();
-                res = response.StatusCode == (HttpStatusCode) 400
-                    ? throw new AppException("Wrong Information Format")
-                    : new StreamReader((response).GetResponseStream())
-                        .ReadToEnd();
-            });
+            var httpWebRequest =
+                (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = methodType;
+            var response = (HttpWebResponse) httpWebRequest.GetResponse();
+            string res = response.StatusCode == (HttpStatusCode) 400
+                ? throw new AppException("Wrong Information Format")
+                : new StreamReader((response).GetResponseStream())
+                    .ReadToEnd();
             return res;
         }
 
@@ -43,36 +40,34 @@ namespace SmartfaceSolution.Models
         /// <param name="methodType">the method type</param>
         /// <param name="json">the request body json</param>
         /// <returns>the response of the request</returns>
-        public async Task<string> requestWithBody(string reqUrl, string methodType, string json)
+        public string requestWithBody(string reqUrl, string methodType, string json)
         {
-            string res = null;
-            await Task.Run(async () =>
+            
+
+            var httpWebRequest =
+                (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = methodType;
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                var httpWebRequest =
-                    (HttpWebRequest) WebRequest.Create(serverName + reqUrl);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = methodType;
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    try
-                    {
-                        streamWriter.Write(json);
-                    }
-                    finally
-                    {
-                        streamWriter.Flush();
-                        streamWriter.Close();
-                    }
+                    streamWriter.Write(json);
                 }
+                finally
+                {
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+            }
 
-                var response = (HttpWebResponse) httpWebRequest.GetResponse();
-                res = response.StatusCode == (HttpStatusCode) 400
-                    ? throw new AppException("Wrong Information Format")
-                    : new StreamReader((response).GetResponseStream())
-                        .ReadToEnd();
-                Console.WriteLine(res);
-            });
+            var response = (HttpWebResponse) httpWebRequest.GetResponse();
+            string res = response.StatusCode == (HttpStatusCode) 400
+                ? throw new AppException("Wrong Information Format")
+                : new StreamReader((response).GetResponseStream())
+                    .ReadToEnd();
+        
             return res;
         }
     }

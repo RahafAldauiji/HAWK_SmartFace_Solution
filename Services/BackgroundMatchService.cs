@@ -23,7 +23,7 @@ namespace SmartfaceSolution.Services
             while (!stoppingToken.IsCancellationRequested)
             {
               _logger.LogInformation("BackBround service running", DateTime.Now);
-                await Task.Delay(TimeSpan.FromMilliseconds(1000), stoppingToken);
+                await Task.Delay(TimeSpan.FromMilliseconds(1000), stoppingToken);// every one second
                 _matchService.matchFaces();
             }
            

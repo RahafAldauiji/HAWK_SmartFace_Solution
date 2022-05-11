@@ -11,20 +11,15 @@ namespace SmartfaceSolution.SubEntities
     /// </summary>
     public class SubCamera
     {
-        
         /// <summary>
         /// Method <c>getCamera</c> gets a specific camera
         /// </summary>
         /// <param name="id">the id of the camera</param>
         /// <returns>the camera</returns>
-        public async Task<Camera> getCamera(string id)
+        public Camera getCamera(string id)
         {
-            Camera camera = null;
-            await Task.Run(async () =>
-            {
-                string result = await new SmartfaceResquest().requestNoBody("Cameras/"+id, "GET");
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            });
+            string result = new SmartfaceResquest().requestNoBody("Cameras/" + id, "GET");
+            Camera camera = JsonSerializer.Deserialize<Camera>(result);
             return camera;
         }
 
@@ -32,14 +27,10 @@ namespace SmartfaceSolution.SubEntities
         /// Method <c>getAllCameras</c> gets all cameras that are stored in the database
         /// </summary>
         /// <returns>list of cameras</returns>
-        public async Task<List<Camera>> getAllCameras()
+        public List<Camera> getAllCameras()
         {
-            List<Camera> cameras = null;
-            await Task.Run(async () =>
-            { 
-                string result = await new SmartfaceResquest().requestNoBody("Cameras/", "GET");
-                cameras = JsonSerializer.Deserialize<List<Camera>>(result);
-            });
+            string result = new SmartfaceResquest().requestNoBody("Cameras/", "GET");
+            List<Camera> cameras = JsonSerializer.Deserialize<List<Camera>>(result);
             return cameras;
         }
 
@@ -49,16 +40,13 @@ namespace SmartfaceSolution.SubEntities
         /// <param name="rtsp">the real time streaming protocol of the camera</param>
         /// <param name="cameraName">the name of the camera</param>
         /// <returns>the new camera</returns>
-        public async Task<Camera> createCamera(string rtsp, string cameraName)
+        public Camera createCamera(string rtsp, string cameraName)
         {
-            Camera camera = null;
-            await Task.Run(async () =>
-            {
-                string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
-                              true + "\"}";
-                string result = await new SmartfaceResquest().requestWithBody("Cameras/", "POST", json);
-                camera = JsonSerializer.Deserialize<Camera>(result);
-            });
+            string json = "{\"name\":\"" + cameraName + "\",\"source\":\"" + rtsp + "\",\"enabled\":\"" +
+                          true + "\"}";
+            string result = new SmartfaceResquest().requestWithBody("Cameras/", "POST", json);
+            Camera camera = JsonSerializer.Deserialize<Camera>(result);
+
             return camera;
         }
 
@@ -67,13 +55,11 @@ namespace SmartfaceSolution.SubEntities
         /// </summary>
         /// <param name="cam">the camera that will be updated</param>
         /// <returns>the camera after the updating</returns>
-        public async Task<Camera> updateCamera(Camera cam)
+        public Camera updateCamera(Camera cam)
         {
-            Camera camera = null;
             string jsonCam = JsonSerializer.Serialize(cam);
-            string result = await new SmartfaceResquest().requestWithBody("Cameras/", "PUT", jsonCam);
-            camera = JsonSerializer.Deserialize<Camera>(result);
-
+            string result = new SmartfaceResquest().requestWithBody("Cameras/", "PUT", jsonCam);
+            Camera camera = JsonSerializer.Deserialize<Camera>(result);
             return camera;
         }
 
@@ -82,14 +68,9 @@ namespace SmartfaceSolution.SubEntities
         /// </summary>
         /// <param name="id">the id of the camera to be deleted</param>
         /// <returns>the deleted camera</returns>
-        public async Task<string> deleteCamera(string id)
+        public string deleteCamera(string id)
         {
-            string camera = "";
-            await Task.Run(async () =>
-            {
-                string result = await new SmartfaceResquest().requestNoBody("Cameras/"+id, "DELETE");
-                camera = result;
-            });
+            string camera  = new SmartfaceResquest().requestNoBody("Cameras/" + id, "DELETE");
             return camera;
         }
     }

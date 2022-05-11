@@ -13,10 +13,12 @@ namespace SmartfaceSolution.Helpers
         public void setMemberId(int empId, string memberId);
         public void deleteMemberById(int id);
     }
-    public class DBConnection:IDBConnection
+
+    public class DBConnection : IDBConnection
     {
-        private Task<Members> allMembers = new SubWatchlistMember().retrievesAllWatchlistMembers();
+        private Members allMembers = new SubWatchlistMember().retrievesAllWatchlistMembers();
         private readonly ServerConfig _serverName;
+
         public DBConnection(IOptions<ServerConfig> serverConfig)
         {
             _serverName = serverConfig.Value;
@@ -42,7 +44,7 @@ namespace SmartfaceSolution.Helpers
                 {
                     while (dr.Read())
                     {
-                        return (string)dr["MemberID"];
+                        return (string) dr["MemberID"];
                     }
                 }
             }
@@ -50,30 +52,33 @@ namespace SmartfaceSolution.Helpers
             {
                 dr.Close();
             }
+
             return null;
         }
+
         public void setMemberId(int empId, string memberId)
         {
             string sqlCommand;
             SqlCommand cmd;
             SqlConnection cnn;
-           
-                //open the connection with the database
-                cnn = new SqlConnection(_serverName.DefaultConnection);
-                cnn.Open();
-                sqlCommand =
-                    "INSERT INTO [dbo].[SmartfaceLink] ([EmpId], [MemberId] ) VALUES (@EmpId ,@MemberId)";
-                cmd = new SqlCommand(sqlCommand, cnn);
-                cmd.Parameters.Add("@EmpId", System.Data.SqlDbType.Int, 4).Value = empId;
-                cmd.Parameters.Add("@MemberId", System.Data.SqlDbType.VarChar, -1).Value = memberId.Trim();
-                cmd.ExecuteNonQuery();
+
+            //open the connection with the database
+            cnn = new SqlConnection(_serverName.DefaultConnection);
+            cnn.Open();
+            sqlCommand =
+                "INSERT INTO [dbo].[SmartfaceLink] ([EmpId], [MemberId] ) VALUES (@EmpId ,@MemberId)";
+            cmd = new SqlCommand(sqlCommand, cnn);
+            cmd.Parameters.Add("@EmpId", System.Data.SqlDbType.Int, 4).Value = empId;
+            cmd.Parameters.Add("@MemberId", System.Data.SqlDbType.VarChar, -1).Value = memberId.Trim();
+            cmd.ExecuteNonQuery();
         }
+
         public void deleteMemberById(int id)
         {
             string sqlCommand;
             SqlCommand cmd;
             SqlConnection cnn;
-           
+
             //open the connection with the database
             cnn = new SqlConnection(_serverName.DefaultConnection);
             cnn.Open();

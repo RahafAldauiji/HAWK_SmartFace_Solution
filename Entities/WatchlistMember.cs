@@ -1,7 +1,9 @@
 ﻿
 namespace SmartfaceSolution.Entities
 {
-    
+    /// <summary>
+    /// Entity <c>Members</c> has  all the members that are stored in the database
+    /// </summary>
     public class Members
     {
         public WatchlistMember[] items { get; set; }

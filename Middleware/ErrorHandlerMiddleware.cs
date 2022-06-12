@@ -39,6 +39,7 @@ namespace SmartfaceSolution.Middleware
                 switch(ex)
                 {
                     case UnauthorizedAccessException e:
+                        // Unauthorized user error, error code 401
                         response.StatusCode = (int) HttpStatusCode.Unauthorized;
                         break;
                     case AppException e:

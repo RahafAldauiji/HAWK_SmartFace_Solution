@@ -1,12 +1,11 @@
 ﻿namespace SmartfaceSolution.Entities
 {
     /// <summary>
-    /// Entity <c>MemberMatch</c> provide all the attribute that needed in Member Match
+    /// Entity <c>MemberMatch</c> provide all the attribute that needed in Member Match entity
     /// </summary>
     public class MemberMatch
     {
         public string CropImage { get; set; }
-        public SpoofCheck SpoofCheck{ get; set; }
         public long FrameTimestampMicroseconds{ get; set; }
         public double LeftEyeX{ get; set; }
         public double LeftEyeY{ get; set; }
@@ -39,43 +38,5 @@
         public double RollAngle{ get; set; }
     }
 
-    public class SpoofCheck
-    {
-        public bool Performed{ get; set; }
-        public bool Passed{ get; set; }
-        public BodyPartsSpoofCheck BodyPartsSpoofCheck{ get; set; }
-        public DistantLivenessSpoofCheck DistantLivenessSpoofCheck{ get; set; }
-        public NearbyLivenessSpoofCheck NearbyLivenessSpoofCheck{ get; set; }
-        public ExternalSpoofCheck ExternalSpoofCheck{ get; set; }
-       
-    }
-
-    public class BodyPartsSpoofCheck
-    {
-        public bool Performed{ get; set; }
-        public bool Passed { get; set; }
-        public bool PhotoInHandsDetected{ get; set; }
-    }
-
-    public class DistantLivenessSpoofCheck
-    {
-        public bool Performed{ get; set; }
-        public bool Passed{ get; set; }
-        public double Score{ get; set; }
-    }
-
-    public class NearbyLivenessSpoofCheck
-    {
-        public bool Performed{ get; set; }
-        public bool Passed{ get; set; }
-        public double Score{ get; set; }
-    }
-
-    public class ExternalSpoofCheck
-    {
-        public bool Performed{ get; set; }
-        public bool Passed { get; set; }
-        public double Score{ get; set; }
-        public double Quality{ get; set; }
-    }
+   
 }

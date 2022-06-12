@@ -121,6 +121,7 @@ namespace SmartfaceSolution.Services
                     cmd.Parameters.Add("@date", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("MM/dd/yyyy");
                     cmd.Parameters.Add("@time", System.Data.SqlDbType.VarChar, -1).Value = date.ToString("HH:mm:ss");
                     int row = cmd.ExecuteNonQuery();
+                    // if there is no record to be updated and the camera position is 2 for exit cam
                     if (row == 0 && Int32.Parse(cam.name.Split("-")[1]) == 2)
                     {
                         sqlCommand =

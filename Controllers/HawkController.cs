@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -48,7 +46,9 @@ namespace SmartfaceSolution.Controllers
         {
             var response = _user.Authenticate(user);
             Console.WriteLine(response.Result);
-            return response.Result == null ? throw new UnauthorizedAccessException("Invalid User") : Json(response.Result);
+            return response.Result == null
+                ? throw new UnauthorizedAccessException("Invalid User")
+                : Json(response.Result);
         }
 
         #endregion
@@ -59,6 +59,13 @@ namespace SmartfaceSolution.Controllers
 
         #region Camera
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the camera id to get the specific camera information.
+        /// The request will be sent it to samrtface platform using method getCamera from class SubCamera then the result will return it to the user 
+        /// </summary>
+        /// <param name="id">camera id</param>
+        /// <returns>Camera data</returns>
         [Authorize]
         [HttpGet]
         [Route("Camera/getCamera")]
@@ -67,6 +74,12 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubCamera().getCamera(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The request will be sent it to samrtface platform using method getAllCameras from class SubCamera then the result
+        /// will return it to the user contain all the cameras information in the system
+        /// </summary>
+        /// <returns>all cameras</returns>
         [Authorize]
         [HttpGet]
         [Route("Camera/getAllCameras")]
@@ -75,6 +88,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubCamera().getAllCameras());
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the camera RTSP and the name and by default we will enable the camera.
+        /// The request will be sent it to samrtface platform using method createCamera from class SubCamera then the result will return it to the user contain the new camera
+        /// </summary>
+        /// <param name="cam">camera</param>
+        /// <returns>new camera</returns>
         [Authorize]
         [HttpPost]
         [Route("Camera/create")]
@@ -83,6 +103,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubCamera().createCamera(rtsp: cam.source, cameraName: cam.name));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the camera and the new information to be updated.
+        /// The request will be sent it to samrtface platform using method updateCamera from class SubCamera then the result will return it to the user contain the updated camera 
+        /// </summary>
+        /// <param name="camera">camera data</param>
+        /// <returns>updated camera</returns>
         [Authorize]
         [HttpPost]
         [Route("Camera/update")]
@@ -92,6 +119,14 @@ namespace SmartfaceSolution.Controllers
             return Json(updatedCamera);
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the camera.
+        /// Then, the response will be the information of the deleted camera.
+        /// The request will be sent it to samrtface platform using method deleteCamera from class SubCamera then the result will return it to the user 
+        /// </summary>
+        /// <param name="id">camera id</param>
+        /// <returns>deleted camera</returns>
         [Authorize]
         [HttpDelete]
         [Route("Camera/delete")]
@@ -100,6 +135,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubCamera().deleteCamera(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The response will be send if the smartface platform detect and match any member on the system.
+        /// We will listen to the changes in the database using ZeroMQ library that running on post 2406.
+        /// If there is any match the system will send a response with the member match information 
+        /// </summary>
+        /// <returns>match</returns>
         [Authorize]
         [HttpGet]
         [Route("Match")]
@@ -116,6 +158,13 @@ namespace SmartfaceSolution.Controllers
 
         #region Watchlist
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the watchlist display, full name, and threshold.
+        /// The request will be sent it to samrtface platform using method createWatchlist from class SubWatchlist then the result will return it to the user contain the new watchlist information 
+        /// </summary>
+        /// <param name="watchlist">watchlist data</param>
+        /// <returns>new watchlist</returns>
         [Authorize]
         [HttpPost]
         [Route("Watchlist/create")]
@@ -125,6 +174,13 @@ namespace SmartfaceSolution.Controllers
                 watchlist.threshold));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the Id of the watchlist.
+        /// The request will be sent it to samrtface platform using method getWatchlistMembers from class SubWatchlist then the result will return it to the user contain all the members in the watchlist 
+        /// </summary>
+        /// <param name="id">watchlist id</param>
+        /// <returns>members</returns>
         [Authorize]
         [HttpGet]
         [Route("Watchlist/getMembers")]
@@ -133,6 +189,13 @@ namespace SmartfaceSolution.Controllers
             return Json((new SubWatchlist().retrievesWatchlistMembers(id)).items);
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the watchlist and the new information to be updated.
+        /// The request will be sent it to samrtface platform using method updateWatchlist from class SubWatchlist then the result will return it to the user contain the updated watchlist 
+        /// </summary>
+        /// <param name="watchlist">watchlist data</param>
+        /// <returns>updated watchlist</returns>
         [Authorize]
         [HttpPost]
         [Route("Watchlist/upadte")]
@@ -143,6 +206,11 @@ namespace SmartfaceSolution.Controllers
                 list.fullName, list.threshold));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The request will be sent it to samrtface platform using method retrievesAllWatchlist from class SubWatchlist then the result will return it to the user contain all watchlist in the system
+        /// </summary>
+        /// <returns>all watchlists</returns>
         [Authorize]
         [HttpGet]
         [Route("Watchlist/getAllWatchlist")]
@@ -151,6 +219,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlist().retrievesAllWatchlist());
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the watchlist id to get the specific watchlist.
+        /// The request will be sent it to samrtface platform using method getWatchlist from class SubWatchlist then the result will return it to the user contain all watchlist in the system 
+        /// </summary>
+        /// <param name="id">watchlist id</param>
+        /// <returns>watchlist</returns>
         [Authorize]
         [HttpGet]
         [Route("Watchlist/getWatchlist")]
@@ -159,6 +234,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlist().getWatchlist(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the watchlist name to get the specific watchlist.
+        /// The request will be sent it to samrtface platform using method retrievesAllWatchlist from class SubWatchlist to get all the watchlists then finding the watchlists by its name if it is existed it will be return to the user
+        /// </summary>
+        /// <param name="name">watchlist name</param>
+        /// <returns>watchlist</returns>
         [Authorize]
         [HttpGet]
         [Route("Watchlist/getWatchlistByName")]
@@ -174,6 +256,14 @@ namespace SmartfaceSolution.Controllers
             return Json(watchlist.items[i]);
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the watchlist.
+        /// Then, the response will be the information of the deleted watchlist.
+        /// The request will be sent it to samrtface platform using method deleteWatchlist from class SubWatchlist then the result will return it to the user 
+        /// </summary>
+        /// <param name="id">watchlist id</param>
+        /// <returns>deleted watchlist</returns>
         [Authorize]
         [HttpDelete]
         [Route("Watchlist/delete")]
@@ -190,6 +280,13 @@ namespace SmartfaceSolution.Controllers
 
         #region WatchlistMember
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the member id to get the specific member information.
+        /// The request will be sent it to samrtface platform using method getWatchlistMember from class SubWatchlistMember then the result will return it to the user contain the member information
+        /// </summary>
+        /// <param name="id">member id</param>
+        /// <returns>watchlist member</returns>
         [Authorize]
         [HttpGet]
         [Route("WatchlistMember/getMember")]
@@ -198,6 +295,13 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlistMember().getWatchlistMember(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the member after that the watchlistmemberId will be retrieve from the SmartfaceLink table using getMemberId method from DBConnection class.
+        /// The request will be sent it to samrtface platform using method updateWatchlistMember from class SubWatchlistMember then the result will return it to the user contain the updated member information
+        /// </summary>
+        /// <param name="member">member data</param>
+        /// <returns>updated watchlist member</returns>
         [Authorize]
         [HttpPost]
         [Route("WatchlistMember/update")]
@@ -209,6 +313,14 @@ namespace SmartfaceSolution.Controllers
                 watchlistMember.displayName, watchlistMember.fullName, watchlistMember.note));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the id of the member after that the watchlistmemberId will be retrieve from the SmartfaceLink table using getMemberId method from DBConnection class.
+        /// Then, the member will be deleted from SmartfaceLink table using deleteMemberById method from DBConnection class.
+        /// Finally, the request will be sent it to samrtface platform using method deleteWatchlistMember from class SubWatchlistMember then the result will return it to the user
+        /// </summary>
+        /// <param name="id">member id</param>
+        /// <returns>deleted member</returns>
         [Authorize]
         [HttpDelete]
         [Route("WatchlistMember/delete")]
@@ -219,6 +331,11 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlistMember().deleteWatchListMember(watchlistMemberId));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The request will be sent it to samrtface platform using method retrieveAllWatchlistMembers from class SubWatchlistMember then the result will return it to the user contain all members information
+        /// </summary>
+        /// <returns>all watchlist members</returns>
         [Authorize]
         [HttpGet]
         [Route("WatchlistMember/GetAllWatchlistMembers")]
@@ -228,6 +345,14 @@ namespace SmartfaceSolution.Controllers
             return Json(watchlistMember.items);
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the member id after that, the request will be sent it to samrtface platform using method
+        /// getMemberFace from class SubWatchlistMember then the response will contain the face information and the image data will be retrieved and converted
+        /// to base64 string using retrieveImage method from SubWatchlistMember class and the result will be returned to the user contain the image data 
+        /// </summary>
+        /// <param name="id">member id</param>
+        /// <returns>member face data</returns>
         [Authorize]
         [HttpGet]
         [Route("WatchlistMember/getMemberFace")]
@@ -236,6 +361,15 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlistMember().getMemberFace(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the member id after that, the request will be sent it to samrtface platform using method
+        /// getMemberFace from class SubWatchlistMember then the response will contain the all the member faces information
+        /// and the image data will be retrieved and converted to base64 string using retrieveImage method from SubWatchlistMember
+        /// class for each image and the result will be returned to the user contain array of images data
+        /// </summary>
+        /// <param name="id">member id</param>
+        /// <returns>member face</returns>
         [Authorize]
         [HttpGet]
         [Route("WatchlistMember/getFaces")]
@@ -244,6 +378,15 @@ namespace SmartfaceSolution.Controllers
             return Json(new SubWatchlistMember().getFaces(id));
         }
 
+        /// <summary>
+        /// The user should be authorized to access this API request.
+        /// The user should provide the member display name, full name, notes, watchlist id, and image.
+        /// First, we send a request to smartface platform to create a new watchlistMember using createWatchlistMember method from SubWatchlistMember.
+        /// Then we link and set the id of the employee with the watchlistMember id in SmartfaceLink table using setMemberId method from DBConnection class.
+        /// Finally, send the request to smartface platform to register the member in the watchlist and send the image data.
+        /// </summary>
+        /// <param name="memberRegistration"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("WatchlistMember/CreateAndResgister")]
